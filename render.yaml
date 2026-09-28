@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: mangowit
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: python manage.py migrate && python manage.py seed_ai_data && gunicorn mangowit.wsgi:application --bind 0.0.0.0:$PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
+      - key: MANGOWIT_DEBUG
+        value: "false"
+      - key: MANGOWIT_SECRET_KEY
+        generateValue: true
+      - key: MANGOWIT_ALLOWED_HOSTS
+        value: .onrender.com
+      - key: MANGOWIT_CSRF_TRUSTED_ORIGINS
+        value: https://*.onrender.com
+      - key: DATABASE_URL
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
