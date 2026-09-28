@@ -1,8 +1,10 @@
 import logging
 
+from cloudinary.exceptions import Error as CloudinaryError
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.shortcuts import redirect, render
 
 from .forms import RegistrationForm, UserProfileForm
@@ -99,7 +101,17 @@ def profile(request):
     if request.method == "POST":
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()
+            try:
+                with transaction.atomic():
+                    form.save()
+            except CloudinaryError:
+                request.user.refresh_from_db()
+                form = UserProfileForm(request.POST, instance=request.user)
+                form.add_error(
+                    "profile_picture",
+                    "头像上传失败，请稍后重试。",
+                )
+                return render(request, "profile.html", {"form": form})
             messages.success(request, "个人信息更新成功！")
             return redirect("profile")
         for field, errors in form.errors.items():
