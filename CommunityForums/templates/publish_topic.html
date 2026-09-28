@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %}
+发布话题
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* 保持与community_index一致的样式 */
+    .chat-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto;
+    }
+
+    .publish-container {
+        flex: 2;
+        background-color: #fff;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .sidebar h3 {
+        font-size: 20px;  /* 增大标题字体 */
+        margin-left: 15px; /* 增加标题左边距 */
+        margin-bottom: 25px; /* 增大标题与列表间距 */
+    }
+
+    .guide-list {
+        list-style: none;
+        padding-left: 25px;  /* 增加整体左边距 */
+        margin: 0;
+        font-size: 16px;  /* 增大列表字体 */
+        line-height: 1.8;  /* 增加行距 */
+    }
+
+    .guide-list li {
+        position: relative;
+        margin-bottom: 12px;  /* 增加列表项间距 */
+        padding-left: 20px;  /* 给自定义符号留空间 */
+    }
+
+    .guide-list li::before {
+        content: "•";
+        color: #007bff;
+        font-size: 18px;
+        position: absolute;
+        left: 0;
+        top: 2px;
+    }
+
+    /* 表单元素样式 */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* 浅紫色按钮样式 */
+    .light-purple-button {
+        width: 18%;
+        padding: 10px;
+        background-color: #9b59b6; /* 浅紫色背景 */
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+    }
+
+    .light-purple-button:hover {
+        background-color: #b39ddb; /* 浅紫色悬停效果 */
+    }
+</style>
+
+<!-- 主内容 -->
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="publish-container">
+            <h2>发表新话题</h2>
+            <form id="publish-form" method="post" action="{% url 'publish_topic' %}">
+                {% csrf_token %}
+                {% if error_message %}
+                    <p style="color: red;">{{ error_message }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label>话题标题：</label>
+                    <input type="text" id="title" name="title" value="{{ initial_title }}" required placeholder="请输入话题标题">
+                </div>
+                <div class="form-group">
+                    <label>详细内容：</label>
+                    <textarea id="content" name="content" rows="10" required placeholder="请输入话题详细内容..."></textarea>
+                </div>
+                <button type="submit" class="light-purple-button">立即发布</button>
+            </form>
+        </div>
+
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <h3>发帖指南</h3>
+            <ul class="guide-list">
+                <li>请使用文明用语</li>
+                <li>避免敏感个人信息</li>
+                <li>主题明确易于讨论</li>
+                <li>遵守社区规范</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('publish-form');
+        const titleInput = document.getElementById('title');
+        const contentInput = document.getElementById('content');
+
+        form.addEventListener('submit', function (event) {
+            let isValid = true;
+            let errorMessage = '';
+
+            if (titleInput.value.trim() === '') {
+                isValid = false;
+                errorMessage += '话题标题未填，请补充内容。\n';
+            }
+
+            if (contentInput.value.trim() === '') {
+                isValid = false;
+                errorMessage += '详细内容未填，请补充内容。\n';
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // 阻止表单提交
+                alert(errorMessage);
+            } else {
+                // 将输入框的内容填充到话题标题栏
+                topicTitle.textContent = titleInput.value;
+            }
+        });
+    });
+</script>
+
+{% endblock %}

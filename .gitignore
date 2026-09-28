@@ -1,0 +1,31 @@
+.DS_Store
+.idea/
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+.env.*
+!.env.example
+
+# Finder/archive conflict copies retained locally
+.env 2.example
+requirements 2.txt
+requirements-mysql 2.txt
+mangowit/settings 2.py
+CommunityForums/views 2.py
+challenge/views 2.py
+sex_education_app/views 2.py
+sex_education_app/views 3.py
+tests/__init__ 2.py
+tests/test_entry_routes 2.py
+tests/test_settings 2.py
+
+# Runtime-generated files
+media/
+staticfiles/
+
+# Test and tooling caches
+.coverage
+.pytest_cache/
+.mypy_cache/

@@ -1,0 +1,229 @@
+<!-- templates/profile.html -->
+{% extends 'base.html' %}
+{% block title %}个人信息修改 - 开启专属变身之旅{% endblock %}
+{% block content %}
+    <div class="flex justify-center items-center min-h-screen relative overflow-hidden">
+        <!-- 左侧区域：头像、闯关信息和收藏模块 -->
+        <div class="flex flex-col bg-white p-8 rounded-3xl shadow-2xl mr-12 transition-transform hover:scale-105 duration-300 hover:shadow-xl w-1/3 will-change: transform">
+            <!-- 头像显示区域 -->
+            <div class="mb-4">
+                {% if request.user.profile_picture %}
+                    <img src="{{ request.user.profile_picture.url }}" alt="用户超酷头像" class="w-64 h-64 object-cover rounded-full transition-opacity hover:opacity-80 duration-300 mx-auto will-change: opacity">
+                {% else %}
+                    <img src="https://via.placeholder.com/256" alt="默认萌萌头像" class="w-64 h-64 object-cover rounded-full transition-opacity hover:opacity-80 duration-300 mx-auto will-change: opacity">
+                {% endif %}
+                <p class="text-center text-gray-600 mt-2">在这里展示你的独特魅力哟！</p>
+            </div>
+            <!-- 历史闯关和收藏内容区域 -->
+            <div class="flex flex-col justify-between flex-grow">
+                <div class="mt-4 flex justify-center space-x-4 flex-col items-center">
+                    <a href="{% url 'quiz_history' %}" class="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 transition-transform hover:scale-105 duration-300 w-full text-center mb-2 will-change: transform">
+                        <i class="fa-solid fa-history mr-2"></i>点击查看闯关历史记录
+                    </a>
+                    <a href="{% url 'favorite_news' %}" class="bg-yellow-500 text-white py-2 px-4 rounded-full hover:bg-yellow-600 transition-transform hover:scale-105 duration-300 w-full text-center will-change: transform">
+                        <i class="fa-solid fa-bookmark mr-2"></i>点击查看收藏的资讯内容以及留言
+                    </a>
+                </div>
+                <!-- 新增统计信息 -->
+                <div class="mt-4 text-center">
+                    <p class="text-gray-600">闯关次数: <span class="font-bold">10</span></p>
+                    <p class="text-gray-600">收藏数量: <span class="font-bold">0</span></p>
+                </div>
+                <!-- 新增积分信息 -->
+                <div class="mt-8 text-center">
+                    <h3 class="text-lg font-bold mb-2">我的积分</h3>
+                    <p class="text-gray-600">当前积分: <span class="font-bold">100</span></p>
+                    <p class="text-gray-600">积分规则: 每次闯关成功可获得 10 积分。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 右侧区域：个人信息修改表单区域 -->
+        <div class="bg-white p-8 rounded-3xl shadow-2xl w-1/3 transform origin-top scale-y-0 transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-xl will-change: transform" id="form-container">
+            <h2 class="text-3xl font-bold mb-6 text-center text-purple-600">戳这里，更改个人信息</h2>
+            <form method="post" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div>
+                        <!-- 修改标签文本为中文 -->
+                        {% if field.name == 'username' %}
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+                        {% elif field.name == 'age' %}
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">年龄</label>
+                        {% elif field.name == 'gender' %}
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">性别</label>
+                        {% elif field.name == 'phone_number' %}
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">电话号码</label>
+                        {% elif field.name == 'profile_picture' %}
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">头像</label>
+                            <!-- 自定义头像选择区域 -->
+                            <div class="flex items-center">
+                                {% if request.user.profile_picture %}
+                                    <img src="{{ request.user.profile_picture.url }}" alt="当前头像" class="w-16 h-16 object-cover rounded-full mr-4">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/64" alt="默认头像" class="w-16 h-16 object-cover rounded-full mr-4">
+                                {% endif %}
+                                <div>
+                                    <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" class="hidden" onchange="displayFileName(this)">
+                                    <label for="{{ field.id_for_label }}" class="bg-purple-600 text-white py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer will-change: background-color">
+                                        <i class="fa-solid fa-image mr-2"></i>选择新头像
+                                    </label>
+                                    <span id="file-name" class="ml-2 text-gray-600"></span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
+                        {% endif %}
+                        <!-- 非头像字段正常显示 -->
+                        {% if field.name != 'profile_picture' %}
+                            <div class="relative">
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+                                {% endif %}
+                                <span class="absolute top-1/2 right-3 -translate-y-1/2">
+                                    {% if field.name == 'username' %}
+                                        <i class="fa-solid fa-user text-gray-400"></i>
+                                    {% elif field.name == 'age' %}
+                                        <i class="fa-solid fa-calendar-days text-gray-400"></i>
+                                    {% elif field.name == 'gender' %}
+                                        <i class="fa-solid fa-venus-mars text-gray-400"></i>
+                                    {% elif field.name == 'phone_number' %}
+                                        <i class="fa-solid fa-phone text-gray-400"></i>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-purple-600 text-white py-2 px-6 rounded-full hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-transform hover:scale-105 duration-300 will-change: transform" id="submit-button">
+                        <i class="fa-solid fa-save mr-2"></i>长按保存，焕然一新
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <style>
+        /* 输入框样式 */
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            background-color: #f9fafb;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #7e57c2;
+            box-shadow: 0 0 0 2px rgba(126, 87, 194, 0.2);
+            background-color: #fff;
+            transform: scale(1.02);
+        }
+
+        /* 输入框悬停效果 */
+        input[type="text"]:hover,
+        input[type="password"]:hover,
+        input[type="email"]:hover,
+        input[type="number"]:hover,
+        textarea:hover,
+        select:hover {
+            border-color: #7e57c2;
+            box-shadow: 0 0 0 2px rgba(126, 87, 194, 0.1);
+        }
+
+        /* 按钮样式 */
+        button[type="submit"] {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px) scale(1.05);
+            background-color: #673ab7;
+        }
+
+        /* 提交按钮点击动画 */
+        button[type="submit"]:active {
+            animation: spin 0.5s;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 错误信息样式 */
+        .text-red-500 {
+            animation: shake 0.5s;
+            color: #e53e3e;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* 确保左右两部分高度一致 */
+       .flex > div {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        /* 卡片阴影动画 */
+       .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: box-shadow 0.3s ease;
+        }
+
+       .shadow-2xl:hover {
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 图标颜色动画 */
+       .fa-solid {
+            transition: color 0.3s ease;
+        }
+
+       .bg-green-500:hover .fa-solid,
+       .bg-yellow-500:hover .fa-solid {
+            color: white;
+        }
+    </style>
+    <script>
+        function displayFileName(input) {
+            if (input.files.length > 0) {
+                document.getElementById('file-name').textContent = input.files[0].name;
+            } else {
+                document.getElementById('file-name').textContent = '';
+            }
+        }
+
+        // 表单展开动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const formContainer = document.getElementById('form-container');
+            formContainer.classList.remove('scale-y-0');
+            formContainer.classList.add('scale-y-100');
+        });
+    </script>
+{% endblock %}

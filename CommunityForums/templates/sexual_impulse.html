@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+青少年如何正确看待性冲动？
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- 主内容区域 -->
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chatbot-info">
+                    <h2 class="chatbot-name">青少年如何正确看待性冲动？</h2>
+                </div>
+            </div>
+            <!-- 帖子内容区域 -->
+            <div class="post-content">
+                <p>这里是关于“青少年如何正确看待性冲动？”的帖子详细内容。</p>
+                <p>青少年时期，身体和心理都在经历着快速的变化，性冲动是这一阶段较为常见的生理和心理现象。首先，我们要明白性冲动的产生是自然且正常的。随着青春期的到来，身体内的激素水平发生变化，这会导致性器官逐渐发育成熟，从而引发性冲动。这是人类繁衍本能的一种自然表现，就像饿了会想吃饭、渴了会想喝水一样，是身体正常的生理反应，青少年不必为此感到过度羞耻或焦虑。</p>
+                <p>然而，虽然性冲动是正常的，但青少年也需要学会正确地应对和处理它。一方面，要正确认识自己的身体和性冲动，通过学习科学的性教育知识，了解性的生理和心理过程，知道性冲动是可以被理解和接纳的。另一方面，要学会用合适的方式来疏导性冲动。例如，可以通过参加体育锻炼、培养兴趣爱好等方式，将注意力从性冲动上转移开，让自己的生活更加充实和有意义。</p>
+                <p>同时，青少年在面对性冲动时，也要树立正确的价值观和道德观。要明白性行为是一种非常严肃的行为，需要在合适的年龄、合适的环境以及双方自愿的前提下进行。在青少年时期，应该把更多的精力放在学习和自我成长上，避免过早地陷入不适当的性行为中，以免对自己的身心健康造成伤害。</p>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="comment-section">
+                <div class="action-buttons">
+                    <button id="like-button">点赞 <span id="like-count">0</span></button>
+                    <button id="comment-button">评论 <span id="comment-count">0</span></button>
+                </div>
+                <div class="comment-input">
+                    <input type="text" id="comment-input" placeholder="写下你的评论">
+                    <button id="submit-comment">提交</button>
+                </div>
+                <div class="comments-display">
+                    <!-- 评论将显示在这里 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const likeButton = document.getElementById('like-button');
+        const likeCount = document.getElementById('like-count');
+        const commentButton = document.getElementById('comment-button');
+        const commentCount = document.getElementById('comment-count');
+        const commentInput = document.getElementById('comment-input');
+        const submitComment = document.getElementById('submit-comment');
+        const commentsDisplay = document.querySelector('.comments-display');
+
+        // 点赞功能
+        likeButton.addEventListener('click', function () {
+            let count = parseInt(likeCount.textContent);
+            likeCount.textContent = count + 1;
+        });
+
+        // 评论功能
+        submitComment.addEventListener('click', function () {
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment-item';
+                commentElement.innerHTML = `
+                    <p>${commentText}</p>
+                `;
+                commentsDisplay.appendChild(commentElement);
+                commentInput.value = ''; // 清空输入框
+
+                // 更新评论计数
+                let count = parseInt(commentCount.textContent);
+                commentCount.textContent = count + 1;
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}益阳市蚂蚁社会服务中心走进逸夫学校开展防性侵教育活动{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="/static/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <div class="chat-wrapper">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chatbot-info">
+                        <h2 class="chatbot-name">益阳市蚂蚁社会服务中心走进逸夫学校开展防性侵教育活动</h2>
+                    </div>
+                </div>
+                <!-- 帖子内容区域 -->
+                <div class="post-content">
+                    <p>为增强学生的自我保护意识，有效预防儿童性侵害违法犯罪的发生。2025年4月10日，由共青团赫山区委举办，益阳市蚂蚁社会服务中心展开了一场以“青春护航 预防性侵害”为主题的防性侵教育讲座，该场活动对社会青少年具有及其特殊的教育意义。</p>
+                    <p>据该次讲座的通讯员蔡娟真实记录，益阳市蚂蚁社会服务中心的志愿者们聚焦在益阳市赫山区沧水铺逸夫学校，让逸夫学校的孩子们感受到了独有的关爱，志愿者讲师们根据学生的年龄特点，采用生动形象的PPT演示、趣味游戏、情景模拟、画画等多种方式进行讲解。</p>
+                    <p>讲师先通过互动，引导学生认识人体的隐私部位，知晓自己的成长过程，明白哪些部位是不能被他人随意触碰的。接着结合实际案例，深入浅出地向同学们讲解了什么是性侵害、如何分辨性侵害以及如何预防性侵害。在讲解过程中，讲师特别强调：无论遇到什么情况，都要勇敢地向家人、老师或其他信任的人寻求帮助，不要因为害怕而隐瞒真相，如果遇到了性侵害，一定要保留证据。</p>
+                    <p>同学们对讲座内容表现出了浓厚的兴趣，积极参与，主动回答问题，现场气氛热烈。一位同学表示：“通过这次讲座，我知道了如何保护自己，以后遇到不好的事情，我会勇敢说出来。”</p>
+                    <p>此次益阳市蚂蚁社会服务中心走进逸夫学校开展防性侵教育活动，不仅让学生们掌握了必要的防性侵知识和技能，提高了自我保护意识，也为学校的安全教育工作提供了有力的支持，有助于营造安全、和谐的校园环境。</p>
+                    <p>逸夫学校肖波校长表示：今后我们将继续加强与社会公益组织的合作，开展更多形式多样的安全教育活动，为学生的健康成长保驾护航。</p>
+                    <!-- 修改: 确保图片路径正确 -->
+                    <img src="../../static/images/3.1.jpg" alt="防性侵教育活动图片" style="max-width: 100%; height: auto;">
+                    <!-- 新增: 本文来源 -->
+                    <p>本文来源：<a href="https://www.toutiao.com/article/7491878475045896715/?upstream_biz=doubao&source=m_redirect" class="italic-underline">点击查看原文</a></p>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="comment-section">
+                    <div class="action-buttons">
+                        <button id="like-button">点赞 <span id="like-count">0</span></button>
+                        <button id="comment-button">评论 <span id="comment-count">0</span></button>
+                    </div>
+                    <div class="comment-input">
+                        <input type="text" id="comment-input" placeholder="写下你的评论">
+                        <button id="submit-comment">提交</button>
+                    </div>
+                    <div class="comments-display">
+                        <!-- 评论将显示在这里 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const likeButton = document.getElementById('like-button');
+            const likeCount = document.getElementById('like-count');
+            const commentButton = document.getElementById('comment-button');
+            const commentCount = document.getElementById('comment-count');
+            const commentInput = document.getElementById('comment-input');
+            const submitComment = document.getElementById('submit-comment');
+            const commentsDisplay = document.querySelector('.comments-display');
+
+            // 点赞功能
+            likeButton.addEventListener('click', function () {
+                let count = parseInt(likeCount.textContent);
+                likeCount.textContent = count + 1;
+            });
+
+            // 评论功能
+            submitComment.addEventListener('click', function () {
+                const commentText = commentInput.value.trim();
+                if (commentText) {
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'comment-item';
+                    commentElement.innerHTML = `
+                        <p>${commentText}</p>
+                    `;
+                    commentsDisplay.appendChild(commentElement);
+                    commentInput.value = ''; // 清空输入框
+
+                    // 更新评论计数
+                    let count = parseInt(commentCount.textContent);
+                    commentCount.textContent = count + 1;
+                }
+            });
+        });
+    </script>
+{% endblock %}

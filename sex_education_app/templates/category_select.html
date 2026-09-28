@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}知识挑战乐园{% endblock %}
+
+{% block content %}
+<style>
+    /* 全局样式 */
+    body {
+        background-color: #77ac98;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+   .container {
+        max-width: 80%;
+        margin: 50px auto;
+        padding: 20px;
+        animation: fadeIn 1s ease;
+    }
+
+   .title {
+        font-size: 3.5rem;
+        color: #5e35b1;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        margin-bottom: 50px;
+        letter-spacing: 2px;
+        animation: slideDown 1s ease;
+    }
+
+   .category-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+    }
+
+   .category {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        cursor: pointer;
+        animation: scaleIn 0.5s ease;
+        border: 2px solid #5e35b1;
+    }
+
+   .category:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        border-color: #8ec2b0;
+    }
+
+   .category-icon {
+        font-size: 3rem;
+        color: #5e35b1;
+        margin-bottom: 20px;
+    }
+
+   .category-title {
+        font-size: 2rem;
+        color: #5e35b1;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    /* 进度条样式 */
+   .progress-bar {
+        background-color: #e9ecef;
+        border-radius: 20px;
+        height: 25px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+   .progress {
+        background: linear-gradient(to right, #77ac98, #669a88);
+        height: 100%;
+        border-radius: 20px;
+        width: 0;
+        animation: progressAnimation 1.5s ease forwards;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+   .start-btn {
+        background-color: #5e35b1;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        display: inline-block;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+   .start-btn:hover {
+        background-color: #7e57c2;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        transform: scale(1.05);
+    }
+
+    /* 动画关键帧 */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes progressAnimation {
+        from {
+            width: 0;
+        }
+        to {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="container">
+    <h1 class="title">知识挑战乐园，开启智慧冒险！</h1>
+    <div class="category-container">
+        <div class="category">
+            <div class="category-icon">
+                <i class="fa-solid fa-dna"></i>
+            </div>
+            <h2 class="category-title">生理知识大冒险</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href="{% url 'level_select' 'physiology' %}" class="start-btn">开启冒险，探索生理奥秘</a>
+        </div>
+        <div class="category">
+            <div class="category-icon">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <h2 class="category-title">心理知识探秘之旅</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href="{% url 'level_select' 'psychology' %}" class="start-btn">踏上旅程，解锁心理密码</a>
+        </div>
+        <div class="category">
+            <div class="category-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </div>
+            <h2 class="category-title">防范性知识守护战</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href="{% url 'level_select' 'prevention' %}" class="start-btn">投入战斗，守护自身安全</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

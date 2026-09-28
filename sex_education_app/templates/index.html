@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>性教育科普网站</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自定义样式 */
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #77ac98 0%, #a0cda7 100%);
+            color: #333;
+        }
+
+        /* 复用 base.html 导航栏样式，此处可省略 */
+
+       .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: none;
+            margin-top: 0;
+        }
+
+       .hero-slider {
+            display: flex;
+            width: 400%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+       .hero-slide {
+            width: 25%;
+            height: 450px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+       .hero-slide::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+        }
+
+       .hero-slide h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            z-index: 1;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+       .hero-slide p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            z-index: 1;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+       .cta-button {
+            background: linear-gradient(135deg, #77ac98 0%, #6a9787 100%);
+            color: #7e57c2;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 1.25rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+       .cta-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+       .cta-button:hover {
+            background: linear-gradient(135deg, #6a9787 0%, #537d70 100%);
+            cursor: pointer;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+       .cta-button:hover::before {
+            left: 100%;
+        }
+
+       .cta-button:active {
+            background: #537d70;
+            color: white;
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+       .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+       .slider-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+       .prev-btn {
+            left: 1rem;
+        }
+
+       .next-btn {
+            right: 1rem;
+        }
+
+       .hero-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+       .hero-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+       .hero-indicator.active {
+            background-color: white;
+        }
+
+       .knowledge-section,
+       .news-section,
+       .interactive-section {
+            /* 修改此处的 padding 值，缩小上下边距 */
+            padding: 2rem 5%;
+            text-align: left;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+       /* 美化标题样式 */
+       .knowledge-section h2,
+       .news-section h2 {
+            font-size: 2.5rem; /* 增大字体 */
+            color: #7e57c2;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 添加文字阴影 */
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+       .knowledge-section h2::after,
+       .news-section h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 4px; /* 增加下划线厚度 */
+            background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加下划线阴影 */
+        }
+
+       /* 美化卡片样式 */
+       .knowledge-cards,
+       .news-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+       .knowledge-card,
+       .news-card,
+       .interactive-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease; /* 过渡效果 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            border: 2px solid transparent;
+            transform: translateY(0); /* 初始位置 */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+       .knowledge-card:hover,
+       .news-card:hover,
+       .interactive-card:hover {
+            transform: translateY(-10px); /* 悬停时向上移动更多 */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 增加阴影 */
+            border-color: #7e57c2;
+            background-color: #f9f9f9; /* 悬停时背景颜色变化 */
+        }
+
+       .knowledge-card img,
+       .news-card img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1rem;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+            border: 3px solid #7e57c2;
+            padding: 5px;
+        }
+
+       .knowledge-card:hover img,
+       .news-card:hover img {
+            transform: scale(1.2); /* 悬停时图片放大更多 */
+        }
+
+       .knowledge-card h3,
+       .news-card h3,
+       .interactive-card h3 {
+            font-size: 1.5rem;
+            color: #7e57c2;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+       .knowledge-card p,
+       .news-card p,
+       .interactive-card p {
+            font-size: 1rem;
+            color: #333;
+            text-align: center;
+        }
+
+       .interactive-section {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+       .interactive-card {
+            width: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+       .interactive-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: opacity 0.3s ease;
+        }
+
+       .interactive-card:hover img {
+            opacity: 0.8;
+        }
+
+       .interactive-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(126, 87, 194, 0.7), rgba(126, 87, 194, 0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+       .interactive-card:hover .overlay {
+            opacity: 1;
+        }
+
+       .interactive-card .overlay a {
+            background: linear-gradient(135deg, #77ac98 0%, #6a9787 100%);
+            color: #7e57c2;
+            padding: 0.8rem 1.6rem;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+       .welcome-message {
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    padding: 1.5rem; /* 增加内边距 */
+    text-align: center;
+    margin: 2rem auto; /* 增加外边距并居中 */
+    border-radius: 1rem; /* 增大圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* 增强阴影效果 */
+    animation: fadeIn 1s ease-in-out;
+    max-width: 80%; /* 限制最大宽度 */
+    font-size: 1.1rem; /* 增大字体大小 */
+    color: #333; /* 设置文字颜色 */
+}
+
+.welcome-message a {
+    color: #7e57c2;
+    text-decoration: underline;
+    font-weight: bold; /* 加粗链接文字 */
+    transition: color 0.3s ease; /* 添加颜色过渡效果 */
+}
+
+.welcome-message a:hover {
+    color: #673ab7; /* 悬停时改变链接颜色 */
+}
+
+
+       .interactive-card .overlay a:hover {
+            background: linear-gradient(135deg, #6a9787 0%, #537d70 100%);
+            cursor: pointer;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
+            color: white;
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+       .social-links {
+            margin-bottom: 1rem;
+        }
+
+       .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+       .social-links a:hover {
+            color: #77ac98;
+        }
+
+       .copyright {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+           .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                background-color: #7e57c2;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+           .nav-links.show {
+                display: flex;
+            }
+
+           .menu-icon {
+                display: block;
+            }
+
+           .interactive-section {
+                flex-direction: column;
+            }
+
+           .interactive-card {
+                width: 100%;
+            }
+
+           .knowledge-section,
+           .news-section,
+           .interactive-section {
+                /* 修改此处的 padding 值，缩小上下边距 */
+                padding: 2rem 3%;
+            }
+
+            nav {
+                padding: 1rem 3%;
+            }
+        }
+    </style>
+</head>
+
+{% extends 'base.html' %}
+{% block title %}性教育科普网站{% endblock %}
+{% block content %}
+    <!-- 首页内容（hero 部分） -->
+    <div class="hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide" style="background-image: url(static/2.jpg);">
+                <h1>欢迎走进性教育知识天地</h1>
+                <p>在这里开启关于自我认知的旅程，探索性教育的奥秘。</p>
+                <a href="{% url 'profile' %}" class="cta-button">开始探索</a>
+            </div>
+            <div class="hero-slide" style="background-image: url(static/index1.png);">
+                <h1>性教育，从了解自己开始</h1>
+                <p>深入学习性健康知识，为美好生活护航。</p>
+                <a href="{% url 'knowledge' %}" class="cta-button">开始探索</a>
+            </div>
+            <div class="hero-slide" style="background-image: url(static/1.jpg);">
+                <h1>探索性教育的无限可能</h1>
+                <p>丰富的知识资源，等待你的发现。</p>
+                <a href="{% url 'news' %}" class="cta-button">开始探索</a>
+            </div>
+            <div class="hero-slide" style="background-image: url(static/1.png);">
+                <h1>开启性教育的精彩之旅</h1>
+                <p>与我们一起，共同成长。</p>
+                <a href="{% url 'category_select' %}" class="cta-button">开始探索</a>
+            </div>
+        </div>
+        <div class="hero-indicators" id="heroIndicators">
+            <div class="hero-indicator active" onclick="goToSlide(0)"></div>
+            <div class="hero-indicator" onclick="goToSlide(1)"></div>
+            <div class="hero-indicator" onclick="goToSlide(2)"></div>
+            <div class="hero-indicator" onclick="goToSlide(3)"></div>
+        </div>
+        <button class="slider-btn prev-btn" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-btn next-btn" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+            <!-- 新增欢迎信息 -->
+        {% if user.is_authenticated %}
+            <div class="welcome-message">
+                <p>欢迎，{{ user.username }}！希望你在青芒悟语——性教育科普网站有个愉快的体验。</p>
+            </div>
+        {% else %}
+            <div class="welcome-message">
+                <p>欢迎来到青芒悟语——性教育科普网站，请 <a href="{% url 'login_register' %}">登录/注册</a> 以享受更多功能。</p>
+            </div>
+        {% endif %}
+    <!-- 知识科普板块 -->
+    <div class="knowledge-section">
+        <h2>青春奥秘知多少</h2>
+        <div class="knowledge-cards">
+            <a href="{% url 'physiology_knowledge' %}" class="knowledge-card">
+                <img src="/static/index6.png" alt="生理图标">
+                <h3>躯壳奥秘解码</h3>
+                <p>了解人体生理结构与发育相关知识，</p>
+                <p>为健康成长奠基</p>
+            </a>
+            <a href="{% url 'psychology_knowledge' %}" class="knowledge-card">
+                <img src="/static/index8.png" alt="心理图标">
+                <h3>情感思维洞察</h3>
+                <p>探索性心理变化，</p>
+                <p>学会应对青春期及各阶段心理问题</p>
+            </a>
+            <a href="{% url 'safety_knowledge' %}" class="knowledge-card">
+                <img src="/static/index7.png" alt="安全图标">
+                <h3>身心守护指南</h3>
+                <p>掌握性健康安全要点，</p>
+                <p>保护自己与他人的身心健康</p>
+            </a>
+        </div>
+    </div>
+    <!-- 新闻资讯板块 -->
+    <div class="news-section">
+        <h2>时事前沿聚焦</h2>
+        <div class="news-cards">
+            <a href="news" class="news-card">
+                <img src="/static/index9.png" alt="研究图标">
+                <h3>直击性教现场</h3>
+                <p>追踪热点，聚焦新闻视角下的多元动态</p>
+            </a>
+            <a href="news" class="news-card">
+                <img src="/static/index12.png" alt="政策图标">
+                <h3>法眼看性教</h3>
+                <p>明晰法规，守护成长</p>
+            </a>
+        </div>
+    </div>
+    <!-- 答题闯关和交流社区板块 -->
+    <div class="interactive-section">
+        <div class="interactive-card">
+            <img src="/static/index10.png" alt="答题闯关">
+            <h3>答题闯关</h3>
+            <p>答题挑战开启，检验性教育知识，凭智慧一路通关</p>
+            <div class="overlay">
+                <a href="{% url 'category_select' %}">立即挑战</a>
+            </div>
+        </div>
+        <div class="interactive-card">
+            <img src="/static/index13.png" alt="交流社区">
+            <h3>交流社区</h3>
+            <p>分享经验、交流见解，共筑互动空间</p>
+            <div class="overlay">
+                <a href="{% url 'community' %}">进入社区</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToHomePage() {
+            alert('点击了 KNOW MORE ABOUT YOURSELF，即将跳转到首页');
+        }
+
+        let slideIndex = 0;
+        const heroSlider = document.getElementById('heroSlider');
+        const totalSlides = 4;
+        const indicators = document.querySelectorAll('.hero-indicator');
+
+        function nextSlide() {
+            slideIndex = (slideIndex + 1) % totalSlides;
+            heroSlider.style.transform = `translateX(-${slideIndex * 25}%)`;
+            updateIndicators();
+        }
+
+        function prevSlide() {
+            slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+            heroSlider.style.transform = `translateX(-${slideIndex * 25}%)`;
+            updateIndicators();
+        }
+
+        function goToSlide(index) {
+            slideIndex = index;
+            heroSlider.style.transform = `translateX(-${slideIndex * 25}%)`;
+            updateIndicators();
+        }
+
+        function updateIndicators() {
+            indicators.forEach((indicator, index) => {
+                if (index === slideIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        setInterval(nextSlide, 5000);
+    </script>
+{% endblock %}

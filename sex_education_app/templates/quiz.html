@@ -1,0 +1,53 @@
+<!-- app/templates/category_select.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ category }} - 选择关卡</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* 确保导航栏和页尾充满页面 */
+        .header,
+        .footer {
+            width: 100%;
+        }
+
+        /* 确保 main 部分和搜索框区域整体居中 */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#">Community Forums</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">首页</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="{% url 'ai_home' %}">AI问答</a></li>
+                <li><a href="#">联系我们</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1 class="title">{{ category }} - 选择关卡</h1>
+        <div class="category-container">
+            {% for level in levels %}
+                <div class="category">
+                    <h2 class="category-title">第 {{ level }} 关</h2>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <a href="{% url 'question' category=category level=level %}" class="start-btn">开始闯关</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+发布的话题
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="/static/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+<!-- 主内容区域 -->
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chatbot-info">
+                    <h2 class="chatbot-name">{{ title }}</h2>
+                </div>
+            </div>
+            <!-- 帖子内容区域 -->
+            <div class="post-content">
+                <p>{{ content }}</p>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="comment-section">
+                <div class="action-buttons">
+                    <button id="like-button">点赞 <span id="like-count">0</span></button>
+                    <button id="comment-button">评论 <span id="comment-count">0</span></button>
+                </div>
+                <div class="comment-input">
+                    <input type="text" id="comment-input" placeholder="写下你的评论">
+                    <button id="submit-comment">提交</button>
+                </div>
+                <div class="comments-display">
+                    <!-- 评论将显示在这里 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const likeButton = document.getElementById('like-button');
+        const likeCount = document.getElementById('like-count');
+        const commentButton = document.getElementById('comment-button');
+        const commentCount = document.getElementById('comment-count');
+        const commentInput = document.getElementById('comment-input');
+        const submitComment = document.getElementById('submit-comment');
+        const commentsDisplay = document.querySelector('.comments-display');
+
+        // 点赞功能
+        likeButton.addEventListener('click', function () {
+            let count = parseInt(likeCount.textContent);
+            likeCount.textContent = count + 1;
+        });
+
+        // 评论功能
+        submitComment.addEventListener('click', function () {
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment-item';
+                commentElement.innerHTML = `
+                    <p>${commentText}</p>
+                `;
+                commentsDisplay.appendChild(commentElement);
+                commentInput.value = ''; // 清空输入框
+
+                // 更新评论计数
+                let count = parseInt(commentCount.textContent);
+                commentCount.textContent = count + 1;
+            }
+        });
+    });
+</script>
+
+{% endblock %}

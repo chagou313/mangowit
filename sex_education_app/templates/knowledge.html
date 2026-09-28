@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}知识图谱{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        padding: 50px 0;
+        width: 100%;
+    }
+
+    /* 白色圆角容器 */
+    .rounded-box {
+        width: 85%;
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    /* 第一个框调整 */
+    .box1-header {
+        text-align: left;
+        margin-bottom: 40px;
+    }
+    .box1-header h1 {
+        font-size: 32px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin: 0 0 8px 0;
+    }
+    .box1-header p {
+        font-size: 22px;
+        color: #7f8c8d;
+        margin: 0;
+    }
+
+    /* 模块布局 */
+    .modules-row {
+        display: flex;
+        justify-content: center;
+        gap: 100px !important;  /* 最大间距 */
+    }
+    .module-card {
+        width: 500px;
+        height: 250px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .module-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .module-card i {
+        font-size: 7rem !important;  /* 超大图标 */
+    }
+    .module-card p {
+        font-size: 22px !important;
+        margin-top: 20px !important;
+    }
+
+    /* 第二个框样式 */
+    .box2-content {
+        display: flex;
+        flex-direction: column;
+        height: 400px;
+    }
+    .video-module {
+        width: 90%;
+        height: 120px;
+        margin: 15px auto;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+        transition: all 0.3s;
+    }
+    .video-module:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+    .start-btn {
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 16px;
+        margin-left: 20px;
+        transition: all 0.3s;
+    }
+    .start-btn:hover {
+        transform: translateX(5px);
+    }
+</style>
+
+<main class="main-content">
+    <!-- 第一个知识模块 -->
+    <div class="rounded-box">
+        <div class="box1-header">
+            <h1>青芒悟语知识图谱</h1>
+            <p>全面解读性教育相关知识要点</p>
+        </div>
+        <div class="modules-row">
+            <a href="{% url 'physiology_knowledge' %}" class="module-card" style="background:#e8f4ff">
+                <i class="fas fa-brain" style="color:#3498db"></i>
+                <p>生理健康知识</p>
+            </a>
+            <a href="{% url 'psychology_knowledge' %}" class="module-card" style="background:#fff5e6">
+                <i class="fas fa-heartbeat" style="color:#e67e22"></i>
+                <p>心理健康知识</p>
+            </a>
+            <a href="{% url 'safety_knowledge' %}" class="module-card" style="background:#e6ffe6">
+                <i class="fas fa-shield-alt" style="color:#2ecc71"></i>
+                <p>安全防范知识</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- 第二个视频模块 -->
+    <div class="rounded-box">
+        <div class="box2-content">
+            <h2 style="color:#2c3e50; margin-bottom:30px; font-size:32px; font-weight:bold;">知识科普小视频（持续更新中~）</h2>
+
+            <div class="video-module" style="background:#f3e8fd">
+                <div class="video-info">
+                    <h3 style="margin:0; color:#8a4caf; font-size:24px">青春期（上）</h3>
+                    <p style="color:#666; margin:8px 0 0 0; font-size:18px">时长：4分钟</p>
+                </div>
+                <a href="{% url 'video1' %}" class="start-btn" style="background:#8a4caf; color:white">
+                    开始学习 <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+
+            <div class="video-module" style="background:#e0f3e2">  <!-- 鲜明浅绿色 -->
+                <div class="video-info">
+                    <h3 style="margin:0; color:#27ae60; font-size:24px">青春期（下）</h3>  <!-- 深绿色 -->
+                    <p style="color:#666; margin:8px 0 0 0; font-size:18px">时长：3分钟</p>
+                </div>
+                <a href="{% url 'video2' %}" class="start-btn" style="background:#27ae60; color:white">
+                    开始学习 <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,335 @@
+/* 主内容区域样式 */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    width: 100%; /* 确保 main-content 占据整个视口宽度 */
+}
+
+.chat-wrapper {
+    display: flex;
+    width: 85% !important; /* 设置宽度为 80% */
+    max-width: none !important;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    margin: 0 auto; /* 水平居中 */
+}
+
+.chat-container {
+    flex: 3;
+    padding: 30px;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.chatbot-avatar {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.chatbot-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chatbot-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbot-name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.chatbot-intro {
+    font-size: 1.2rem;
+    color: #777;
+}
+
+.chat-messages {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.chatbot-message {
+    justify-content: flex-start;
+    margin-left: 20px; /* 给 AI 回答添加左边距，区分与问题 */
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.message-content {
+    padding: 15px 20px;
+    border-radius: 15px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.chatbot-message .message-content {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.user-message .message-content {
+    background-color: #e0f7e5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#user-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+#send-button {
+    padding: 12px 25px;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#send-button:hover {
+    background-color: #8e44ad;
+    transform: translateY(-2px);
+}
+
+.sidebar {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 30px;
+}
+
+.sidebar h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.popular-questions {
+    list-style: none;
+}
+
+.question-item {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.question-item:hover {
+    background-color: #e0f7e5;
+    transform: translateX(5px);
+}
+
+/* 帖子内容区域样式 */
+.post-content {
+    padding: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    /* 每段开头空两格 */
+    text-indent: 2em;
+}
+
+/* 评论区样式 */
+.comment-section {
+    width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.action-buttons button {
+    padding: 8px 15px;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-right: 10px;
+}
+
+.action-buttons button:hover {
+    background-color: #8e44ad;
+    transform: translateY(-2px);
+}
+
+.comment-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.comment-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.comment-input button {
+    padding: 12px 25px;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.comment-input button:hover {
+    background-color: #8e44ad;
+    transform: translateY(-2px);
+}
+
+.comments-display {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.comments-display p {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* 新增以下专业样式 */
+.news-item {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.news-item:hover {
+    transform: translateY(-3px);
+}
+
+.law-item {
+    border-left: 3px solid #3498db;
+    padding-left: 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.law-item::before {
+    content: "•";
+    color: #3498db;
+    font-size: 24px;
+    position: absolute;
+    left: -12px;
+    top: 2px;
+}
+
+.section-title {
+    font-size: 1.5em;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin: 30px 0 20px;
+    position: relative;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: #3498db;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+}
+
+
+/* 保证容器居中 */
+.chat-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 新增：带下划线的斜体链接样式 */
+.italic-underline {
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.italic-underline:hover {
+    color: darkviolet; /* 悬停颜色 */
+}
+
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .chat-messages {
+        flex-direction: column;
+    }
+    .question-item {
+        margin: 10px 0 !important;
+    }
+}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}教育资讯{% endblock %}
+
+{% block content %}
+<section style="max-width: 960px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 1rem;">
+    <h1 style="margin-bottom: 1.5rem; color: #6d43b5;">教育资讯</h1>
+    {% for article in articles %}
+        <article style="padding: 1rem 0; border-bottom: 1px solid #eee;">
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.content|truncatechars:180 }}</p>
+            <a href="{{ article.source_url }}" rel="noopener noreferrer">查看来源</a>
+        </article>
+    {% empty %}
+        <p>暂无教育资讯。</p>
+    {% endfor %}
+    <p style="margin-top: 1.5rem;"><a href="{% url 'news' %}">返回新闻资讯</a></p>
+</section>
+{% endblock %}

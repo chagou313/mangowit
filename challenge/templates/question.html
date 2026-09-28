@@ -1,0 +1,78 @@
+<!-- challenge/templates/question.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ category }} - 第 {{ level }} 关 - 题目</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* 确保导航栏和页尾充满页面 */
+        .header,
+        .footer {
+            width: 100%;
+        }
+
+        /* 确保 main 部分和搜索框区域整体居中 */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .message {
+            color: red;
+            font-weight: bold;
+        }
+
+        .correct-message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#">Community Forums</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">首页</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="{% url 'ai_home' %}">AI问答</a></li>
+                <li><a href="#">联系我们</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1 class="title">{{ category }} - 第 {{ level }} 关 - 题目</h1>
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+        <div class="question-container">
+            <p><strong>{{ question.question_text }}</strong></p>
+            <form method="post" action="{% url 'check_answer' category=category level=level %}">
+                {% csrf_token %}
+                <div class="options">
+                    <label><input type="radio" name="answer" value="A" required> A. {{ options.A }}</label><br>
+                    <label><input type="radio" name="answer" value="B"> B. {{ options.B }}</label><br>
+                    <label><input type="radio" name="answer" value="C"> C. {{ options.C }}</label><br>
+                    <label><input type="radio" name="answer" value="D"> D. {{ options.D }}</label><br>
+                </div>
+                <button type="submit" class="start-btn">提交答案</button>
+            </form>
+            {% if explanation %}
+                <div class="explanation">
+                    <p>{{ explanation }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

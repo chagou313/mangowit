@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+
+{% block title %}
+交流社区
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+
+   .search-area {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        justify-content: center;
+        margin: 20px auto;
+        align-items: center;
+        gap: 20px;
+        animation: fadeIn 0.5s ease-out; /* 搜索区域淡入动画 */
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+   .search-area .input-area {
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 80px);
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* 增加盒子阴影过渡 */
+    }
+
+    input[type="text"]:focus {
+        border-color: #9b59b6;
+        outline: none;
+        box-shadow: 0 0 8px rgba(155, 89, 182, 0.3); /* 输入框聚焦时的阴影效果 */
+    }
+
+    .common-button {
+        width: 18%;
+        margin-left: 10px;
+        padding: 10px;
+        background-color: #9b59b6;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.1s; /* 增加按钮点击动画 */
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+    }
+
+    .common-button:active {
+        transform: scale(0.95); /* 按钮点击时缩小 */
+    }
+
+    .common-button:hover {
+        background-color: #8e44ad;
+    }
+
+    #search-suggestions {
+        width: 100%;
+        max-width: 600px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        top: 100%;
+        margin-top: 5px;
+        z-index: 1000;
+        max-height: 300px;
+        overflow-y: auto;
+        display: none;
+        animation: slideDown 0.3s ease-out; /* 搜索建议下拉动画 */
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+   .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+   .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+
+   .main-content {
+        display: flex;
+        flex: 1;
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        flex-wrap: wrap;
+        gap: 20px;
+        animation: fadeIn 0.5s ease-out; /* 主体内容淡入动画 */
+    }
+
+   .chat-wrapper {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+   .chat-container {
+        flex: 2;
+        min-width: 300px;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.3s ease-in-out; /* 聊天容器悬停动画 */
+    }
+
+   .chat-container:hover {
+        transform: translateY(-5px); /* 聊天容器悬停时上移 */
+    }
+
+   .chat-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+   .chatbot-name {
+        font-size: 28px; /* 增大聊天机器人名称字体大小 */
+        font-weight: 600; /* 增加字体粗细 */
+        margin: 0;
+        color: #9b59b6; /* 修改字体颜色 */
+    }
+
+   .chatbot-intro {
+        font-size: 18px; /* 增大聊天机器人介绍字体大小 */
+        margin: 5px 0 0;
+        color: #555;
+    }
+
+   .sidebar {
+        flex: 1.5;
+        min-width: 250px;
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out; /* 侧边栏悬停动画 */
+    }
+
+   .sidebar:hover {
+        transform: translateY(-5px); /* 侧边栏悬停时上移 */
+    }
+
+   .popular-questions {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+   .popular-questions li {
+        margin-bottom: 10px;
+        font-size: 18px; /* 增大热帖列表字体大小 */
+    }
+
+   .popular-questions a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s ease-in-out, transform 0.1s; /* 增加热帖链接点击动画 */
+        display: inline-block;
+    }
+
+   .popular-questions a:active {
+        transform: scale(0.95); /* 热帖链接点击时缩小 */
+    }
+
+   .popular-questions a:hover {
+        color: #9b59b6;
+        text-decoration: underline;
+    }
+
+   .ai-question-window {
+        background-color: #f0e8f4;
+        border: 1px solid #d1bbdb;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out, transform 0.1s; /* 增加AI问答窗口点击动画 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+   .ai-question-window:active {
+        transform: scale(0.95); /* AI问答窗口点击时缩小 */
+    }
+
+   .ai-question-window:hover {
+        background-color: #e6d8ed;
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+   .ai-question-window h3 {
+        margin: 0;
+        font-size: 18px; /* 增大AI问答窗口标题字体大小 */
+    }
+
+   .ai-question-window i {
+        color: #9b59b6;
+        font-size: 22px; /* 增大AI问答窗口图标大小 */
+    }
+</style>
+
+<!-- 搜索区域 -->
+<div class="search-area">
+    <div class="input-area">
+        <input type="text" placeholder="请输入您想搜索的性教育话题" id="search-input">
+        <button id="send-button" class="common-button">搜索</button>
+        <div id="search-suggestions"></div>
+    </div>
+    <div class="ai-question-window" onclick="window.location.href='{% url 'ai_home' %}'">
+        <i class="fa-solid fa-question-circle"></i>
+        <h3>有问题，问小青芒！</h3>
+    </div>
+</div>
+
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chatbot-info">
+                    <h2 class="chatbot-name">青芒悟语交流社区</h2>
+                    <p class="chatbot-intro">欢迎来到交流社区，一起探讨性教育相关话题！</p>
+                </div>
+            </div>
+            <img src="../../static/community.png" alt="青春期教育讲座图片" style="max-width: 100%; height: auto;">
+            <div class="input-area" style="margin-top: 20px;">
+                <input type="text" placeholder="请输入您想交流的性教育话题" id="topic-input">
+                <button id="submit-button" class="common-button">发送</button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h3>热帖</h3>
+            <ul class="popular-questions">
+                <li><a href="{% url 'sexual_impulse' %}" class="question-item">青少年如何正确看待性冲动？</a></li>
+                <li><a href="#" class="question-item">如何与异性建立健康的友谊？</a></li>
+                <li><a href="#" class="question-item">了解同性恋：我们该知道些什么？</a></li>
+                <li><a href="#" class="question-item">如何避免性骚扰？</a></li>
+                <li><a href="#" class="question-item">青春期的秘密：身体和心理的奇妙变化</a></li>
+                <li><a href="#" class="question-item">家长如何与孩子谈性？实用技巧大揭秘</a></li>
+                <li><a href="#" class="question-item">如何正确地与异性聊天？</a></li>
+                <li><a href="#" class="question-item">青春期的爱情与责任：如何正确对待早恋</a></li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<script>
+    // DOM元素引用
+    const searchInput = document.getElementById('search-input');
+    const sendButton = document.getElementById('send-button');
+    const questionItems = document.querySelectorAll('.question-item');
+    const suggestions = document.getElementById('search-suggestions');
+
+    // 显示搜索建议
+    function showSuggestions(keyword) {
+        suggestions.innerHTML = '';
+        if (!keyword) {
+            suggestions.style.display = 'none';
+            return;
+        }
+
+        const matches = [];
+        questionItems.forEach(item => {
+            const title = item.textContent
+               .toLowerCase()
+               .replace(/[^\u4e00-\u9fa5a-zA-Z]/g, '');
+            if (title.includes(keyword.toLowerCase())) {
+                matches.push({ title: item.textContent, url: item.href });
+            }
+        });
+
+        if (matches.length > 0) {
+            matches.forEach(match => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = match.title;
+                div.onclick = () => window.location.href = match.url;
+                suggestions.appendChild(div);
+            });
+            suggestions.style.display = 'block';
+        } else {
+            suggestions.style.display = 'none';
+            // 不在这里弹出错误提示
+        }
+    }
+
+    // 处理搜索逻辑（仅匹配热帖）
+    function handleSearch() {
+        const rawInput = searchInput.value
+           .trim()
+           .toLowerCase()
+           .replace(/[^\u4e00-\u9fa5a-zA-Z]/g, '');
+
+        if (!rawInput) {
+            suggestions.style.display = 'none';
+            alert('未找到相关内容，请重新输入关键词');
+            return;
+        }
+
+        let matchedItem = null;
+        questionItems.forEach(item => {
+            const title = item.textContent
+               .toLowerCase()
+               .replace(/[^\u4e00-\u9fa5a-zA-Z]/g, '');
+            if (title.includes(rawInput)) {
+                matchedItem = { url: item.href };
+                return;
+            }
+        });
+
+        if (matchedItem) {
+            window.location.href = matchedItem.url;
+        } else {
+            suggestions.style.display = 'none';
+            alert('未找到相关话题，请检查关键词拼写');
+        }
+    }
+
+    // 事件监听
+    searchInput.addEventListener('input', (e) => showSuggestions(e.target.value));
+    sendButton.addEventListener('click', handleSearch);
+    searchInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleSearch());
+
+    // 话题提交功能
+    document.getElementById('submit-button').addEventListener('click', function () {
+        const topic = document.getElementById('topic-input').value;
+        if (topic.trim()) {
+            window.location.href = `/community/publish_topic?title=${encodeURIComponent(topic)}`;
+        }
+    });
+
+    // 点击外部隐藏建议
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.input-area')) {
+            suggestions.style.display = 'none';
+        }
+    });
+</script>
+</body>
+<script src="script.js"></script>
+{% endblock %}

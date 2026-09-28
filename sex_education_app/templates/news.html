@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block title %}
+新闻资讯
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- 引入 Font Awesome 图标库 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+<style>
+    /* 定义淡入动画 */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 为主要内容区域添加动画 */
+   .main-content {
+        animation: fadeIn 0.8s ease;
+    }
+
+    /* 原有样式保持不变 */
+   .chat-header {
+        text-align: left;
+        margin-left: 20px;
+    }
+
+   .sidebar {
+        text-align: left;
+        margin-left: 20px;
+    }
+
+   .chatbot-name {
+        margin: 0;
+        padding: 0;
+    }
+
+   .sidebar h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+   .popular-questions {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+   .popular-questions li {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+   .popular-questions a {
+        text-decoration: none;
+        color: #333;
+    }
+
+   .popular-questions a:hover {
+        text-decoration: underline;
+    }
+
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+   .search-area {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        justify-content: center;
+        margin: 30px auto 5px; /* 缩短底部外边距 */
+    }
+
+   .search-area .input-area {
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+    }
+
+   .sidebar {
+        flex: 1.5;
+        background-color: #f9f9f9;
+        padding: 30px;
+    }
+
+    /* 建议列表样式 */
+    #search-suggestions {
+        width: 100%;
+        max-width: 600px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        top: 100%;
+        margin-top: 5px;
+        z-index: 1000;
+        max-height: 300px;
+        overflow-y: auto;
+        display: none;
+    }
+
+
+</style>
+
+<!-- 搜索区域 -->
+<div class="search-area">
+    <div class="input-area">
+        <input type="text" placeholder="请输入您想搜索的性教育资讯" id="user-input">
+        <button id="send-button">
+            <i class="fa-solid fa-magnifying-glass"></i> 搜索
+        </button>
+        <div id="search-suggestions"></div>
+    </div>
+</div>
+
+<!-- 主内容区 -->
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chatbot-info">
+                    <h2 class="chatbot-name">
+                        <i class="fa-solid fa-newspaper"></i> 新闻&资讯
+                    </h2>
+                </div>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <!-- 帖子列表 -->
+                <div class="message chatbot-message question-item" data-url="{% url 'news1' %}">
+                    <div class="message-content">
+                        <p>山东枣庄一小学女教师因一节性教育课，得到人民日报表扬并转载</p>
+                    </div>
+                </div>
+                <div class="message chatbot-message question-item" data-url="{% url 'news2' %}">
+                    <div class="message-content">
+                        <p>守护花蕾 护航青春——2025“春蕾计划”青春期健康教育讲座走进资溪二中</p>
+                    </div>
+                </div>
+                <div class="message chatbot-message question-item" data-url="{% url 'news3' %}">
+                    <div class="message-content">
+                        <p>益阳市蚂蚁社会服务中心走进逸夫学校开展防性侵教育活动</p>
+                    </div>
+                </div>
+                <div class="message chatbot-message question-item">
+                    <div class="message-content">
+                        <p>全国人大代表建议性教育独立成课，青少年成长亟需科学"必修课"</p>
+                    </div>
+                </div>
+                <div class="message chatbot-message question-item">
+                    <div class="message-content">
+                        <p>金五中举行青少年性教育专题宣传活动</p>
+                    </div>
+                </div>
+                <div class="message chatbot-message question-item">
+                    <div class="message-content">
+                        <p>新盛街道：守护青春，健康成长——青春期性教育讲座</p>
+                    </div>
+                </div>
+                <div class="message chatbot-message question-item">
+                    <div class="message-content">
+                        <p>笪桥镇社工站在柑村小学开展“生命教育”之青少年性教育项目活动</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h3>法律法规</h3>
+            <ul class="popular-questions">
+                <li><a href="#" class="question-item" data-url="{% url 'law1' %}">普法 |《中华人民共和国未成年人保护法》</a></li>
+                <li><a href="#" class="question-item" data-url="{% url 'law2' %}">【利剑护蕾】保护未成年人免受性侵害的相关法律法规</a></li>
+                <li><a href="#" class="question-item" data-url="{% url 'law3' %}">最高人民法院、最高人民检察院、公安部、司法部关于依法惩治性侵害未成年人犯罪的意见</a></li>
+                <li><a href="#" class="question-item">百度百科-性教育国内政策</a></li>
+                <li><a href="#" class="question-item">教育部：学校要对学生开展青春期教育性教育，提高其保护能力</a></li>
+                <li><a href="#" class="question-item">与未满14周岁儿童发生性关系，一律构成犯罪！</a></li>
+                <li><a href="#" class="question-item">关于依法严厉惩治性侵害未成年人违法犯罪的通告</a></li>
+                <li><a href="#" class="question-item">《国务院关于切实加强艾滋病防治工作的通知》</a></li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<script>
+    // DOM元素引用
+    const questionItems = document.querySelectorAll('.question-item');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    const suggestions = document.getElementById('search-suggestions');
+
+    // 显示搜索建议
+    function showSuggestions(keyword) {
+        suggestions.innerHTML = '';
+        if (!keyword) {
+            suggestions.style.display = 'none';
+            return;
+        }
+
+        const matches = [];
+        questionItems.forEach(item => {
+            const title = item.querySelector('p')?.textContent || item.textContent;
+            if (title.toLowerCase().includes(keyword.toLowerCase())) {
+                matches.push({ title, url: item.dataset.url });
+            }
+        });
+
+        if (matches.length > 0) {
+            matches.forEach(match => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = match.title;
+                div.onclick = () => window.location.href = match.url;
+                suggestions.appendChild(div);
+            });
+            suggestions.style.display = 'block';
+        } else {
+            suggestions.style.display = 'none';
+        }
+    }
+
+    // 简化错误提示（只保留基础提示）
+    function showFallbackMessage() {
+        alert('未找到相关内容，请重新输入关键词');
+    }
+
+    // 事件监听
+    userInput.addEventListener('input', (e) => showSuggestions(e.target.value));
+
+    sendButton.addEventListener('click', () => {
+        const searchText = userInput.value.trim();
+        if (!searchText) return;
+
+        const hasSuggestions = document.querySelector('.suggestion-item');
+        if (!hasSuggestions) {
+            showFallbackMessage();
+        }
+    });
+
+    // 点击外部隐藏建议
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.input-area')) {
+            suggestions.style.display = 'none';
+        }
+    });
+
+    // 保留原有跳转功能
+    questionItems.forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            const url = this.dataset.url;
+            if (url) window.location.href = url;
+        });
+    });
+</script>
+
+{% endblock %}

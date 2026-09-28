@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} - 选择关卡{% endblock %}
+
+{% block content %}
+<style>
+    /* 标题样式 */
+   .title {
+        font-size: clamp(3rem, 6vw, 5rem);
+        color: #fff;
+        font-weight: 900;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.7);
+        animation: fadeInDown 1.2s ease;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        letter-spacing: 0.3em;
+        font-family: 'Montserrat', sans-serif;
+        line-height: 1.1;
+    }
+
+    /* 分类标题样式 */
+   .category-title {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        color: #7e57c2;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 0 10px rgba(126, 87, 194, 0.6);
+        font-weight: 800;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    /* 分类容器样式 */
+   .category-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5rem;
+        padding: 0 2rem;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: calc(100vh - 250px);
+        align-items: center;
+    }
+
+    /* 分类样式 */
+   .category {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+        padding: 3rem;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform-style: preserve-3d;
+        width: calc(33.33% - 2rem); /* 确保三个板块宽度合适 */
+    }
+
+   .category:hover {
+        transform: scale(1.1) translateZ(30px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 进度条样式 */
+   .progress-bar {
+        background-color: #e9ecef;
+        border-radius: 20px;
+        height: 25px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+   .progress {
+        background: linear-gradient(to right, #77ac98, #669a88);
+        height: 100%;
+        border-radius: 20px;
+        width: 0;
+        animation: progressAnimation 1.5s ease forwards;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 开始按钮样式 */
+   .start-btn {
+        background: linear-gradient(to bottom, #77ac98, #669a88);
+        color: white;
+        padding: 1.2rem 2.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+   .start-btn:hover {
+        background: linear-gradient(to bottom, #669a88, #558a78);
+        transform: scale(1.08);
+    }
+
+    /* 返回按钮样式 */
+   .back-btn {
+        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        background-color: rgba(0, 0, 0, 0.15);
+        display: block;
+        text-align: center;
+        margin: 2rem auto;
+        max-width: 200px;
+    }
+
+   .back-btn:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        transform: scale(1.05);
+    }
+
+    /* 关卡图片样式 */
+   .level-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+   .category:hover .level-image {
+        transform: scale(1.07);
+    }
+
+    /* 动画关键帧 */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes progressAnimation {
+        from {
+            width: 0;
+        }
+        to {
+            width: 100%;
+        }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+       .category-container {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+       .category {
+            width: calc(50% - 2rem);
+            margin: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+       .category-container {
+            flex-direction: column;
+        }
+       .category {
+            width: 100%;
+            margin: 1rem 0;
+        }
+       .title {
+            font-size: 3.5rem;
+        }
+       .back-btn {
+            font-size: 1.2rem;
+            padding: 0.8rem 1.6rem;
+        }
+    }
+
+    /* 为 main 元素添加顶部和底部内边距，增加与顶部导航栏和底部导航栏的间距 */
+    main {
+        padding-top: 4rem; /* 新增顶部内边距 */
+        padding-bottom: 4rem;
+    }
+</style>
+
+<div class="container">
+    <h1 class="title">{{ category }} - 选择关卡</h1>
+    <div class="category-container">
+        <!-- 替换关卡名称 -->
+        <div class="category">
+            <img src='/static/game1.png' alt="Newbie Arena" class="level-image">
+            <h2 class="category-title">新手试炼场</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href="{% url 'question1' %}?category={{ category }}&level=1" class="start-btn">开始闯关</a>
+        </div>
+        <div class="category">
+            <img src="/static/ganme2.png" alt="Expert Advancement Camp" class="level-image">
+            <h2 class="category-title">高手进阶营</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href="{% url 'question1' %}?category={{ category }}&level=2" class="start-btn">开始闯关</a>
+        </div>
+        <div class="category">
+            <img src="/static/game3.png" alt="Master Challenge Pavilion" class="level-image">
+            <h2 class="category-title">大师挑战阁</h2>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href="{% url 'question1' %}?category={{ category }}&level=3" class="start-btn">开始闯关</a>
+        </div>
+    </div>
+    <a href="{% url "category_select" %}" class="back-btn">返回</a>
+</div>
+<script>
+    function toggleMenu() {
+        const navLinks = document.getElementById('navLinks');
+        navLinks.classList.toggle('show');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const category = '{{ category }}';
+        const startBtns = document.querySelectorAll('.start-btn');
+
+        startBtns.forEach(btn => {
+            btn.href = getQuestionUrl(category, btn.href);
+        });
+
+        function getQuestionUrl(category, currentUrl) {
+            const urlParams = new URLSearchParams(new URL(currentUrl).search);
+            const level = urlParams.get('level');
+
+            let questionUrl = '';
+            switch (category) {
+                case 'physiology':
+                    questionUrl = '{% url "question1" %}';
+                    break;
+                case 'psychology':
+                    questionUrl = '{% url "question21" %}';
+                    break;
+                case 'prevention':
+                    questionUrl = '{% url "question31" %}';
+                    break;
+                default:
+                    questionUrl = '{% url "question1" %}';
+            }
+
+            return `${questionUrl}?category=${category}&level=${level}`;
+        }
+    });
+</script>
+{% endblock %}

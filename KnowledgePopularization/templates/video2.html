@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>video</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(to bottom right, #77ac98, #7e57c2);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* 导航栏样式 */
+        nav {
+            background-color: #7e57c2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+            white-space: nowrap;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* logo区域样式 */
+       .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+            margin-right: auto;
+        }
+
+       .logo i {
+            margin-right: 0.5rem;
+            color: #77ac98;
+        }
+
+       .logo:hover {
+            color: #77ac98;
+        }
+
+        /* 导航链接样式 */
+       .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+       .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-weight: 500;
+            position: relative;
+            white-space: nowrap;
+        }
+
+       .nav-link.active {
+            background-color: #77ac98;
+            color: #7e57c2;
+        }
+
+       .nav-link::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #77ac98;
+            transition: width 0.3s ease;
+        }
+
+       .nav-link:hover::before {
+            width: 100%;
+        }
+
+       .nav-link:hover {
+            background-color: #77ac98;
+            color: #7e57c2;
+            transform: scale(1.05);
+        }
+
+        /* 响应式导航菜单 */
+       .menu-icon {
+            display: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+           .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                background-color: #7e57c2;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+           .nav-links.show {
+                display: flex;
+            }
+
+           .menu-icon {
+                display: block;
+            }
+        }
+
+        /* 视频容器 */
+       .video-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        video {
+            width: 800px;
+            max-width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+       .next-btn {
+            padding: 12px 35px;
+            background-color: #8a2be2;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+       .next-btn:hover {
+            background-color: #77ac98;
+            transform: translateY(-2px);
+        }
+
+        /* 新增：按钮容器样式 */
+       .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 新增：按钮间隔样式 */
+       .button-container a,
+       .button-container button {
+            margin-left: 15px;
+        }
+
+        footer {
+            background-color: #7e57c2;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+       .social-links {
+            margin-bottom: 1rem;
+        }
+
+       .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+       .social-links a:hover {
+            color: #77ac98;
+        }
+
+       .copyright {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="{% url 'index' %}" class="logo">
+            <i class="fa-solid fa-heart-pulse"></i> KNOW MORE ABOUT YOURSELF
+        </a>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="{% url 'knowledge' %}" class="nav-link {% if request.path == '/knowledge/' %}active{% endif %}">知识科普</a>
+            <a href="{% url 'news' %}" class="nav-link {% if request.path == '/news/' %}active{% endif %}">新闻资讯</a>
+            <a href="{% url 'category_select' %}" class="nav-link {% if request.path == '/category_select/' %}active{% endif %}">答题闯关</a>
+            <a href="{% url 'community' %}" class="nav-link {% if request.path == '/community/' %}active{% endif %}">交流社区</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="nav-link">退出登录</a>
+                <a href="{% url 'profile' %}" class="nav-link {% if request.path == '/profile/' %}active{% endif %}">个人主页</a>
+            {% else %}
+                <a href="{% url 'login_register' %}" class="nav-link">登录/注册</a>
+            {% endif %}
+            <a href="{% url 'knowledge_index' %}" class="nav-link">回到目录</a>
+        </div>
+    </nav>
+
+    <div class="video-container">
+        <video controls>
+            <source src="{% static 'video/青春期下.mp4' %}" type="video/mp4">
+            您的浏览器不支持video标签
+        </video>
+        <div class="button-container">
+            <button class="next-btn" onclick="window.location.href='{% url 'video1' %}'">◀ 上一集</button>
+            <a href="{% url 'knowledge' %}" class="next-btn">返回</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+        <div class="copyright">
+            © 2025青芒悟语——性教育科普网站. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
