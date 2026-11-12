@@ -1,0 +1,26 @@
+{% load static %}
+<style>
+    .reactions .reaction-btn.is-on { background-color: #e0457b; }
+    .reactions .reaction-btn.is-on:hover { background-color: #c73468; }
+    .reactions .reaction-btn:disabled { opacity: 0.7; cursor: wait; }
+    .reaction-hint { margin: -10px 0 16px; font-size: 0.9rem; color: #6b6380; }
+    .reaction-hint a { color: #7e57c2; text-decoration: underline; }
+</style>
+<div class="action-buttons reactions"
+     data-like-url="{% url 'toggle_reaction' article_key 'like' %}"
+     data-favorite-url="{% url 'toggle_reaction' article_key 'favorite' %}"
+     data-login-url="{{ login_url }}"
+     data-csrf="{{ csrf_token }}">
+    <button type="button" class="reaction-btn{% if reactions.liked %} is-on{% endif %}" data-kind="like" aria-pressed="{{ reactions.liked|yesno:'true,false' }}">
+        <i class="fa-solid fa-thumbs-up"></i>
+        <span class="reaction-label">{% if reactions.liked %}已赞{% else %}点赞{% endif %}</span>
+        <span id="like-count">{{ reactions.like_count }}</span>
+    </button>
+    <button type="button" class="reaction-btn{% if reactions.favorited %} is-on{% endif %}" data-kind="favorite" aria-pressed="{{ reactions.favorited|yesno:'true,false' }}">
+        <i class="fa-solid fa-bookmark"></i>
+        <span class="reaction-label">{% if reactions.favorited %}已收藏{% else %}收藏{% endif %}</span>
+    </button>
+    <button id="comment-button" type="button">评论 <span id="comment-count">0</span></button>
+</div>
+<p class="reaction-hint" id="reaction-hint" hidden></p>
+<script src="{% static 'js/reactions.js' %}"></script>

@@ -93,10 +93,7 @@
             </div>
             <div class="sidebar">
                 <div class="comment-section">
-                    <div class="action-buttons">
-                        <button id="like-button">点赞 <span id="like-count">0</span></button>
-                        <button id="comment-button">评论 <span id="comment-count">0</span></button>
-                    </div>
+{% include '_reactions.html' %}
                     <div class="comment-input">
                         <input type="text" id="comment-input" placeholder="写下你的评论">
                         <button id="submit-comment">提交</button>
@@ -112,19 +109,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const likeButton = document.getElementById('like-button');
-            const likeCount = document.getElementById('like-count');
             const commentButton = document.getElementById('comment-button');
             const commentCount = document.getElementById('comment-count');
             const commentInput = document.getElementById('comment-input');
             const submitComment = document.getElementById('submit-comment');
             const commentsDisplay = document.querySelector('.comments-display');
-
-            // 点赞功能
-            likeButton.addEventListener('click', function () {
-                let count = parseInt(likeCount.textContent);
-                likeCount.textContent = count + 1;
-            });
 
             // 评论功能
             submitComment.addEventListener('click', function () {
@@ -132,9 +121,9 @@
                 if (commentText) {
                     const commentElement = document.createElement('div');
                     commentElement.className = 'comment-item';
-                    commentElement.innerHTML = `
-                        <p>${commentText}</p>
-                    `;
+                    const commentParagraph = document.createElement('p');
+                    commentParagraph.textContent = commentText;
+                    commentElement.appendChild(commentParagraph);
                     commentsDisplay.appendChild(commentElement);
                     commentInput.value = ''; // 清空输入框
 

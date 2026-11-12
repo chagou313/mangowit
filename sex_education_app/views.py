@@ -6,8 +6,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.http import url_has_allowed_host_and_scheme
 
 from CommunityForums.models import Topic
+from EducationInformation.articles import ARTICLES
+from EducationInformation.models import ArticleReaction
 
 from .forms import RegistrationForm, UserProfileForm
 
@@ -56,8 +60,27 @@ def category_select(request):
     return render(request, "category_select.html")
 
 
+@login_required(login_url="login_register")
 def favorite_news(request):
-    return render(request, "favorite_news.html")
+    favorites = []
+    for reaction in request.user.article_reactions.filter(kind=ArticleReaction.FAVORITE):
+        info = ARTICLES.get(reaction.article)
+        if info:
+            favorites.append({
+                **info,
+                "url": reverse(reaction.article),
+                "saved_at": reaction.created_at,
+            })
+    return render(request, "favorite_news.html", {"favorites": favorites})
+
+
+def _safe_next(request):
+    target = request.GET.get("next", "")
+    if url_has_allowed_host_and_scheme(
+        target, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+    ):
+        return target
+    return ""
 
 
 def login_register(request):
@@ -73,7 +96,7 @@ def login_register(request):
                 login(request, user)
                 logger.info("User %s logged in successfully.", username)
                 messages.success(request, "登录成功！")
-                return redirect("index")
+                return redirect(_safe_next(request) or "index")
             messages.error(request, "用户名或密码错误，请重试。")
             logger.warning("Failed login attempt for user %s.", username)
         else:
@@ -99,6 +122,15 @@ def user_logout(request):
     return redirect("index")
 
 
+def _profile_context(request, form):
+    return {
+        "form": form,
+        "favorite_count": request.user.article_reactions.filter(
+            kind=ArticleReaction.FAVORITE
+        ).count(),
+    }
+
+
 @login_required(login_url="login_register")
 def profile(request):
     if request.method == "POST":
@@ -114,7 +146,7 @@ def profile(request):
                     "profile_picture",
                     "头像上传失败，请稍后重试。",
                 )
-                return render(request, "profile.html", {"form": form})
+                return render(request, "profile.html", _profile_context(request, form))
             messages.success(request, "个人信息更新成功！")
             return redirect("profile")
         for field, errors in form.errors.items():
@@ -122,4 +154,4 @@ def profile(request):
                 messages.error(request, f"{field}: {error}")
     else:
         form = UserProfileForm(instance=request.user)
-    return render(request, "profile.html", {"form": form})
+    return render(request, "profile.html", _profile_context(request, form))
