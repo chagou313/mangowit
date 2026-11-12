@@ -6,12 +6,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 
-from challenge.progress import category_progress, user_stats
+from challenge.progress import best_scores, category_progress, user_stats
 from challenge.question_bank import CATEGORIES, LEVEL_NAMES, QUESTIONS
 from CommunityForums.models import Topic
+from EducationInformation.articles import ARTICLES
 from EducationInformation.models import ArticleReaction
+from interactions.models import Comment
 from interactions.targets import resolve
 
 from .forms import RegistrationForm, UserProfileForm
@@ -20,8 +24,53 @@ from .forms import RegistrationForm, UserProfileForm
 logger = logging.getLogger(__name__)
 
 
+def _daily_question():
+    """The same question for everyone on a given day, cycling through the bank."""
+    pool = [
+        (category, level, question)
+        for category, levels in QUESTIONS.items()
+        for level, questions in levels.items()
+        for question in questions
+    ]
+    category, level, question = pool[timezone.localdate().toordinal() % len(pool)]
+    return {
+        "text": question["text"],
+        "category": CATEGORIES[category]["name"],
+        "url": reverse("quiz_play", args=[category, level]),
+    }
+
+
+def _next_level(user):
+    """The first level this reader hasn't passed, in category order."""
+    best = best_scores(user)
+    for category, levels in QUESTIONS.items():
+        for level in sorted(levels):
+            if not best.get((category, level), {}).get("passed"):
+                return {
+                    "name": f"{CATEGORIES[category]['name']} · {LEVEL_NAMES[level]}",
+                    "url": reverse("quiz_play", args=[category, level]),
+                }
+    return None
+
+
 def index(request):
-    return render(request, "index.html")
+    articles = []
+    for key, info in ARTICLES.items():
+        articles.append({
+            **info,
+            "url": reverse(key),
+            "likes": ArticleReaction.objects.filter(article=key, kind=ArticleReaction.LIKE).count(),
+            "comments": Comment.objects.filter(target=key, is_hidden=False).count(),
+        })
+    context = {
+        "articles": articles,
+        "topics": Topic.objects.order_by("-created_at")[:5],
+        "daily": _daily_question(),
+    }
+    if request.user.is_authenticated:
+        context["stats"] = user_stats(request.user)
+        context["next_level"] = _next_level(request.user)
+    return render(request, "index.html", context)
 
 
 def knowledge(request):

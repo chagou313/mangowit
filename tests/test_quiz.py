@@ -168,3 +168,34 @@ class ProfileStatsTests(TestCase):
         self.assertContains(response, "很有用的法律知识")
         self.assertContains(response, "1/3 关")
         self.assertNotContains(response, "via.placeholder.com")
+
+
+@PLAIN_STATIC
+class HomepageTests(TestCase):
+    def test_anonymous_homepage_shows_live_content(self):
+        from CommunityForums.models import Topic
+        from EducationInformation.models import ArticleReaction
+
+        user = CustomUser.objects.create_user("reader", password="pw-123456")
+        ArticleReaction.objects.create(user=user, article="law1", kind="like")
+        Topic.objects.create(title="首页能看到的新话题", content="内容")
+
+        response = self.client.get(reverse("index"))
+
+        self.assertContains(response, "今日一题")
+        self.assertIn(response.context["daily"]["text"],
+                      [q["text"] for levels in QUESTIONS.values() for qs in levels.values() for q in qs])
+        self.assertContains(response, "首页能看到的新话题")
+        self.assertContains(response, "12355")
+        self.assertContains(response, "登录 / 注册")
+        law1 = next(a for a in response.context["articles"] if a["url"] == reverse("law1"))
+        self.assertEqual(law1["likes"], 1)
+
+    def test_logged_in_homepage_suggests_the_next_level(self):
+        user = CustomUser.objects.create_user("player", password="pw-123456")
+        QuizAttempt.objects.create(user=user, category="physiology", level=1, correct=5,
+                                   total=5, points=20, passed=True)
+        self.client.force_login(user)
+        response = self.client.get(reverse("index"))
+        self.assertContains(response, "欢迎回来，player")
+        self.assertContains(response, reverse("quiz_play", args=["physiology", 2]))
