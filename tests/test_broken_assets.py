@@ -10,8 +10,8 @@ from sex_education_app.models import CustomUser
 
 PAGES = [
     "/", "/community/", "/physiology/", "/psychology/", "/safety/", "/ai/",
-    "/question1/", "/question2/", "/question3/", "/question21/", "/question22/",
-    "/question23/", "/question31/", "/question32/", "/question33/", "/result/",
+    "/category_select/", "/level_select/physiology/", "/quiz/physiology/1/",
+    "/quiz/psychology/2/", "/quiz/prevention/3/",
 ]
 
 

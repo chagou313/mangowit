@@ -144,8 +144,14 @@
             width: 0;
         }
         to {
-            width: 100%;
+            width: var(--p, 0%);
         }
+    }
+
+    .level-status {
+        margin: -0.5rem 0 0.75rem;
+        font-size: 0.95rem;
+        color: #6b6380;
     }
 </style>
 
@@ -157,8 +163,9 @@
                 <i class="fa-solid fa-dna"></i>
             </div>
             <h2 class="category-title">生理知识大冒险</h2>
-            <div class="progress-bar">
-                <div class="progress"></div>
+            <p class="level-status">{% if user.is_authenticated %}已通过 {{ progress.physiology.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</p>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ progress.physiology.passed|default:0 }}">
+                <div class="progress" style="--p: {{ progress.physiology.percent|default:0 }}%"></div>
             </div>
             <a href="{% url 'level_select' 'physiology' %}" class="start-btn">开启冒险，探索生理奥秘</a>
         </div>
@@ -167,8 +174,9 @@
                 <i class="fa-solid fa-brain"></i>
             </div>
             <h2 class="category-title">心理知识探秘之旅</h2>
-            <div class="progress-bar">
-                <div class="progress"></div>
+            <p class="level-status">{% if user.is_authenticated %}已通过 {{ progress.psychology.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</p>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ progress.psychology.passed|default:0 }}">
+                <div class="progress" style="--p: {{ progress.psychology.percent|default:0 }}%"></div>
             </div>
             <a href="{% url 'level_select' 'psychology' %}" class="start-btn">踏上旅程，解锁心理密码</a>
         </div>
@@ -177,8 +185,9 @@
                 <i class="fa-solid fa-shield-heart"></i>
             </div>
             <h2 class="category-title">防范性知识守护战</h2>
-            <div class="progress-bar">
-                <div class="progress"></div>
+            <p class="level-status">{% if user.is_authenticated %}已通过 {{ progress.prevention.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</p>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ progress.prevention.passed|default:0 }}">
+                <div class="progress" style="--p: {{ progress.prevention.percent|default:0 }}%"></div>
             </div>
             <a href="{% url 'level_select' 'prevention' %}" class="start-btn">投入战斗，守护自身安全</a>
         </div>

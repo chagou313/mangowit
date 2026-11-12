@@ -8,6 +8,8 @@ from django.db import transaction
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 
+from challenge.progress import category_progress, user_stats
+from challenge.question_bank import LEVEL_NAMES
 from CommunityForums.models import Topic
 from EducationInformation.models import ArticleReaction
 from interactions.targets import resolve
@@ -51,12 +53,21 @@ def safety_knowledge(request):
     return render(request, "knowledge/safety_knowledge.html")
 
 
+@login_required(login_url="login_register")
 def quiz_history(request):
-    return render(request, "quiz_history.html")
+    return render(request, "quiz_history.html", {
+        "attempts": request.user.quiz_attempts.all()[:100],
+        "stats": user_stats(request.user),
+        "level_names": LEVEL_NAMES,
+    })
 
 
 def category_select(request):
-    return render(request, "category_select.html")
+    passed = category_progress(request.user)
+    progress = {
+        key: {"passed": count, "percent": round(100 * count / 3)} for key, count in passed.items()
+    }
+    return render(request, "category_select.html", {"progress": progress})
 
 
 def _reacted_articles(user, kind):

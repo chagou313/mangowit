@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ category }} - 选择关卡{% endblock %}
+{% block title %}{{ category_name }} - 选择关卡{% endblock %}
 
 {% block content %}
 <style>
@@ -150,8 +150,14 @@
             width: 0;
         }
         to {
-            width: 100%;
+            width: var(--p, 0%);
         }
+    }
+
+    .level-status {
+        margin: -0.5rem 0 0.75rem;
+        font-size: 0.95rem;
+        color: #6b6380;
     }
 
     /* 响应式设计 */
@@ -191,71 +197,20 @@
 </style>
 
 <div class="container">
-    <h1 class="title">{{ category }} - 选择关卡</h1>
+    <h1 class="title">{{ category_name }} - 选择关卡</h1>
     <div class="category-container">
-        <!-- 替换关卡名称 -->
+        {% for level in levels %}
         <div class="category">
-            <img src='/static/game1.png' alt="Newbie Arena" class="level-image">
-            <h2 class="category-title">新手试炼场</h2>
-            <div class="progress-bar">
-                <div class="progress"></div>
+            <img src="/static/{{ level.image }}" alt="{{ level.title }}" class="level-image">
+            <h2 class="category-title">{{ level.title }}</h2>
+            <p class="level-status">{% if level.passed %}已通过 · 最好成绩 {{ level.best }}/{{ level.total }}{% elif level.best is not None %}最好成绩 {{ level.best }}/{{ level.total }} · 答对 {{ pass_score }} 题过关{% elif user.is_authenticated %}还没挑战过{% else %}登录后记录成绩{% endif %}</p>
+            <div class="progress-bar" role="progressbar" aria-label="{{ level.title }}最好成绩" aria-valuemin="0" aria-valuemax="{{ level.total }}" aria-valuenow="{{ level.best|default:0 }}">
+                <div class="progress" style="--p: {{ level.percent }}%"></div>
             </div>
-            <a href="{% url 'question1' %}?category={{ category }}&level=1" class="start-btn">开始闯关</a>
+            <a href="{{ level.url }}" class="start-btn">{% if level.passed %}再次挑战{% else %}开始闯关{% endif %}</a>
         </div>
-        <div class="category">
-            <img src="/static/ganme2.png" alt="Expert Advancement Camp" class="level-image">
-            <h2 class="category-title">高手进阶营</h2>
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
-            <a href="{% url 'question1' %}?category={{ category }}&level=2" class="start-btn">开始闯关</a>
-        </div>
-        <div class="category">
-            <img src="/static/game3.png" alt="Master Challenge Pavilion" class="level-image">
-            <h2 class="category-title">大师挑战阁</h2>
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
-            <a href="{% url 'question1' %}?category={{ category }}&level=3" class="start-btn">开始闯关</a>
-        </div>
+        {% endfor %}
     </div>
     <a href="{% url "category_select" %}" class="back-btn">返回</a>
 </div>
-<script>
-    function toggleMenu() {
-        const navLinks = document.getElementById('navLinks');
-        navLinks.classList.toggle('show');
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const category = '{{ category }}';
-        const startBtns = document.querySelectorAll('.start-btn');
-
-        startBtns.forEach(btn => {
-            btn.href = getQuestionUrl(category, btn.href);
-        });
-
-        function getQuestionUrl(category, currentUrl) {
-            const urlParams = new URLSearchParams(new URL(currentUrl).search);
-            const level = urlParams.get('level');
-
-            let questionUrl = '';
-            switch (category) {
-                case 'physiology':
-                    questionUrl = '{% url "question1" %}';
-                    break;
-                case 'psychology':
-                    questionUrl = '{% url "question21" %}';
-                    break;
-                case 'prevention':
-                    questionUrl = '{% url "question31" %}';
-                    break;
-                default:
-                    questionUrl = '{% url "question1" %}';
-            }
-
-            return `${questionUrl}?category=${category}&level=${level}`;
-        }
-    });
-</script>
 {% endblock %}
