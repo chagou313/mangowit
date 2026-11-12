@@ -100,11 +100,6 @@ class QuizFlowTests(TestCase):
         self.assertEqual(self.client.get(reverse("quiz_play", args=["physiology", 4])).status_code, 404)
         self.assertEqual(self.client.get(reverse("level_select", args=["cooking"])).status_code, 404)
 
-    def test_old_question_pages_redirect_to_the_quiz(self):
-        for path in ["/question1/", "/question33/", "/result/"]:
-            with self.subTest(path=path):
-                self.assertRedirects(self.client.get(path), reverse("category_select"))
-
 
 @PLAIN_STATIC
 class QuizProgressTests(TestCase):

@@ -120,17 +120,6 @@ if database_url:
             ssl_require=not DEBUG,
         )
     }
-elif os.getenv("MANGOWIT_DB_ENGINE", "sqlite").strip().lower() == "mysql":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": os.getenv("MANGOWIT_DB_NAME", "sex_education"),
-            "USER": os.getenv("MANGOWIT_DB_USER", "root"),
-            "PASSWORD": os.getenv("MANGOWIT_DB_PASSWORD", ""),
-            "HOST": os.getenv("MANGOWIT_DB_HOST", "127.0.0.1"),
-            "PORT": os.getenv("MANGOWIT_DB_PORT", "3306"),
-        }
-    }
 else:
     DATABASES = {
         "default": {
@@ -201,10 +190,4 @@ STORAGES = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-NEO4J_CONFIG = {
-    "uri": os.getenv("MANGOWIT_NEO4J_URI", "bolt://localhost:7687"),
-    "user": os.getenv("MANGOWIT_NEO4J_USER", "neo4j"),
-    "password": os.getenv("MANGOWIT_NEO4J_PASSWORD", ""),
-}
 

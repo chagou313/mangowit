@@ -81,25 +81,9 @@ def news(request):
     return render(request, "news.html")
 
 
-def quiz(request):
-    return redirect("category_select")
-
-
 def community(request):
     topics = Topic.objects.order_by("-created_at")[:8]
     return render(request, "community.html", {"topics": topics})
-
-
-def physiological_knowledge(request):
-    return render(request, "knowledge/physiological_knowledge.html")
-
-
-def psychological_knowledge(request):
-    return render(request, "knowledge/psychological_knowledge.html")
-
-
-def safety_knowledge(request):
-    return render(request, "knowledge/safety_knowledge.html")
 
 
 @login_required(login_url="login_register")

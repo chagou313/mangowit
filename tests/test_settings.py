@@ -11,12 +11,6 @@ SETTING_NAMES = {
     "CLOUDINARY_URL",
     "DATABASE_URL",
     "MANGOWIT_CSRF_TRUSTED_ORIGINS",
-    "MANGOWIT_DB_ENGINE",
-    "MANGOWIT_DB_NAME",
-    "MANGOWIT_DB_USER",
-    "MANGOWIT_DB_PASSWORD",
-    "MANGOWIT_DB_HOST",
-    "MANGOWIT_DB_PORT",
     "MANGOWIT_DEBUG",
 }
 
@@ -55,30 +49,6 @@ class RuntimeSettingsTests(TestCase):
 
         self.assertEqual(databases["default"]["ENGINE"], "django.db.backends.sqlite3")
         self.assertTrue(databases["default"]["NAME"].endswith("db.sqlite3"))
-
-    def test_mysql_configuration_comes_from_environment(self):
-        databases = self.load_databases(
-            {
-                "MANGOWIT_DB_ENGINE": "mysql",
-                "MANGOWIT_DB_NAME": "mangowit_test",
-                "MANGOWIT_DB_USER": "mangowit_user",
-                "MANGOWIT_DB_PASSWORD": "test-password",
-                "MANGOWIT_DB_HOST": "db.internal",
-                "MANGOWIT_DB_PORT": "3307",
-            }
-        )
-
-        self.assertEqual(
-            databases["default"],
-            {
-                "ENGINE": "django.db.backends.mysql",
-                "NAME": "mangowit_test",
-                "USER": "mangowit_user",
-                "PASSWORD": "test-password",
-                "HOST": "db.internal",
-                "PORT": "3307",
-            },
-        )
 
     def test_database_url_selects_postgresql(self):
         databases = self.load_databases(

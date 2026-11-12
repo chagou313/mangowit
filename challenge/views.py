@@ -28,11 +28,6 @@ LEVEL_CARDS = {
 }
 
 
-def legacy_question(request):
-    """The old hand-written question pages now point to the new quiz."""
-    return redirect("category_select")
-
-
 def level_select(request, category=None):
     if category is None:
         return redirect("category_select")
