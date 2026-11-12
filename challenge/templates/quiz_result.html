@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}闯关成绩{% endblock %}
+{% block content %}
+<style>
+    .qr { max-width: 560px; margin: 0 auto; padding: 2.5rem max(16px, env(safe-area-inset-left, 0px)) 3rem max(16px, env(safe-area-inset-right, 0px)); color: #2b2540; }
+    .qr-card { background: #fff; border-radius: 16px; box-shadow: 0 12px 32px rgba(43, 37, 64, 0.2); padding: 2rem 1.75rem; text-align: center; }
+    .qr-crumb { font-size: 0.9rem; color: #6b6380; }
+    .qr-badge { width: 84px; height: 84px; margin: 1.25rem auto 0.75rem; border-radius: 50%; display: grid; place-items: center; font-size: 2.2rem; color: #fff; }
+    .qr-badge.pass { background: #4f9d7e; }
+    .qr-badge.fail { background: #b39ddb; }
+    .qr h1 { font-size: 1.6rem; font-weight: 700; }
+    .qr-score { display: flex; justify-content: center; gap: 2.5rem; margin: 1.5rem 0; font-variant-numeric: tabular-nums; }
+    .qr-score b { display: block; font-size: 2rem; line-height: 1.1; color: #7e57c2; }
+    .qr-score span { font-size: 0.85rem; color: #6b6380; }
+    .qr-note { color: #6b6380; font-size: 0.92rem; }
+    .qr-note a { color: #7e57c2; text-decoration: underline; }
+    .qr-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1.75rem; }
+    .qr-btn { padding: 0.65rem 1.4rem; border-radius: 999px; font-weight: 600; text-decoration: none; border: 2px solid #7e57c2; }
+    .qr-btn.primary { background: #7e57c2; color: #fff; }
+    .qr-btn.secondary { background: #fff; color: #7e57c2; }
+</style>
+<section class="qr">
+    <div class="qr-card">
+        <div class="qr-crumb">{{ category_name }} · {{ level_name }}</div>
+        <div class="qr-badge {% if passed %}pass{% else %}fail{% endif %}" aria-hidden="true">
+            <i class="fa-solid {% if passed %}fa-trophy{% else %}fa-rotate-right{% endif %}"></i>
+        </div>
+        <h1>{% if passed %}闯关成功！{% else %}还差一点，再试一次吧{% endif %}</h1>
+        <div class="qr-score">
+            <div><b>{{ correct }}/{{ total }}</b><span>答对题数</span></div>
+            <div><b>+{{ points }}</b><span>本次积分</span></div>
+        </div>
+        {% if saved %}
+        <p class="qr-note">成绩已保存，可以在 <a href="{% url 'quiz_history' %}">闯关记录</a> 里查看。</p>
+        {% else %}
+        <p class="qr-note">这次成绩没有保存。<a href="{{ login_url }}">登录</a>后再闯关，成绩和积分都会记录下来。</p>
+        {% endif %}
+        {% if not passed %}<p class="qr-note">答对 {{ pass_score }} 题即可过关。</p>{% endif %}
+        <div class="qr-actions">
+            {% if passed and next_url %}
+            <a class="qr-btn primary" href="{{ next_url }}">挑战下一关</a>
+            <a class="qr-btn secondary" href="{{ retry_url }}">再玩一次</a>
+            {% elif passed %}
+            <a class="qr-btn primary" href="{% url 'category_select' %}">换个分类挑战</a>
+            <a class="qr-btn secondary" href="{{ retry_url }}">再玩一次</a>
+            {% else %}
+            <a class="qr-btn primary" href="{{ retry_url }}">重新挑战</a>
+            <a class="qr-btn secondary" href="{{ levels_url }}">返回关卡</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

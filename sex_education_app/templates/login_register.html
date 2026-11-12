@@ -101,6 +101,23 @@
         }
 
         /* 错误信息 */
+       .form-message {
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.92rem;
+        }
+
+       .form-message.error {
+            background: #fdecef;
+            color: #b3261e;
+        }
+
+       .form-message.success {
+            background: #e3f3ec;
+            color: #2f7d5f;
+        }
+
        .error-message {
             color: red;
             margin-bottom: 1rem;
@@ -117,12 +134,15 @@
 
 <body>
     <div class="login-register-container">
+        {% for message in messages %}
+        <p class="form-message {{ message.tags }}" role="alert">{{ message }}</p>
+        {% endfor %}
         {% if form_type == 'login' %}
             <h2>登录</h2>
             <form method="post">
                 {% csrf_token %}
                 <label for="username">用户名</label>
-                <input type="text" name="username" placeholder="用户名" required>
+                <input type="text" name="username" id="username" placeholder="用户名" value="{{ username|default:'' }}" required>
                 <label for="password">密码</label>
                 <input type="password" name="password" placeholder="密码" required>
                 <button type="submit">登录</button>

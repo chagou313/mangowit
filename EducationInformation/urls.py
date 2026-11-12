@@ -11,4 +11,5 @@ urlpatterns = [
     path('law1/', views.law1, name='law1'),
     path('law2/', views.law2, name='law2'),
     path('law3/', views.law3, name='law3'),
+    path('react/<slug:article>/<slug:kind>/', views.toggle_reaction, name='toggle_reaction'),
 ]

@@ -1,10 +1,68 @@
 <!-- templates/favorite_news.html -->
 {% extends 'base.html' %}
-{% block title %}收藏的资讯内容及留言{% endblock %}
+{% block title %}我的收藏与点赞{% endblock %}
 {% block content %}
-    <div class="container mx-auto p-8">
-        <h2 class="text-2xl font-bold mb-4">收藏的资讯内容及留言</h2>
-        <!-- 这里可以添加显示收藏的资讯内容及留言的代码 -->
-        <p>暂无收藏的资讯内容及留言。</p>
+<style>
+    .fav { max-width: 860px; margin: 0 auto; padding: 2rem max(16px, env(safe-area-inset-left, 0px)) 3rem max(16px, env(safe-area-inset-right, 0px)); }
+    .fav-card { background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(43, 37, 64, 0.18); padding: 1.75rem; }
+    .fav-card h1 { font-size: 1.6rem; font-weight: 700; color: #7e57c2; }
+    .fav-sub { color: #6b6380; margin-top: 0.25rem; }
+    .fav-list { list-style: none; margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .fav-item a { display: flex; gap: 1rem; align-items: baseline; padding: 0.9rem 1rem; border: 1px solid #e4e0ee; border-radius: 10px; color: #2b2540; text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+    .fav-item a:hover { border-color: #7e57c2; background: #f6f4fb; }
+    .fav-tag { flex: none; font-size: 0.78rem; padding: 0.1rem 0.55rem; border-radius: 999px; background: #efe9fa; color: #6a44b0; }
+    .fav-title { flex: 1; min-width: 0; font-weight: 500; line-height: 1.5; }
+    .fav-date { flex: none; font-size: 0.82rem; color: #8a83a0; font-variant-numeric: tabular-nums; }
+    .fav-empty { margin-top: 1.25rem; padding: 1.5rem; border: 1px dashed #d6d0e4; border-radius: 10px; color: #6b6380; text-align: center; }
+    .fav-empty a, .fav-more a { color: #7e57c2; text-decoration: underline; }
+    .fav-more { margin-top: 1.25rem; font-size: 0.92rem; color: #6b6380; }
+    .fav-card h2 { font-size: 1.15rem; font-weight: 700; color: #2b2540; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e4e0ee; }
+    .fav-card h2:first-of-type { margin-top: 1.5rem; padding-top: 0; border-top: 0; }
+    .fav-count { font-weight: 400; color: #8a83a0; font-size: 0.95rem; }
+    @media (max-width: 560px) {
+        .fav-item a { flex-wrap: wrap; gap: 0.35rem 0.75rem; }
+        .fav-title { flex-basis: 100%; order: 3; }
+    }
+</style>
+<section class="fav">
+    <div class="fav-card">
+        <h1>我的收藏与点赞</h1>
+        <p class="fav-sub">在新闻和法规文章里点过「收藏」或「点赞」的文章，都能在这里找到。</p>
+
+        <h2>收藏 <span class="fav-count">{{ favorites|length }}</span></h2>
+        {% if favorites %}
+        <ul class="fav-list">
+            {% for item in favorites %}
+            <li class="fav-item">
+                <a href="{{ item.url }}">
+                    <span class="fav-tag">{{ item.category }}</span>
+                    <span class="fav-title">{{ item.title }}</span>
+                    <span class="fav-date">{{ item.saved_at|date:"Y-m-d" }} 收藏</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="fav-empty">还没有收藏任何文章。去 <a href="{% url 'news' %}">新闻资讯</a> 看看吧。</p>
+        {% endif %}
+
+        <h2>赞过的文章 <span class="fav-count">{{ likes|length }}</span></h2>
+        {% if likes %}
+        <ul class="fav-list">
+            {% for item in likes %}
+            <li class="fav-item">
+                <a href="{{ item.url }}">
+                    <span class="fav-tag">{{ item.category }}</span>
+                    <span class="fav-title">{{ item.title }}</span>
+                    <span class="fav-date">{{ item.saved_at|date:"Y-m-d" }} 点赞</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="fav-empty">还没有赞过任何文章。</p>
+        {% endif %}
+        <p class="fav-more">想取消？打开文章，再点一次「已收藏」或「已赞」即可。</p>
     </div>
+</section>
 {% endblock %}

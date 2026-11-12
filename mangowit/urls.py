@@ -14,5 +14,6 @@ urlpatterns = [
     path('education/', include('EducationInformation.urls')),  # 修改为include
     path('community/', include('CommunityForums.urls')),  # 修改为include
     path('ai/', include('AI_communication.urls')),  # 包含子应用的 urls.py
+    path('comments/', include('interactions.urls')),
 ]
 

@@ -1,229 +1,158 @@
 <!-- templates/profile.html -->
 {% extends 'base.html' %}
-{% block title %}个人信息修改 - 开启专属变身之旅{% endblock %}
+{% block title %}个人主页{% endblock %}
 {% block content %}
-    <div class="flex justify-center items-center min-h-screen relative overflow-hidden">
-        <!-- 左侧区域：头像、闯关信息和收藏模块 -->
-        <div class="flex flex-col bg-white p-8 rounded-3xl shadow-2xl mr-12 transition-transform hover:scale-105 duration-300 hover:shadow-xl w-1/3 will-change: transform">
-            <!-- 头像显示区域 -->
-            <div class="mb-4">
-                {% if request.user.profile_picture %}
-                    <img src="{{ request.user.profile_picture.url }}" alt="用户超酷头像" class="w-64 h-64 object-cover rounded-full transition-opacity hover:opacity-80 duration-300 mx-auto will-change: opacity">
-                {% else %}
-                    <img src="https://via.placeholder.com/256" alt="默认萌萌头像" class="w-64 h-64 object-cover rounded-full transition-opacity hover:opacity-80 duration-300 mx-auto will-change: opacity">
-                {% endif %}
-                <p class="text-center text-gray-600 mt-2">在这里展示你的独特魅力哟！</p>
-            </div>
-            <!-- 历史闯关和收藏内容区域 -->
-            <div class="flex flex-col justify-between flex-grow">
-                <div class="mt-4 flex justify-center space-x-4 flex-col items-center">
-                    <a href="{% url 'quiz_history' %}" class="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 transition-transform hover:scale-105 duration-300 w-full text-center mb-2 will-change: transform">
-                        <i class="fa-solid fa-history mr-2"></i>点击查看闯关历史记录
-                    </a>
-                    <a href="{% url 'favorite_news' %}" class="bg-yellow-500 text-white py-2 px-4 rounded-full hover:bg-yellow-600 transition-transform hover:scale-105 duration-300 w-full text-center will-change: transform">
-                        <i class="fa-solid fa-bookmark mr-2"></i>点击查看收藏的资讯内容以及留言
-                    </a>
-                </div>
-                <!-- 新增统计信息 -->
-                <div class="mt-4 text-center">
-                    <p class="text-gray-600">闯关次数: <span class="font-bold">10</span></p>
-                    <p class="text-gray-600">收藏数量: <span class="font-bold">0</span></p>
-                </div>
-                <!-- 新增积分信息 -->
-                <div class="mt-8 text-center">
-                    <h3 class="text-lg font-bold mb-2">我的积分</h3>
-                    <p class="text-gray-600">当前积分: <span class="font-bold">100</span></p>
-                    <p class="text-gray-600">积分规则: 每次闯关成功可获得 10 积分。</p>
-                </div>
+<style>
+    .pf { --ink: #2b2540; --muted: #6b6380; --line: #e4e0ee; --soft: #f6f4fb; --accent: #7e57c2; --teal: #4f9d7e;
+          max-width: 1120px; margin: 0 auto; padding: 2rem max(16px, env(safe-area-inset-left, 0px)) 3rem max(16px, env(safe-area-inset-right, 0px)); color: var(--ink); }
+    .pf-card { background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(43, 37, 64, 0.18); padding: 1.5rem; min-width: 0; }
+    .pf-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+    .pf-card h2 a { float: right; font-size: 0.85rem; font-weight: 500; color: var(--accent); text-decoration: none; }
+    .pf-msg { margin-bottom: 1rem; padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.92rem; }
+    .pf-msg.success { background: #e3f3ec; color: #2f7d5f; }
+    .pf-msg.error { background: #fdecef; color: #b3261e; }
+    .pf-head { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 2rem; }
+    .pf-who { display: flex; align-items: center; gap: 1rem; flex: 1 1 260px; min-width: 0; }
+    .pf-avatar { flex: none; width: 88px; height: 88px; border-radius: 50%; object-fit: cover; }
+    .pf-initial { flex: none; width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #77ac98, #7e57c2); color: #fff; font-size: 2.2rem; font-weight: 700; }
+    .pf-name { font-size: 1.5rem; font-weight: 700; overflow-wrap: anywhere; }
+    .pf-since { font-size: 0.88rem; color: var(--muted); }
+    .pf-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.6rem; flex: 2 1 480px; }
+    .pf-stat { padding: 0.75rem 0.5rem; border-radius: 12px; background: var(--soft); text-align: center; text-decoration: none; color: inherit; font-variant-numeric: tabular-nums; }
+    a.pf-stat:hover { background: #ede7f8; }
+    .pf-stat b { display: block; font-size: 1.4rem; line-height: 1.2; }
+    .pf-stat span { font-size: 0.78rem; color: var(--muted); }
+    .pf-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.25rem; margin-top: 1.25rem; }
+    .pf-col { display: flex; flex-direction: column; gap: 1.25rem; min-width: 0; }
+    .pf-prog { display: flex; flex-direction: column; gap: 0.9rem; }
+    .pf-prog-row { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 3.5rem; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
+    .pf-prog-row i { color: var(--accent); width: 1.2rem; }
+    .pf-track { height: 10px; border-radius: 5px; background: #ebe6f4; overflow: hidden; }
+    .pf-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #77ac98, #4f9d7e); }
+    .pf-prog-num { font-size: 0.85rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+    .pf-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    .pf-list li a, .pf-list li > div { display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.65rem 0.8rem; border-radius: 10px; background: var(--soft); color: inherit; text-decoration: none; font-size: 0.92rem; }
+    .pf-list li a:hover { background: #ede7f8; }
+    .pf-list .meta { flex: none; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+    .pf-list .main { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pf-pill { font-size: 0.75rem; padding: 0.05rem 0.5rem; border-radius: 999px; margin-left: 0.4rem; }
+    .pf-pill.pass { background: #e3f3ec; color: #2f7d5f; }
+    .pf-pill.fail { background: #ece8f4; color: var(--muted); }
+    .pf-empty { font-size: 0.9rem; color: var(--muted); }
+    .pf-empty a { color: var(--accent); text-decoration: underline; }
+    .pf-form { display: flex; flex-direction: column; gap: 1rem; }
+    .pf-field label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .pf-field input[type=text], .pf-field input[type=number] { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #d6d0e4; border-radius: 10px; font: inherit; font-size: 0.95rem; background: #fff; color: var(--ink); }
+    .pf-field input:focus { outline: 2px solid #b39ddb; border-color: var(--accent); }
+    .pf-help { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+    .pf-err { font-size: 0.82rem; color: #b3261e; margin-top: 0.3rem; }
+    .pf-upload { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .pf-upload input[type=file] { font-size: 0.85rem; max-width: 100%; }
+    .pf-upload a { font-size: 0.85rem; color: var(--muted); }
+    .pf-save { align-self: flex-start; padding: 0.65rem 1.6rem; border: 0; border-radius: 999px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+    .pf-save:hover { background: #6a44b0; }
+    @media (max-width: 900px) {
+        .pf-grid { grid-template-columns: minmax(0, 1fr); }
+        .pf-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) { .pf-list .main { white-space: normal; } }
+    @media (max-width: 420px) { .pf-prog-row { grid-template-columns: 6rem minmax(0, 1fr) 3rem; } }
+</style>
+
+<section class="pf">
+    <div class="pf-card pf-head">
+        <div class="pf-who">
+            {% if request.user.profile_picture %}
+            <img class="pf-avatar" src="{{ request.user.profile_picture.url }}" alt="{{ request.user.username }}的头像">
+            {% else %}
+            <div class="pf-initial" aria-hidden="true">{{ request.user.username|slice:":1"|upper }}</div>
+            {% endif %}
+            <div>
+                <div class="pf-name">{{ request.user.username }}</div>
+                <div class="pf-since">{{ request.user.date_joined|date:"Y 年 n 月" }} 加入</div>
             </div>
         </div>
-        <!-- 右侧区域：个人信息修改表单区域 -->
-        <div class="bg-white p-8 rounded-3xl shadow-2xl w-1/3 transform origin-top scale-y-0 transition-transform duration-500 ease-in-out hover:scale-105 hover:shadow-xl will-change: transform" id="form-container">
-            <h2 class="text-3xl font-bold mb-6 text-center text-purple-600">戳这里，更改个人信息</h2>
-            <form method="post" enctype="multipart/form-data" class="space-y-6">
-                {% csrf_token %}
-                {% for field in form %}
-                    <div>
-                        <!-- 修改标签文本为中文 -->
-                        {% if field.name == 'username' %}
-                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
-                        {% elif field.name == 'age' %}
-                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">年龄</label>
-                        {% elif field.name == 'gender' %}
-                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">性别</label>
-                        {% elif field.name == 'phone_number' %}
-                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">电话号码</label>
-                        {% elif field.name == 'profile_picture' %}
-                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">头像</label>
-                            <!-- 自定义头像选择区域 -->
-                            <div class="flex items-center">
-                                {% if request.user.profile_picture %}
-                                    <img src="{{ request.user.profile_picture.url }}" alt="当前头像" class="w-16 h-16 object-cover rounded-full mr-4">
-                                {% else %}
-                                    <img src="https://via.placeholder.com/64" alt="默认头像" class="w-16 h-16 object-cover rounded-full mr-4">
-                                {% endif %}
-                                <div>
-                                    <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" class="hidden" onchange="displayFileName(this)">
-                                    <label for="{{ field.id_for_label }}" class="bg-purple-600 text-white py-2 px-4 rounded-full hover:bg-purple-700 cursor-pointer will-change: background-color">
-                                        <i class="fa-solid fa-image mr-2"></i>选择新头像
-                                    </label>
-                                    <span id="file-name" class="ml-2 text-gray-600"></span>
-                                </div>
-                            </div>
-                        {% else %}
-                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
-                        {% endif %}
-                        <!-- 非头像字段正常显示 -->
-                        {% if field.name != 'profile_picture' %}
-                            <div class="relative">
-                                {{ field }}
-                                {% if field.help_text %}
-                                    <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
-                                {% endif %}
-                                <span class="absolute top-1/2 right-3 -translate-y-1/2">
-                                    {% if field.name == 'username' %}
-                                        <i class="fa-solid fa-user text-gray-400"></i>
-                                    {% elif field.name == 'age' %}
-                                        <i class="fa-solid fa-calendar-days text-gray-400"></i>
-                                    {% elif field.name == 'gender' %}
-                                        <i class="fa-solid fa-venus-mars text-gray-400"></i>
-                                    {% elif field.name == 'phone_number' %}
-                                        <i class="fa-solid fa-phone text-gray-400"></i>
-                                    {% endif %}
-                                </span>
-                            </div>
-                        {% endif %}
-                        {% for error in field.errors %}
-                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-                <div class="flex justify-center">
-                    <button type="submit" class="bg-purple-600 text-white py-2 px-6 rounded-full hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-transform hover:scale-105 duration-300 will-change: transform" id="submit-button">
-                        <i class="fa-solid fa-save mr-2"></i>长按保存，焕然一新
-                    </button>
-                </div>
-            </form>
+        <div class="pf-stats">
+            <a class="pf-stat" href="{% url 'quiz_history' %}"><b>{{ stats.points }}</b><span>积分</span></a>
+            <a class="pf-stat" href="{% url 'quiz_history' %}"><b>{{ stats.attempt_count }}</b><span>闯关次数</span></a>
+            <a class="pf-stat" href="{% url 'category_select' %}"><b>{{ stats.levels_passed }}/{{ stats.levels_total }}</b><span>已通过关卡</span></a>
+            <a class="pf-stat" href="{% url 'favorite_news' %}"><b>{{ favorite_count }}</b><span>收藏</span></a>
+            <a class="pf-stat" href="{% url 'favorite_news' %}"><b>{{ like_count }}</b><span>点赞</span></a>
+            <div class="pf-stat"><b>{{ comment_count }}</b><span>评论</span></div>
         </div>
     </div>
-    <style>
-        /* 输入框样式 */
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 0.75rem 2.5rem 0.75rem 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-            background-color: #f9fafb;
-            font-size: 0.9rem;
-        }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="email"]:focus,
-        input[type="number"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #7e57c2;
-            box-shadow: 0 0 0 2px rgba(126, 87, 194, 0.2);
-            background-color: #fff;
-            transform: scale(1.02);
-        }
+    <div class="pf-grid">
+        <div class="pf-col">
+            <div class="pf-card">
+                <h2>闯关进度 <a href="{% url 'quiz_history' %}">全部记录</a></h2>
+                <div class="pf-prog">
+                    {% for cat in category_progress %}
+                    <a class="pf-prog-row" href="{% url 'level_select' cat.key %}">
+                        <span><i class="fa-solid {{ cat.icon }}"></i> {{ cat.name }}</span>
+                        <span class="pf-track" role="progressbar" aria-label="{{ cat.name }}" aria-valuemin="0" aria-valuemax="{{ cat.total }}" aria-valuenow="{{ cat.passed }}"><span class="pf-fill" style="display:block;width: {{ cat.percent }}%"></span></span>
+                        <span class="pf-prog-num">{{ cat.passed }}/{{ cat.total }} 关</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="pf-card">
+                <h2>最近闯关</h2>
+                {% if recent_attempts %}
+                <ul class="pf-list">
+                    {% for a in recent_attempts %}
+                    <li><a href="{% url 'level_select' a.category %}">
+                        <span class="main">{{ a.get_category_display }} · 第 {{ a.level }} 关 · {{ a.correct }}/{{ a.total }}<span class="pf-pill {% if a.passed %}pass{% else %}fail{% endif %}">{% if a.passed %}通过{% else %}未通过{% endif %}</span></span>
+                        <span class="meta">{{ a.created_at|date:"m-d H:i" }}</span>
+                    </a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="pf-empty">还没有闯关记录，<a href="{% url 'category_select' %}">去挑战一下</a>。</p>
+                {% endif %}
+            </div>
+            <div class="pf-card">
+                <h2>我的评论</h2>
+                {% if recent_comments %}
+                <ul class="pf-list">
+                    {% for c in recent_comments %}
+                    <li><a href="{{ c.url }}#comments">
+                        <span class="main">{{ c.body }}</span>
+                        <span class="meta">{{ c.title|truncatechars:14 }}</span>
+                    </a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="pf-empty">还没有发表过评论。</p>
+                {% endif %}
+            </div>
+        </div>
 
-        /* 输入框悬停效果 */
-        input[type="text"]:hover,
-        input[type="password"]:hover,
-        input[type="email"]:hover,
-        input[type="number"]:hover,
-        textarea:hover,
-        select:hover {
-            border-color: #7e57c2;
-            box-shadow: 0 0 0 2px rgba(126, 87, 194, 0.1);
-        }
-
-        /* 按钮样式 */
-        button[type="submit"] {
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        button[type="submit"]:hover {
-            transform: translateY(-2px) scale(1.05);
-            background-color: #673ab7;
-        }
-
-        /* 提交按钮点击动画 */
-        button[type="submit"]:active {
-            animation: spin 0.5s;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* 错误信息样式 */
-        .text-red-500 {
-            animation: shake 0.5s;
-            color: #e53e3e;
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* 确保左右两部分高度一致 */
-       .flex > div {
-            display: flex;
-            flex-direction: column;
-            min-height: 100%;
-        }
-
-        /* 卡片阴影动画 */
-       .shadow-2xl {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transition: box-shadow 0.3s ease;
-        }
-
-       .shadow-2xl:hover {
-            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
-        }
-
-        /* 图标颜色动画 */
-       .fa-solid {
-            transition: color 0.3s ease;
-        }
-
-       .bg-green-500:hover .fa-solid,
-       .bg-yellow-500:hover .fa-solid {
-            color: white;
-        }
-    </style>
-    <script>
-        function displayFileName(input) {
-            if (input.files.length > 0) {
-                document.getElementById('file-name').textContent = input.files[0].name;
-            } else {
-                document.getElementById('file-name').textContent = '';
-            }
-        }
-
-        // 表单展开动画
-        document.addEventListener('DOMContentLoaded', function() {
-            const formContainer = document.getElementById('form-container');
-            formContainer.classList.remove('scale-y-0');
-            formContainer.classList.add('scale-y-100');
-        });
-    </script>
+        <div class="pf-col">
+            <div class="pf-card">
+                <h2>修改个人信息</h2>
+                <form method="post" enctype="multipart/form-data" class="pf-form" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="pf-field">
+                        {% if field.name == 'profile_picture' %}
+                        <label for="{{ field.id_for_label }}">头像</label>
+                        <div class="pf-upload">
+                            <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" accept="image/*">
+                            {% if request.user.profile_picture %}<a href="{{ request.user.profile_picture.url }}" target="_blank" rel="noopener">查看当前头像</a>{% endif %}
+                        </div>
+                        {% else %}
+                        <label for="{{ field.id_for_label }}">{% if field.name == 'username' %}用户名{% elif field.name == 'age' %}年龄{% elif field.name == 'gender' %}性别{% elif field.name == 'phone_number' %}电话号码{% else %}{{ field.label }}{% endif %}</label>
+                        {{ field }}
+                        {% if field.help_text %}<p class="pf-help">{{ field.help_text }}</p>{% endif %}
+                        {% endif %}
+                        {% for error in field.errors %}<p class="pf-err">{{ error }}</p>{% endfor %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="pf-save"><i class="fa-solid fa-floppy-disk"></i> 保存修改</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

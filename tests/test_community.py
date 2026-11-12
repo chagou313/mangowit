@@ -1,9 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from CommunityForums.models import Topic
 
 
+@override_settings(STORAGES={
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+})
 class TopicDetailTests(TestCase):
     def setUp(self):
         self.client.raise_request_exception = False
