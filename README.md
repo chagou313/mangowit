@@ -2,6 +2,8 @@
 
 面向青少年的青春期健康科普网站，基于 Django 5.2。
 
+**在线访问：<https://mangowit.onrender.com>**（免费服务，闲置后首次打开需要等待约一分钟）
+
 ## 功能
 
 | 模块 | 地址 | 说明 |
@@ -51,23 +53,30 @@ python3 -m venv .venv
 .venv/bin/python manage.py test
 ```
 
-## 免费公开部署
+## 线上部署
 
-项目包含 `render.yaml`，用于在 Render 创建免费的 Django Web Service。生产环境采用：
+网站部署在 Render 免费套餐上，配置写在 `render.yaml`：
 
-- Render 运行 Django 与 Gunicorn，并通过 WhiteNoise 提供静态资源；
-- Neon PostgreSQL 长期保存账号、会话、问答和社区数据；
-- Cloudinary 长期保存用户上传的头像。
+| 服务 | 用途 |
+| --- | --- |
+| Render | 运行 Django 与 Gunicorn，WhiteNoise 提供静态资源 |
+| Neon PostgreSQL | 保存账号、点赞收藏、评论、答题记录、社区和问答数据 |
+| Cloudinary | 保存用户上传的头像 |
 
-在 Render 创建 Blueprint 时需要填写以下 Secret 环境变量：
+**更新网站**：把代码合并到 `main` 分支即可。Render 会自动重新构建，启动时自动执行数据库迁移并导入 AI 问答数据。
 
-```text
-DATABASE_URL=<Neon 提供的 PostgreSQL 连接字符串>
-CLOUDINARY_URL=<Cloudinary 控制台提供的连接字符串>
-```
+**环境变量**（在 Render 服务的 Environment 页面管理）：
 
-`MANGOWIT_SECRET_KEY` 由 Blueprint 自动生成。不要把上述连接字符串或密钥提交到 GitHub。
+| 变量 | 说明 |
+| --- | --- |
+| `DATABASE_URL` | Neon 提供的连接字符串，以 `postgresql://` 开头 |
+| `CLOUDINARY_URL` | Cloudinary 控制台提供的连接字符串，以 `cloudinary://` 开头 |
+| `MANGOWIT_SECRET_KEY` | 由 Blueprint 自动生成 |
 
-每次推送到 `main` 分支，Render 会自动重新部署，启动时自动执行数据库迁移。
+连接字符串和密钥只填在 Render 里，不要提交到 GitHub。
 
-Render 免费服务闲置后会休眠，首次访问可能需要等待约一分钟；数据库和头像位于独立的持久服务中，不会因 Web Service 休眠而丢失。
+**注意事项**：
+
+- 免费服务 15 分钟无人访问会休眠，下次打开需要等待约一分钟；数据保存在 Neon 和 Cloudinary，不会因休眠丢失。
+- Neon 数据库长期不用会自动归档，网站再次访问时会自动恢复。
+- 部署失败时，在 Render 的 Deploys 页面打开对应部署查看日志。
