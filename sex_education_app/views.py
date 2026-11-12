@@ -60,18 +60,25 @@ def category_select(request):
     return render(request, "category_select.html")
 
 
-@login_required(login_url="login_register")
-def favorite_news(request):
-    favorites = []
-    for reaction in request.user.article_reactions.filter(kind=ArticleReaction.FAVORITE):
+def _reacted_articles(user, kind):
+    items = []
+    for reaction in user.article_reactions.filter(kind=kind):
         info = ARTICLES.get(reaction.article)
         if info:
-            favorites.append({
+            items.append({
                 **info,
                 "url": reverse(reaction.article),
                 "saved_at": reaction.created_at,
             })
-    return render(request, "favorite_news.html", {"favorites": favorites})
+    return items
+
+
+@login_required(login_url="login_register")
+def favorite_news(request):
+    return render(request, "favorite_news.html", {
+        "favorites": _reacted_articles(request.user, ArticleReaction.FAVORITE),
+        "likes": _reacted_articles(request.user, ArticleReaction.LIKE),
+    })
 
 
 def _safe_next(request):
@@ -123,11 +130,11 @@ def user_logout(request):
 
 
 def _profile_context(request, form):
+    reactions = request.user.article_reactions
     return {
         "form": form,
-        "favorite_count": request.user.article_reactions.filter(
-            kind=ArticleReaction.FAVORITE
-        ).count(),
+        "favorite_count": reactions.filter(kind=ArticleReaction.FAVORITE).count(),
+        "like_count": reactions.filter(kind=ArticleReaction.LIKE).count(),
     }
 
 

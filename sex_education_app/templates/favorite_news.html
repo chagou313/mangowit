@@ -1,6 +1,6 @@
 <!-- templates/favorite_news.html -->
 {% extends 'base.html' %}
-{% block title %}我的收藏{% endblock %}
+{% block title %}我的收藏与点赞{% endblock %}
 {% block content %}
 <style>
     .fav { max-width: 860px; margin: 0 auto; padding: 2rem max(16px, env(safe-area-inset-left, 0px)) 3rem max(16px, env(safe-area-inset-right, 0px)); }
@@ -16,6 +16,9 @@
     .fav-empty { margin-top: 1.25rem; padding: 1.5rem; border: 1px dashed #d6d0e4; border-radius: 10px; color: #6b6380; text-align: center; }
     .fav-empty a, .fav-more a { color: #7e57c2; text-decoration: underline; }
     .fav-more { margin-top: 1.25rem; font-size: 0.92rem; color: #6b6380; }
+    .fav-card h2 { font-size: 1.15rem; font-weight: 700; color: #2b2540; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e4e0ee; }
+    .fav-card h2:first-of-type { margin-top: 1.5rem; padding-top: 0; border-top: 0; }
+    .fav-count { font-weight: 400; color: #8a83a0; font-size: 0.95rem; }
     @media (max-width: 560px) {
         .fav-item a { flex-wrap: wrap; gap: 0.35rem 0.75rem; }
         .fav-title { flex-basis: 100%; order: 3; }
@@ -23,8 +26,10 @@
 </style>
 <section class="fav">
     <div class="fav-card">
-        <h1>我的收藏</h1>
-        <p class="fav-sub">在新闻和法规文章里点「收藏」，就能在这里找到它们。</p>
+        <h1>我的收藏与点赞</h1>
+        <p class="fav-sub">在新闻和法规文章里点过「收藏」或「点赞」的文章，都能在这里找到。</p>
+
+        <h2>收藏 <span class="fav-count">{{ favorites|length }}</span></h2>
         {% if favorites %}
         <ul class="fav-list">
             {% for item in favorites %}
@@ -37,10 +42,27 @@
             </li>
             {% endfor %}
         </ul>
-        <p class="fav-more">想取消收藏？打开文章，再点一次「已收藏」即可。</p>
         {% else %}
         <p class="fav-empty">还没有收藏任何文章。去 <a href="{% url 'news' %}">新闻资讯</a> 看看吧。</p>
         {% endif %}
+
+        <h2>赞过的文章 <span class="fav-count">{{ likes|length }}</span></h2>
+        {% if likes %}
+        <ul class="fav-list">
+            {% for item in likes %}
+            <li class="fav-item">
+                <a href="{{ item.url }}">
+                    <span class="fav-tag">{{ item.category }}</span>
+                    <span class="fav-title">{{ item.title }}</span>
+                    <span class="fav-date">{{ item.saved_at|date:"Y-m-d" }} 点赞</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="fav-empty">还没有赞过任何文章。</p>
+        {% endif %}
+        <p class="fav-more">想取消？打开文章，再点一次「已收藏」或「已赞」即可。</p>
     </div>
 </section>
 {% endblock %}

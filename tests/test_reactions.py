@@ -90,7 +90,7 @@ class FavoritesPageTests(TestCase):
             fetch_redirect_response=False,
         )
 
-    def test_lists_only_this_readers_favorites(self):
+    def test_lists_this_readers_favorites_and_likes_separately(self):
         other = CustomUser.objects.create_user("other", password="pw-123456")
         ArticleReaction.objects.create(user=self.user, article="law1", kind="favorite")
         ArticleReaction.objects.create(user=self.user, article="news1", kind="like")
@@ -99,21 +99,30 @@ class FavoritesPageTests(TestCase):
 
         response = self.client.get(reverse("favorite_news"))
 
+        self.assertEqual(
+            [item["url"] for item in response.context["favorites"]], [reverse("law1")]
+        )
+        self.assertEqual(
+            [item["url"] for item in response.context["likes"]], [reverse("news1")]
+        )
         self.assertContains(response, "中华人民共和国未成年人保护法")
-        self.assertContains(response, reverse("law1"))
-        self.assertNotContains(response, reverse("news1"))
+        self.assertContains(response, "点赞</span>")
         self.assertNotContains(response, reverse("news2"))
 
     def test_empty_state(self):
         self.client.force_login(self.user)
-        self.assertContains(self.client.get(reverse("favorite_news")), "还没有收藏任何文章")
+        response = self.client.get(reverse("favorite_news"))
+        self.assertContains(response, "还没有收藏任何文章")
+        self.assertContains(response, "还没有赞过任何文章")
 
-    def test_profile_shows_favorite_count(self):
+    def test_profile_shows_favorite_and_like_counts(self):
         ArticleReaction.objects.create(user=self.user, article="law1", kind="favorite")
         ArticleReaction.objects.create(user=self.user, article="law2", kind="favorite")
+        ArticleReaction.objects.create(user=self.user, article="news1", kind="like")
         self.client.force_login(self.user)
         response = self.client.get(reverse("profile"))
         self.assertContains(response, '收藏数量: <span class="font-bold">2</span>')
+        self.assertContains(response, '点赞数量: <span class="font-bold">1</span>')
 
 
 class LoginRedirectTests(TestCase):

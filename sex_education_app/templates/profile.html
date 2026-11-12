@@ -21,13 +21,14 @@
                         <i class="fa-solid fa-history mr-2"></i>点击查看闯关历史记录
                     </a>
                     <a href="{% url 'favorite_news' %}" class="bg-yellow-500 text-white py-2 px-4 rounded-full hover:bg-yellow-600 transition-transform hover:scale-105 duration-300 w-full text-center will-change: transform">
-                        <i class="fa-solid fa-bookmark mr-2"></i>点击查看收藏的资讯
+                        <i class="fa-solid fa-bookmark mr-2"></i>点击查看收藏和点赞的资讯
                     </a>
                 </div>
                 <!-- 新增统计信息 -->
                 <div class="mt-4 text-center">
                     <p class="text-gray-600">闯关次数: <span class="font-bold">10</span></p>
                     <p class="text-gray-600">收藏数量: <span class="font-bold">{{ favorite_count|default:0 }}</span></p>
+                    <p class="text-gray-600">点赞数量: <span class="font-bold">{{ like_count|default:0 }}</span></p>
                 </div>
                 <!-- 新增积分信息 -->
                 <div class="mt-8 text-center">
