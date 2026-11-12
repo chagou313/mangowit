@@ -60,10 +60,6 @@
 </style>
 
 <section class="pf">
-    {% for message in messages %}
-    <div class="pf-msg {% if message.tags == 'error' %}error{% else %}success{% endif %}">{{ message }}</div>
-    {% endfor %}
-
     <div class="pf-card pf-head">
         <div class="pf-who">
             {% if request.user.profile_picture %}

@@ -148,6 +148,7 @@ def _safe_next(request):
 def login_register(request):
     form_type = request.GET.get("form_type", "login")
     form = None
+    username = ""
 
     if request.method == "POST":
         if form_type == "login":
@@ -174,7 +175,7 @@ def login_register(request):
     return render(
         request,
         "login_register.html",
-        {"form_type": form_type, "form": form},
+        {"form_type": form_type, "form": form, "username": username},
     )
 
 

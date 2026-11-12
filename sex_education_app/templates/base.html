@@ -197,6 +197,31 @@
     </nav>
     <!-- 主体内容 -->
     <main>
+        {% if messages %}
+        <style>
+            .site-messages { max-width: 1120px; margin: 1rem auto 0; padding: 0 max(16px, env(safe-area-inset-left, 0px)) 0 max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 0.5rem; }
+            .site-message { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.7rem 1rem; border-radius: 10px; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(43, 37, 64, 0.12); transition: opacity 0.4s; }
+            .site-message.success, .site-message.info { background: #e3f3ec; color: #2f7d5f; }
+            .site-message.error, .site-message.warning { background: #fdecef; color: #b3261e; }
+            .site-message button { border: 0; background: none; color: inherit; font-size: 1.1rem; line-height: 1; cursor: pointer; opacity: 0.7; }
+        </style>
+        <div class="site-messages" role="status">
+            {% for message in messages %}
+            <div class="site-message {{ message.tags|default:'info' }}">
+                <span>{{ message }}</span>
+                <button type="button" aria-label="关闭" onclick="this.parentElement.remove()">×</button>
+            </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function () {
+                document.querySelectorAll('.site-message.success, .site-message.info').forEach(function (el) {
+                    el.style.opacity = '0';
+                    setTimeout(function () { el.remove(); }, 400);
+                });
+            }, 4000);
+        </script>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>
