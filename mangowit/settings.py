@@ -69,7 +69,8 @@ INSTALLED_APPS = [
     'KnowledgePopularization',
     'EducationInformation',
     'CommunityForums',
-    'AI_communication'
+    'AI_communication',
+    'interactions',
 ]
 
 
@@ -167,7 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 

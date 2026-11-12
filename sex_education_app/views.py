@@ -6,12 +6,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 
 from CommunityForums.models import Topic
-from EducationInformation.articles import ARTICLES
 from EducationInformation.models import ArticleReaction
+from interactions.targets import resolve
 
 from .forms import RegistrationForm, UserProfileForm
 
@@ -63,13 +62,9 @@ def category_select(request):
 def _reacted_articles(user, kind):
     items = []
     for reaction in user.article_reactions.filter(kind=kind):
-        info = ARTICLES.get(reaction.article)
-        if info:
-            items.append({
-                **info,
-                "url": reverse(reaction.article),
-                "saved_at": reaction.created_at,
-            })
+        info = resolve(reaction.article)
+        if info:  # skip posts that have since been deleted
+            items.append({**info, "saved_at": reaction.created_at})
     return items
 
 

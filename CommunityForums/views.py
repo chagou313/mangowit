@@ -1,5 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
+from interactions.targets import topic_target
+from interactions.views import interaction_context
+
 from .models import Topic
 
 
@@ -21,13 +24,11 @@ def publish_topic(request):
 
 
 def sexual_impulse(request):
-    return render(request, "sexual_impulse.html")
+    return render(request, "sexual_impulse.html", interaction_context(request, "sexual_impulse"))
 
 
 def topic_detail(request, topic_id):
     topic = get_object_or_404(Topic, id=topic_id)
-    return render(
-        request,
-        "topic_detail.html",
-        {"title": topic.title, "content": topic.content},
-    )
+    context = interaction_context(request, topic_target(topic.id))
+    context.update({"title": topic.title, "content": topic.content})
+    return render(request, "topic_detail.html", context)

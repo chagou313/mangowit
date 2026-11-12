@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-from .articles import ARTICLE_CHOICES
 
 class Article(models.Model):
     title = models.CharField("标题", max_length=200)
@@ -19,7 +18,7 @@ class Article(models.Model):
 
 
 class ArticleReaction(models.Model):
-    """A reader's like or favorite on one of the news or law articles."""
+    """A reader's like or favorite on an article or community post (see interactions.targets)."""
 
     LIKE = "like"
     FAVORITE = "favorite"
@@ -28,7 +27,7 @@ class ArticleReaction(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="article_reactions"
     )
-    article = models.CharField("文章", max_length=20, choices=ARTICLE_CHOICES)
+    article = models.CharField("对象", max_length=40)
     kind = models.CharField("类型", max_length=10, choices=KIND_CHOICES)
     created_at = models.DateTimeField("时间", auto_now_add=True)
 

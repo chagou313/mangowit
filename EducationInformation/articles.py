@@ -12,5 +12,3 @@ ARTICLES = {
     "law2": {"category": "法规", "title": "【利剑护蕾】保护未成年人免受性侵害的相关法律法规"},
     "law3": {"category": "法规", "title": "最高人民法院、最高人民检察院、公安部、司法部关于依法惩治性侵害未成年人犯罪的意见"},
 }
-
-ARTICLE_CHOICES = [(key, info["title"]) for key, info in ARTICLES.items()]

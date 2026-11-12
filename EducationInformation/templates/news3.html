@@ -36,44 +36,11 @@
             <div class="sidebar">
                 <div class="comment-section">
 {% include '_reactions.html' %}
-                    <div class="comment-input">
-                        <input type="text" id="comment-input" placeholder="写下你的评论">
-                        <button id="submit-comment">提交</button>
-                    </div>
-                    <div class="comments-display">
-                        <!-- 评论将显示在这里 -->
-                    </div>
+{% include '_comments.html' %}
                 </div>
             </div>
         </div>
     </main>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const commentButton = document.getElementById('comment-button');
-            const commentCount = document.getElementById('comment-count');
-            const commentInput = document.getElementById('comment-input');
-            const submitComment = document.getElementById('submit-comment');
-            const commentsDisplay = document.querySelector('.comments-display');
-
-            // 评论功能
-            submitComment.addEventListener('click', function () {
-                const commentText = commentInput.value.trim();
-                if (commentText) {
-                    const commentElement = document.createElement('div');
-                    commentElement.className = 'comment-item';
-                    const commentParagraph = document.createElement('p');
-                    commentParagraph.textContent = commentText;
-                    commentElement.appendChild(commentParagraph);
-                    commentsDisplay.appendChild(commentElement);
-                    commentInput.value = ''; // 清空输入框
-
-                    // 更新评论计数
-                    let count = parseInt(commentCount.textContent);
-                    commentCount.textContent = count + 1;
-                }
-            });
-        });
-    </script>
 {% endblock %}

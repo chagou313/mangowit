@@ -1,0 +1,50 @@
+{% load static %}
+<style>
+    .cmt { display: flex; flex-direction: column; gap: 0.9rem; }
+    .cmt textarea { width: 100%; min-height: 5.5rem; padding: 0.6rem 0.75rem; border: 1px solid #ddd6ea; border-radius: 10px; font: inherit; font-size: 0.95rem; resize: vertical; background: #fff; color: #2b2540; }
+    .cmt textarea:focus { outline: 2px solid #b39ddb; border-color: #9b59b6; }
+    .cmt-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.4rem; }
+    .cmt-chars { font-size: 0.8rem; color: #8a83a0; font-variant-numeric: tabular-nums; }
+    .cmt-submit { padding: 0.45rem 1.1rem; border: 0; border-radius: 8px; background: #9b59b6; color: #fff; font-size: 0.95rem; cursor: pointer; }
+    .cmt-submit:hover { background: #8e44ad; }
+    .cmt-submit:disabled { opacity: 0.6; cursor: wait; }
+    .cmt-error { font-size: 0.88rem; color: #b3261e; }
+    .cmt-login { padding: 0.8rem; border: 1px dashed #d6d0e4; border-radius: 10px; text-align: center; color: #6b6380; font-size: 0.92rem; }
+    .cmt-login a { color: #7e57c2; text-decoration: underline; }
+    .cmt-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 0; padding: 0; }
+    .cmt-item { padding: 0.65rem 0.8rem; border-radius: 10px; background: #f6f4fb; }
+    .cmt-meta { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.8rem; color: #8a83a0; margin-bottom: 0.2rem; }
+    .cmt-meta b { color: #5b3f9a; font-weight: 600; }
+    .cmt-item p { margin: 0; font-size: 0.93rem; color: #2b2540; line-height: 1.6; overflow-wrap: anywhere; }
+    .cmt-empty { font-size: 0.9rem; color: #8a83a0; text-align: center; padding: 0.5rem 0; }
+    .cmt-rule { font-size: 0.78rem; color: #8a83a0; }
+    .cmt .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+<div class="cmt" id="comments">
+    {% if user.is_authenticated %}
+    <form id="comment-form" data-url="{% url 'post_comment' article_key %}" data-csrf="{{ csrf_token }}" novalidate>
+        <label for="comment-body" class="sr-only">写评论</label>
+        <textarea id="comment-body" name="body" maxlength="300" placeholder="友善发言，说说你的看法或疑问"></textarea>
+        <div class="cmt-foot">
+            <span class="cmt-chars" id="comment-chars">0 / 300</span>
+            <button type="submit" class="cmt-submit">发表评论</button>
+        </div>
+        <p class="cmt-error" id="comment-error" role="alert" hidden></p>
+    </form>
+    {% else %}
+    <p class="cmt-login"><a href="{{ login_url }}">登录</a>后参与讨论</p>
+    {% endif %}
+    <ul class="cmt-list" id="comment-list">
+        {% for comment in comments %}
+        <li class="cmt-item">
+            <div class="cmt-meta"><b>{{ comment.user.username }}</b><time>{{ comment.created_at|date:"Y-m-d H:i" }}</time></div>
+            <p>{{ comment.body|linebreaksbr }}</p>
+        </li>
+        {% empty %}
+        <li class="cmt-empty" id="comment-empty">还没有评论，来说第一句吧。</li>
+        {% endfor %}
+    </ul>
+    {% if comment_count > comments|length %}<p class="cmt-rule">只显示最新的 {{ comments|length }} 条评论。</p>{% endif %}
+    <p class="cmt-rule">评论会经过文明用语检查。为了你的安全，请不要留下电话、微信等个人信息。</p>
+</div>
+<script src="{% static 'js/comments.js' %}"></script>

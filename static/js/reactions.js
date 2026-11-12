@@ -45,7 +45,7 @@
                 if (!state) return;
                 hint.hidden = true;
                 setState("like", state.liked);
-                setState("favorite", state.favorited);
+                if (box.querySelector('[data-kind="favorite"]')) setState("favorite", state.favorited);
                 document.getElementById("like-count").textContent = state.like_count;
                 if (kind === "favorite" && state.favorited) {
                     showHint('已加入<a href="/favorite_news/">我的收藏</a>');

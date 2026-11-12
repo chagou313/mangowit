@@ -1,11 +1,11 @@
 from django.db import IntegrityError, transaction
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
-from django.urls import reverse
-from django.utils.http import urlencode
 from django.views.decorators.http import require_POST
 
-from .articles import ARTICLES
+from interactions.targets import resolve
+from interactions.views import interaction_context, reaction_state
+
 from .models import Article, ArticleReaction
 
 
@@ -14,25 +14,8 @@ def education_index(request):
     return render(request, 'education_index.html', {'articles': articles})
 
 
-def reaction_state(request, article):
-    """Like count and the current reader's like/favorite state for one article."""
-    reactions = ArticleReaction.objects.filter(article=article)
-    mine = set()
-    if request.user.is_authenticated:
-        mine = set(reactions.filter(user=request.user).values_list("kind", flat=True))
-    return {
-        "like_count": reactions.filter(kind=ArticleReaction.LIKE).count(),
-        "liked": ArticleReaction.LIKE in mine,
-        "favorited": ArticleReaction.FAVORITE in mine,
-    }
-
-
 def render_article(request, article, extra=None):
-    context = {
-        "article_key": article,
-        "reactions": reaction_state(request, article),
-        "login_url": reverse("login_register") + "?" + urlencode({"next": request.path}),
-    }
+    context = interaction_context(request, article)
     context.update(extra or {})
     return render(request, f"{article}.html", context)
 
@@ -65,7 +48,7 @@ def law3(request):
 
 @require_POST
 def toggle_reaction(request, article, kind):
-    if article not in ARTICLES or kind not in dict(ArticleReaction.KIND_CHOICES):
+    if resolve(article) is None or kind not in dict(ArticleReaction.KIND_CHOICES):
         raise Http404
     if not request.user.is_authenticated:
         return JsonResponse({"error": "请先登录"}, status=401)
