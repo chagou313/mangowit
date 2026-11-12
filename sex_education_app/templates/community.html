@@ -291,6 +291,14 @@
                 <li><a href="#" class="question-item">如何正确地与异性聊天？</a></li>
                 <li><a href="#" class="question-item">青春期的爱情与责任：如何正确对待早恋</a></li>
             </ul>
+            <h3>最新话题</h3>
+            <ul class="popular-questions">
+                {% for topic in topics %}
+                <li><a href="{% url 'topic_detail' topic.id %}" class="question-item">{{ topic.title }}</a></li>
+                {% empty %}
+                <li class="question-item">还没有人发布话题，来发第一个吧！</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </main>

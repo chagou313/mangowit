@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import redirect, render
 
+from CommunityForums.models import Topic
+
 from .forms import RegistrationForm, UserProfileForm
 
 
@@ -30,7 +32,8 @@ def quiz(request):
 
 
 def community(request):
-    return render(request, "community.html")
+    topics = Topic.objects.order_by("-created_at")[:8]
+    return render(request, "community.html", {"topics": topics})
 
 
 def physiological_knowledge(request):

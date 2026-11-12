@@ -3,11 +3,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Topic
 
 
-def community_index(request):
-    topics = Topic.objects.all().order_by("-created_at")
-    return render(request, "community_index.html", {"topics": topics})
-
-
 def publish_topic(request):
     if request.method == "POST":
         title = request.POST.get("title")

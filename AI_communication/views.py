@@ -4,8 +4,9 @@ from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import AIQuestion, AIAnswer
-import random
+import difflib
 import logging
+import re
 from django.db import transaction
 
 logger = logging.getLogger(__name__)
@@ -13,31 +14,49 @@ logger = logging.getLogger(__name__)
 def ai_home(request):
     return render(request, 'ai_index.html')
 
+NO_ANSWER = "抱歉，小青芒暂时还不会回答这个问题。可以换个说法试试，或者去交流社区问问大家。"
+_IGNORED_CHARS = re.compile(r"[\s?？!！。.,，、~～]+")
+MATCH_THRESHOLD = 0.6
+
+
+# Question words that change how a question is phrased but not what it asks.
+_QUESTION_WORDS = re.compile("请问|什么是|是什么|怎么样|怎么|怎样|如何|什么|吗|呢|啊|的")
+
+
+def _normalize(text):
+    text = _IGNORED_CHARS.sub("", text).lower()
+    return _QUESTION_WORDS.sub("", text) or text
+
+
+def find_answer(question_text):
+    """Return the stored answer whose question best matches the user's text."""
+    target = _normalize(question_text)
+    if not target:
+        return None
+    best_answer, best_score = None, 0.0
+    for answer in AIAnswer.objects.select_related("question"):
+        candidate = _normalize(answer.question.question_text)
+        if candidate == target:
+            return answer.answer_text
+        score = difflib.SequenceMatcher(None, target, candidate).ratio()
+        if score > best_score:
+            best_answer, best_score = answer, score
+    if best_answer is not None and best_score >= MATCH_THRESHOLD:
+        return best_answer.answer_text
+    return None
+
+
+@require_POST
 def get_answer(request):
-    if request.method == 'POST':
-        question_text = request.POST.get('question')
-        if not question_text:
-            logger.warning("用户提交的问题为空")
-            return JsonResponse({'error': '问题不能为空'}, status=400)
+    question_text = (request.POST.get("question") or "").strip()
+    if not question_text:
+        return JsonResponse({"error": "问题不能为空"}, status=400)
+    answer = find_answer(question_text)
+    if answer is None:
+        logger.info("No stored answer for question: %s", question_text[:100])
+        return JsonResponse({"answer": NO_ANSWER, "matched": False})
+    return JsonResponse({"answer": answer, "matched": True})
 
-        try:
-            question_text = question_text.strip().lower()
-            question, created = AIQuestion.objects.get_or_create(question_text=question_text)
-            if created:
-                logger.info(f"新插入问题: {question.question_text}")
-                answer = "这个问题是新插入的，尚未有详细答案。"
-            else:
-                answer = AIAnswer.objects.get(question=question).answer_text
-        except AIAnswer.DoesNotExist:
-            logger.warning(f"未找到问题 '{question_text}' 的答案")
-            answer = "抱歉，没有找到相关答案。"
-        except Exception as e:
-            logger.error(f"获取答案时发生错误: {e}")
-            return JsonResponse({'error': '服务器错误'}, status=500)
-
-        return JsonResponse({'answer': answer})
-    logger.warning("用户使用了无效的请求方法")
-    return JsonResponse({'error': '无效的请求方法'}, status=400)
 
 def _staff_only(user):
     return user.is_active and user.is_staff

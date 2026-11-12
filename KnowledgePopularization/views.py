@@ -1,9 +1,6 @@
 # views.py
 from django.shortcuts import render
 
-def knowledge_index(request):
-    return render(request, 'knowledge_index.html')
-
 def physiology_knowledge(request):
     return render(request, 'physiology_knowledge.html')
 
