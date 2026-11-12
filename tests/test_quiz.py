@@ -144,3 +144,27 @@ class QuizProgressTests(TestCase):
     def test_history_requires_login(self):
         self.client.logout()
         self.assertEqual(self.client.get(reverse("quiz_history")).status_code, 302)
+
+
+@PLAIN_STATIC
+class ProfileStatsTests(TestCase):
+    def test_profile_shows_real_quiz_and_comment_stats(self):
+        from interactions.models import Comment
+
+        user = CustomUser.objects.create_user("player", password="pw-123456")
+        QuizAttempt.objects.create(user=user, category="physiology", level=1, correct=5,
+                                   total=5, points=20, passed=True)
+        QuizAttempt.objects.create(user=user, category="physiology", level=2, correct=1,
+                                   total=5, points=2, passed=False)
+        Comment.objects.create(user=user, target="law1", body="很有用的法律知识")
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("profile"))
+
+        self.assertContains(response, "<b>22</b><span>积分</span>", html=True)
+        self.assertContains(response, "<b>2</b><span>闯关次数</span>", html=True)
+        self.assertContains(response, "<b>1/9</b><span>已通过关卡</span>", html=True)
+        self.assertContains(response, "<b>1</b><span>评论</span>", html=True)
+        self.assertContains(response, "很有用的法律知识")
+        self.assertContains(response, "1/3 关")
+        self.assertNotContains(response, "via.placeholder.com")

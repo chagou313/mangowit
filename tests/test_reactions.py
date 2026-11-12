@@ -121,8 +121,8 @@ class FavoritesPageTests(TestCase):
         ArticleReaction.objects.create(user=self.user, article="news1", kind="like")
         self.client.force_login(self.user)
         response = self.client.get(reverse("profile"))
-        self.assertContains(response, '收藏数量: <span class="font-bold">2</span>')
-        self.assertContains(response, '点赞数量: <span class="font-bold">1</span>')
+        self.assertContains(response, "<b>2</b><span>收藏</span>", html=True)
+        self.assertContains(response, "<b>1</b><span>点赞</span>", html=True)
 
 
 class LoginRedirectTests(TestCase):

@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 
 from challenge.progress import category_progress, user_stats
-from challenge.question_bank import LEVEL_NAMES
+from challenge.question_bank import CATEGORIES, LEVEL_NAMES, QUESTIONS
 from CommunityForums.models import Topic
 from EducationInformation.models import ArticleReaction
 from interactions.targets import resolve
@@ -136,11 +136,27 @@ def user_logout(request):
 
 
 def _profile_context(request, form):
-    reactions = request.user.article_reactions
+    user = request.user
+    reactions = user.article_reactions
+    passed = category_progress(user)
+    recent_comments = []
+    for comment in user.comments.filter(is_hidden=False)[:3]:
+        target = resolve(comment.target)
+        if target:
+            recent_comments.append({"body": comment.body, "created_at": comment.created_at, **target})
     return {
         "form": form,
+        "stats": user_stats(user),
         "favorite_count": reactions.filter(kind=ArticleReaction.FAVORITE).count(),
         "like_count": reactions.filter(kind=ArticleReaction.LIKE).count(),
+        "comment_count": user.comments.filter(is_hidden=False).count(),
+        "category_progress": [
+            {"key": key, "name": info["name"], "icon": info["icon"], "passed": passed[key],
+             "total": len(QUESTIONS[key]), "percent": round(100 * passed[key] / len(QUESTIONS[key]))}
+            for key, info in CATEGORIES.items()
+        ],
+        "recent_attempts": user.quiz_attempts.all()[:3],
+        "recent_comments": recent_comments,
     }
 
 
@@ -162,9 +178,7 @@ def profile(request):
                 return render(request, "profile.html", _profile_context(request, form))
             messages.success(request, "个人信息更新成功！")
             return redirect("profile")
-        for field, errors in form.errors.items():
-            for error in errors:
-                messages.error(request, f"{field}: {error}")
+        messages.error(request, "保存失败，请根据下面的提示修改。")
     else:
         form = UserProfileForm(instance=request.user)
     return render(request, "profile.html", _profile_context(request, form))
