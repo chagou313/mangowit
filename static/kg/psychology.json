@@ -1,0 +1,1096 @@
+{
+ "nodes": [
+  {
+   "id": "female_1",
+   "label": "月经初潮的恐惧",
+   "type": "心理感受",
+   "group": "female"
+  },
+  {
+   "id": "female_2",
+   "label": "对胸部发育的羞涩",
+   "type": "心理情绪",
+   "group": "female"
+  },
+  {
+   "id": "female_3",
+   "label": "渴望了解异性心理",
+   "type": "心理需求",
+   "group": "female"
+  },
+  {
+   "id": "female_4",
+   "label": "性冲动时的不安",
+   "type": "心理状态",
+   "group": "female"
+  },
+  {
+   "id": "female_5",
+   "label": "担心自己缺乏性魅力",
+   "type": "心理担忧",
+   "group": "female"
+  },
+  {
+   "id": "female_6",
+   "label": "对性取向的自我怀疑",
+   "type": "心理困惑",
+   "group": "female"
+  },
+  {
+   "id": "female_7",
+   "label": "因性幻想感到羞耻",
+   "type": "心理负担",
+   "group": "female"
+  },
+  {
+   "id": "female_8",
+   "label": "在性方面与闺蜜比较的心理",
+   "type": "心理现象",
+   "group": "female"
+  },
+  {
+   "id": "female_9",
+   "label": "对性知识书籍的兴趣",
+   "type": "心理倾向",
+   "group": "female"
+  },
+  {
+   "id": "female_10",
+   "label": "性发育过快带来的困扰",
+   "type": "心理感受",
+   "group": "female"
+  },
+  {
+   "id": "female_11",
+   "label": "与异性身体接触时的害羞",
+   "type": "心理情绪",
+   "group": "female"
+  },
+  {
+   "id": "female_12",
+   "label": "性好奇引发的秘密探索",
+   "type": "心理行为",
+   "group": "female"
+  },
+  {
+   "id": "female_13",
+   "label": "对色情信息的厌恶与好奇",
+   "type": "心理矛盾",
+   "group": "female"
+  },
+  {
+   "id": "female_14",
+   "label": "性教育课上的紧张",
+   "type": "心理表现",
+   "group": "female"
+  },
+  {
+   "id": "female_15",
+   "label": "对自慰的羞耻与好奇",
+   "type": "心理问题",
+   "group": "female"
+  },
+  {
+   "id": "female_16",
+   "label": "性方面被他人议论后的伤心",
+   "type": "心理情绪",
+   "group": "female"
+  },
+  {
+   "id": "female_17",
+   "label": "对性健康咨询的期待",
+   "type": "心理期待",
+   "group": "female"
+  },
+  {
+   "id": "female_18",
+   "label": "性冲动下的自我压抑心理",
+   "type": "心理调节",
+   "group": "female"
+  },
+  {
+   "id": "female_19",
+   "label": "因性话题被排斥的失落感",
+   "type": "心理感受",
+   "group": "female"
+  },
+  {
+   "id": "female_20",
+   "label": "对性道德标准的认同",
+   "type": "心理认知",
+   "group": "female"
+  },
+  {
+   "id": "female_21",
+   "label": "性发育滞后的焦虑",
+   "type": "心理情绪",
+   "group": "female"
+  },
+  {
+   "id": "female_22",
+   "label": "对性侵犯防范的强烈意识",
+   "type": "心理意识",
+   "group": "female"
+  },
+  {
+   "id": "female_23",
+   "label": "性知识缺乏导致的迷茫",
+   "type": "心理状态",
+   "group": "female"
+  },
+  {
+   "id": "female_24",
+   "label": "在性方面向闺蜜倾诉的心理",
+   "type": "心理需求",
+   "group": "female"
+  },
+  {
+   "id": "female_25",
+   "label": "性成熟带来的自我形象改变",
+   "type": "心理转变",
+   "group": "female"
+  },
+  {
+   "id": "female_26",
+   "label": "对性传播疾病的极度恐惧",
+   "type": "心理恐惧",
+   "group": "female"
+  },
+  {
+   "id": "female_27",
+   "label": "性方面被家人误解的难过",
+   "type": "心理感受",
+   "group": "female"
+  },
+  {
+   "id": "female_28",
+   "label": "对网络上性信息的谨慎态度",
+   "type": "心理意识",
+   "group": "female"
+  },
+  {
+   "id": "female_29",
+   "label": "性好奇驱使下的试探交流",
+   "type": "心理行为",
+   "group": "female"
+  },
+  {
+   "id": "female_30",
+   "label": "性方面与老师沟通的犹豫心理",
+   "type": "心理表现",
+   "group": "female"
+  },
+  {
+   "id": "female_31",
+   "label": "性幻想影响睡眠的困扰",
+   "type": "心理问题",
+   "group": "female"
+  },
+  {
+   "id": "female_32",
+   "label": "对性角色的独特理解",
+   "type": "心理认知",
+   "group": "female"
+  },
+  {
+   "id": "female_33",
+   "label": "性冲动引发的情绪不稳定",
+   "type": "心理现象",
+   "group": "female"
+  },
+  {
+   "id": "female_34",
+   "label": "性教育不足导致的恐慌",
+   "type": "心理状态",
+   "group": "female"
+  },
+  {
+   "id": "female_35",
+   "label": "对性健康检查的担忧心理",
+   "type": "心理抵触",
+   "group": "female"
+  },
+  {
+   "id": "female_36",
+   "label": "性方面与朋友相处的敏感心理",
+   "type": "心理特质",
+   "group": "female"
+  },
+  {
+   "id": "female_37",
+   "label": "性好奇下对影视的关注",
+   "type": "心理行为",
+   "group": "female"
+  },
+  {
+   "id": "female_38",
+   "label": "性方面被同学误解的委屈",
+   "type": "心理情绪",
+   "group": "female"
+  },
+  {
+   "id": "female_39",
+   "label": "对性平等的强烈追求",
+   "type": "心理认知",
+   "group": "female"
+  },
+  {
+   "id": "female_40",
+   "label": "性发育过程中的自我保护心理",
+   "type": "心理意识",
+   "group": "female"
+  },
+  {
+   "id": "female_41",
+   "label": "性冲动时的理智思考心理",
+   "type": "心理调节",
+   "group": "female"
+  },
+  {
+   "id": "female_42",
+   "label": "性知识获取途径的筛选心理",
+   "type": "心理倾向",
+   "group": "female"
+  },
+  {
+   "id": "female_43",
+   "label": "性方面被欺骗后的伤心欲绝",
+   "type": "心理情绪",
+   "group": "female"
+  },
+  {
+   "id": "female_44",
+   "label": "对性健康生活的憧憬",
+   "type": "心理期待",
+   "group": "female"
+  },
+  {
+   "id": "female_45",
+   "label": "性好奇引发的与同性的讨论",
+   "type": "心理行为",
+   "group": "female"
+  },
+  {
+   "id": "female_46",
+   "label": "性方面的自我肯定意识增强",
+   "type": "心理转变",
+   "group": "female"
+  },
+  {
+   "id": "female_47",
+   "label": "性幻想与道德的冲突心理",
+   "type": "心理矛盾",
+   "group": "female"
+  },
+  {
+   "id": "female_48",
+   "label": "性教育缺失导致的盲目跟风",
+   "type": "心理状态",
+   "group": "female"
+  },
+  {
+   "id": "female_49",
+   "label": "对性话题的回避心理",
+   "type": "心理特质",
+   "group": "female"
+  },
+  {
+   "id": "female_50",
+   "label": "性冲动下的情绪控制心理",
+   "type": "心理调节",
+   "group": "female"
+  },
+  {
+   "id": "male_1",
+   "label": "对遗精的恐慌",
+   "type": "心理感受",
+   "group": "male"
+  },
+  {
+   "id": "male_2",
+   "label": "性梦后的羞耻感",
+   "type": "心理情绪",
+   "group": "male"
+  },
+  {
+   "id": "male_3",
+   "label": "渴望了解异性身体结构",
+   "type": "心理需求",
+   "group": "male"
+  },
+  {
+   "id": "male_4",
+   "label": "性冲动时的不知所措",
+   "type": "心理状态",
+   "group": "male"
+  },
+  {
+   "id": "male_5",
+   "label": "担心自己性能力不足",
+   "type": "心理担忧",
+   "group": "male"
+  },
+  {
+   "id": "male_6",
+   "label": "对性取向的迷茫",
+   "type": "心理困惑",
+   "group": "male"
+  },
+  {
+   "id": "male_7",
+   "label": "因性幻想产生的罪恶感",
+   "type": "心理负担",
+   "group": "male"
+  },
+  {
+   "id": "male_8",
+   "label": "在性方面与同伴比较的心理",
+   "type": "心理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_9",
+   "label": "对性知识科普视频的兴趣",
+   "type": "心理倾向",
+   "group": "male"
+  },
+  {
+   "id": "male_10",
+   "label": "性发育迟缓带来的自卑",
+   "type": "心理感受",
+   "group": "male"
+  },
+  {
+   "id": "male_11",
+   "label": "与异性亲密接触时的紧张",
+   "type": "心理情绪",
+   "group": "male"
+  },
+  {
+   "id": "male_12",
+   "label": "性好奇引发的探索行为",
+   "type": "心理行为",
+   "group": "male"
+  },
+  {
+   "id": "male_13",
+   "label": "对色情内容的好奇与抵制",
+   "type": "心理矛盾",
+   "group": "male"
+  },
+  {
+   "id": "male_14",
+   "label": "性教育课堂上的羞涩",
+   "type": "心理表现",
+   "group": "male"
+  },
+  {
+   "id": "male_15",
+   "label": "对自慰的误解与焦虑",
+   "type": "心理问题",
+   "group": "male"
+  },
+  {
+   "id": "male_16",
+   "label": "性方面被他人嘲笑后的沮丧",
+   "type": "心理情绪",
+   "group": "male"
+  },
+  {
+   "id": "male_17",
+   "label": "对性健康讲座的期待",
+   "type": "心理期待",
+   "group": "male"
+  },
+  {
+   "id": "male_18",
+   "label": "性冲动下的自我克制心理",
+   "type": "心理调节",
+   "group": "male"
+  },
+  {
+   "id": "male_19",
+   "label": "因性话题被孤立的孤独感",
+   "type": "心理感受",
+   "group": "male"
+  },
+  {
+   "id": "male_20",
+   "label": "对性道德规范的初步认知",
+   "type": "心理认知",
+   "group": "male"
+  },
+  {
+   "id": "male_21",
+   "label": "性发育提前的惊喜与不安",
+   "type": "心理情绪",
+   "group": "male"
+  },
+  {
+   "id": "male_22",
+   "label": "对性侵犯防范的心理重视",
+   "type": "心理意识",
+   "group": "male"
+  },
+  {
+   "id": "male_23",
+   "label": "性知识匮乏导致的盲目",
+   "type": "心理状态",
+   "group": "male"
+  },
+  {
+   "id": "male_24",
+   "label": "在性方面寻求朋友建议的心理",
+   "type": "心理需求",
+   "group": "male"
+  },
+  {
+   "id": "male_25",
+   "label": "性成熟带来的自我认同变化",
+   "type": "心理转变",
+   "group": "male"
+  },
+  {
+   "id": "male_26",
+   "label": "对性传播疾病的过度恐惧",
+   "type": "心理恐惧",
+   "group": "male"
+  },
+  {
+   "id": "male_27",
+   "label": "性方面被父母误解的委屈",
+   "type": "心理感受",
+   "group": "male"
+  },
+  {
+   "id": "male_28",
+   "label": "对网络上错误性知识的轻信",
+   "type": "心理误区",
+   "group": "male"
+  },
+  {
+   "id": "male_29",
+   "label": "性好奇驱使下的冒险心理",
+   "type": "心理特质",
+   "group": "male"
+  },
+  {
+   "id": "male_30",
+   "label": "性方面与老师交流的羞涩心理",
+   "type": "心理表现",
+   "group": "male"
+  },
+  {
+   "id": "male_31",
+   "label": "性幻想影响日常学习的焦虑",
+   "type": "心理问题",
+   "group": "male"
+  },
+  {
+   "id": "male_32",
+   "label": "对性角色定位的困惑",
+   "type": "心理迷茫",
+   "group": "male"
+  },
+  {
+   "id": "male_33",
+   "label": "性冲动引发的情绪波动",
+   "type": "心理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_34",
+   "label": "性教育缺失导致的无知无畏",
+   "type": "心理状态",
+   "group": "male"
+  },
+  {
+   "id": "male_35",
+   "label": "对性健康检查的排斥心理",
+   "type": "心理抵触",
+   "group": "male"
+  },
+  {
+   "id": "male_36",
+   "label": "性方面与家人沟通的障碍心理",
+   "type": "心理问题",
+   "group": "male"
+  },
+  {
+   "id": "male_37",
+   "label": "性好奇下对书籍的探索",
+   "type": "心理行为",
+   "group": "male"
+  },
+  {
+   "id": "male_38",
+   "label": "性方面被同学调侃的愤怒",
+   "type": "心理情绪",
+   "group": "male"
+  },
+  {
+   "id": "male_39",
+   "label": "对性平等观念的初步理解",
+   "type": "心理认知",
+   "group": "male"
+  },
+  {
+   "id": "male_40",
+   "label": "性发育过程中的自我观察心理",
+   "type": "心理行为",
+   "group": "male"
+  },
+  {
+   "id": "male_41",
+   "label": "性冲动时的道德挣扎",
+   "type": "心理矛盾",
+   "group": "male"
+  },
+  {
+   "id": "male_42",
+   "label": "性知识获取渠道的偏好心理",
+   "type": "心理倾向",
+   "group": "male"
+  },
+  {
+   "id": "male_43",
+   "label": "性方面被欺骗后的警惕心理",
+   "type": "心理意识",
+   "group": "male"
+  },
+  {
+   "id": "male_44",
+   "label": "对性健康生活方式的向往",
+   "type": "心理期待",
+   "group": "male"
+  },
+  {
+   "id": "male_45",
+   "label": "性好奇引发的与异性的试探行为",
+   "type": "心理行为",
+   "group": "male"
+  },
+  {
+   "id": "male_46",
+   "label": "性方面的自我保护意识觉醒",
+   "type": "心理转变",
+   "group": "male"
+  },
+  {
+   "id": "male_47",
+   "label": "性幻想与现实的冲突心理",
+   "type": "心理矛盾",
+   "group": "male"
+  },
+  {
+   "id": "male_48",
+   "label": "性教育不足导致的困惑积累",
+   "type": "心理状态",
+   "group": "male"
+  },
+  {
+   "id": "male_49",
+   "label": "对性话题的敏感心理",
+   "type": "心理特质",
+   "group": "male"
+  },
+  {
+   "id": "male_50",
+   "label": "性冲动下的理智回归心理",
+   "type": "心理调节",
+   "group": "male"
+  }
+ ],
+ "edges": [
+  {
+   "from": "female_1",
+   "to": "female_2",
+   "label": "引发"
+  },
+  {
+   "from": "female_1",
+   "to": "female_3",
+   "label": "促使产生"
+  },
+  {
+   "from": "female_2",
+   "to": "female_4",
+   "label": "导致"
+  },
+  {
+   "from": "female_3",
+   "to": "female_5",
+   "label": "引发担忧"
+  },
+  {
+   "from": "female_4",
+   "to": "female_6",
+   "label": "造成困惑"
+  },
+  {
+   "from": "female_5",
+   "to": "female_7",
+   "label": "产生负担"
+  },
+  {
+   "from": "female_6",
+   "to": "female_8",
+   "label": "引发比较心理"
+  },
+  {
+   "from": "female_7",
+   "to": "female_9",
+   "label": "产生兴趣"
+  },
+  {
+   "from": "female_8",
+   "to": "female_10",
+   "label": "带来困扰"
+  },
+  {
+   "from": "female_9",
+   "to": "female_11",
+   "label": "导致害羞"
+  },
+  {
+   "from": "female_10",
+   "to": "female_12",
+   "label": "驱使行为"
+  },
+  {
+   "from": "female_11",
+   "to": "female_13",
+   "label": "产生矛盾"
+  },
+  {
+   "from": "female_12",
+   "to": "female_14",
+   "label": "表现为紧张"
+  },
+  {
+   "from": "female_13",
+   "to": "female_15",
+   "label": "引发问题"
+  },
+  {
+   "from": "female_14",
+   "to": "female_16",
+   "label": "导致伤心"
+  },
+  {
+   "from": "female_15",
+   "to": "female_17",
+   "label": "产生期待"
+  },
+  {
+   "from": "female_16",
+   "to": "female_18",
+   "label": "需要调节"
+  },
+  {
+   "from": "female_17",
+   "to": "female_19",
+   "label": "带来失落感"
+  },
+  {
+   "from": "female_18",
+   "to": "female_20",
+   "label": "促进认同"
+  },
+  {
+   "from": "female_19",
+   "to": "female_21",
+   "label": "引发焦虑"
+  },
+  {
+   "from": "female_20",
+   "to": "female_22",
+   "label": "增强意识"
+  },
+  {
+   "from": "female_21",
+   "to": "female_23",
+   "label": "造成迷茫"
+  },
+  {
+   "from": "female_22",
+   "to": "female_24",
+   "label": "产生需求"
+  },
+  {
+   "from": "female_23",
+   "to": "female_25",
+   "label": "带来转变"
+  },
+  {
+   "from": "female_24",
+   "to": "female_26",
+   "label": "引发恐惧"
+  },
+  {
+   "from": "female_25",
+   "to": "female_27",
+   "label": "产生难过"
+  },
+  {
+   "from": "female_26",
+   "to": "female_28",
+   "label": "体现意识"
+  },
+  {
+   "from": "female_27",
+   "to": "female_29",
+   "label": "驱使行为"
+  },
+  {
+   "from": "female_28",
+   "to": "female_30",
+   "label": "表现为犹豫"
+  },
+  {
+   "from": "female_29",
+   "to": "female_31",
+   "label": "引发困扰"
+  },
+  {
+   "from": "female_30",
+   "to": "female_32",
+   "label": "促进认知"
+  },
+  {
+   "from": "female_31",
+   "to": "female_33",
+   "label": "导致现象"
+  },
+  {
+   "from": "female_32",
+   "to": "female_34",
+   "label": "造成恐慌"
+  },
+  {
+   "from": "female_33",
+   "to": "female_35",
+   "label": "产生抵触"
+  },
+  {
+   "from": "female_34",
+   "to": "female_36",
+   "label": "体现特质"
+  },
+  {
+   "from": "female_35",
+   "to": "female_37",
+   "label": "驱使行为"
+  },
+  {
+   "from": "female_36",
+   "to": "female_38",
+   "label": "导致委屈"
+  },
+  {
+   "from": "female_37",
+   "to": "female_39",
+   "label": "促进认知"
+  },
+  {
+   "from": "female_38",
+   "to": "female_40",
+   "label": "引发保护心理"
+  },
+  {
+   "from": "female_39",
+   "to": "female_41",
+   "label": "产生调节心理"
+  },
+  {
+   "from": "female_40",
+   "to": "female_42",
+   "label": "体现倾向"
+  },
+  {
+   "from": "female_41",
+   "to": "female_43",
+   "label": "导致情绪"
+  },
+  {
+   "from": "female_42",
+   "to": "female_44",
+   "label": "产生期待"
+  },
+  {
+   "from": "female_43",
+   "to": "female_45",
+   "label": "驱使行为"
+  },
+  {
+   "from": "female_44",
+   "to": "female_46",
+   "label": "带来转变"
+  },
+  {
+   "from": "female_45",
+   "to": "female_47",
+   "label": "产生冲突"
+  },
+  {
+   "from": "female_46",
+   "to": "female_48",
+   "label": "导致跟风"
+  },
+  {
+   "from": "female_47",
+   "to": "female_49",
+   "label": "表现为回避"
+  },
+  {
+   "from": "female_48",
+   "to": "female_50",
+   "label": "实现调节"
+  },
+  {
+   "from": "male_1",
+   "to": "male_2",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_3",
+   "label": "促使产生"
+  },
+  {
+   "from": "male_2",
+   "to": "male_4",
+   "label": "导致"
+  },
+  {
+   "from": "male_3",
+   "to": "male_5",
+   "label": "引发担忧"
+  },
+  {
+   "from": "male_4",
+   "to": "male_6",
+   "label": "造成迷茫"
+  },
+  {
+   "from": "male_5",
+   "to": "male_7",
+   "label": "产生负担"
+  },
+  {
+   "from": "male_6",
+   "to": "male_8",
+   "label": "引发比较心理"
+  },
+  {
+   "from": "male_7",
+   "to": "male_9",
+   "label": "产生兴趣"
+  },
+  {
+   "from": "male_8",
+   "to": "male_10",
+   "label": "带来自卑"
+  },
+  {
+   "from": "male_9",
+   "to": "male_11",
+   "label": "导致紧张"
+  },
+  {
+   "from": "male_10",
+   "to": "male_12",
+   "label": "驱使行为"
+  },
+  {
+   "from": "male_11",
+   "to": "male_13",
+   "label": "产生矛盾"
+  },
+  {
+   "from": "male_12",
+   "to": "male_14",
+   "label": "表现为羞涩"
+  },
+  {
+   "from": "male_13",
+   "to": "male_15",
+   "label": "引发焦虑"
+  },
+  {
+   "from": "male_14",
+   "to": "male_16",
+   "label": "导致沮丧"
+  },
+  {
+   "from": "male_15",
+   "to": "male_17",
+   "label": "产生期待"
+  },
+  {
+   "from": "male_16",
+   "to": "male_18",
+   "label": "需要调节"
+  },
+  {
+   "from": "male_17",
+   "to": "male_19",
+   "label": "带来孤独感"
+  },
+  {
+   "from": "male_18",
+   "to": "male_20",
+   "label": "促进认知"
+  },
+  {
+   "from": "male_19",
+   "to": "male_21",
+   "label": "引发情绪"
+  },
+  {
+   "from": "male_20",
+   "to": "male_22",
+   "label": "增强意识"
+  },
+  {
+   "from": "male_21",
+   "to": "male_23",
+   "label": "造成盲目"
+  },
+  {
+   "from": "male_22",
+   "to": "male_24",
+   "label": "产生需求"
+  },
+  {
+   "from": "male_23",
+   "to": "male_25",
+   "label": "带来转变"
+  },
+  {
+   "from": "male_24",
+   "to": "male_26",
+   "label": "引发恐惧"
+  },
+  {
+   "from": "male_25",
+   "to": "male_27",
+   "label": "产生委屈"
+  },
+  {
+   "from": "male_26",
+   "to": "male_28",
+   "label": "陷入误区"
+  },
+  {
+   "from": "male_27",
+   "to": "male_29",
+   "label": "激发冒险心理"
+  },
+  {
+   "from": "male_28",
+   "to": "male_30",
+   "label": "表现为羞涩"
+  },
+  {
+   "from": "male_29",
+   "to": "male_31",
+   "label": "引发焦虑"
+  },
+  {
+   "from": "male_30",
+   "to": "male_32",
+   "label": "造成困惑"
+  },
+  {
+   "from": "male_31",
+   "to": "male_33",
+   "label": "导致现象"
+  },
+  {
+   "from": "male_32",
+   "to": "male_34",
+   "label": "造成无知无畏"
+  },
+  {
+   "from": "male_33",
+   "to": "male_35",
+   "label": "产生抵触"
+  },
+  {
+   "from": "male_34",
+   "to": "male_36",
+   "label": "形成障碍"
+  },
+  {
+   "from": "male_35",
+   "to": "male_37",
+   "label": "驱使行为"
+  },
+  {
+   "from": "male_36",
+   "to": "male_38",
+   "label": "导致愤怒"
+  },
+  {
+   "from": "male_37",
+   "to": "male_39",
+   "label": "促进认知"
+  },
+  {
+   "from": "male_38",
+   "to": "male_40",
+   "label": "引发观察心理"
+  },
+  {
+   "from": "male_39",
+   "to": "male_41",
+   "label": "产生矛盾"
+  },
+  {
+   "from": "male_40",
+   "to": "male_42",
+   "label": "体现偏好"
+  },
+  {
+   "from": "male_41",
+   "to": "male_43",
+   "label": "增强警惕"
+  },
+  {
+   "from": "male_42",
+   "to": "male_44",
+   "label": "产生期待"
+  },
+  {
+   "from": "male_43",
+   "to": "male_45",
+   "label": "驱使行为"
+  },
+  {
+   "from": "male_44",
+   "to": "male_46",
+   "label": "带来转变"
+  },
+  {
+   "from": "male_45",
+   "to": "male_47",
+   "label": "产生冲突"
+  },
+  {
+   "from": "male_46",
+   "to": "male_48",
+   "label": "导致积累"
+  },
+  {
+   "from": "male_47",
+   "to": "male_49",
+   "label": "表现为敏感"
+  },
+  {
+   "from": "male_48",
+   "to": "male_50",
+   "label": "实现调节"
+  }
+ ]
+}

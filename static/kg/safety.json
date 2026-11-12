@@ -1,0 +1,1096 @@
+{
+ "nodes": [
+  {
+   "id": "female_1",
+   "label": "识别职场性骚扰的信号",
+   "type": "防范技能",
+   "group": "female"
+  },
+  {
+   "id": "female_2",
+   "label": "避免在夜间独自出行",
+   "type": "防范策略",
+   "group": "female"
+  },
+  {
+   "id": "female_3",
+   "label": "学习女性性健康的知识",
+   "type": "知识学习",
+   "group": "female"
+  },
+  {
+   "id": "female_4",
+   "label": "拒绝熟人的不当性要求",
+   "type": "行为准则",
+   "group": "female"
+  },
+  {
+   "id": "female_5",
+   "label": "保管好个人私密照片和视频",
+   "type": "隐私保护",
+   "group": "female"
+  },
+  {
+   "id": "female_6",
+   "label": "了解性侵犯的常见手段",
+   "type": "知识认知",
+   "group": "female"
+  },
+  {
+   "id": "female_7",
+   "label": "在社交软件上保护个人信息",
+   "type": "隐私保护",
+   "group": "female"
+  },
+  {
+   "id": "female_8",
+   "label": "掌握应对性侵犯的防身术",
+   "type": "技能技巧",
+   "group": "female"
+  },
+  {
+   "id": "female_9",
+   "label": "避免参加不安全的聚会",
+   "type": "防范措施",
+   "group": "female"
+  },
+  {
+   "id": "female_10",
+   "label": "定期进行妇科检查",
+   "type": "健康维护",
+   "group": "female"
+  },
+  {
+   "id": "female_11",
+   "label": "识别网络上的性暗示语言",
+   "type": "识别能力",
+   "group": "female"
+  },
+  {
+   "id": "female_12",
+   "label": "拒绝与陌生男性去私人空间",
+   "type": "行为准则",
+   "group": "female"
+  },
+  {
+   "id": "female_13",
+   "label": "对约会对象进行背景审查",
+   "type": "安全措施",
+   "group": "female"
+  },
+  {
+   "id": "female_14",
+   "label": "学习正确使用避孕方法",
+   "type": "技能知识",
+   "group": "female"
+  },
+  {
+   "id": "female_15",
+   "label": "不随意在公共场所暴露身体敏感部位",
+   "type": "防范策略",
+   "group": "female"
+  },
+  {
+   "id": "female_16",
+   "label": "了解性侵犯后的取证方法",
+   "type": "知识认知",
+   "group": "female"
+  },
+  {
+   "id": "female_17",
+   "label": "在乘坐交通工具时保持警惕",
+   "type": "防范意识",
+   "group": "female"
+  },
+  {
+   "id": "female_18",
+   "label": "遇到性侵犯大声呼救",
+   "type": "应急处理",
+   "group": "female"
+  },
+  {
+   "id": "female_19",
+   "label": "与闺蜜分享性安全经验",
+   "type": "社交行为",
+   "group": "female"
+  },
+  {
+   "id": "female_20",
+   "label": "关注女性性安全的法律法规",
+   "type": "信息获取",
+   "group": "female"
+  },
+  {
+   "id": "female_21",
+   "label": "不轻易相信网络上的帅哥邀约",
+   "type": "防范意识",
+   "group": "female"
+  },
+  {
+   "id": "female_22",
+   "label": "在宿舍注意门窗的安全",
+   "type": "防范措施",
+   "group": "female"
+  },
+  {
+   "id": "female_23",
+   "label": "学习性心理调节方法应对创伤",
+   "type": "心理调节",
+   "group": "female"
+  },
+  {
+   "id": "female_24",
+   "label": "避免在情感脆弱时进行高危性行为",
+   "type": "行为准则",
+   "group": "female"
+  },
+  {
+   "id": "female_25",
+   "label": "识别性侵犯者的常用借口",
+   "type": "识别能力",
+   "group": "female"
+  },
+  {
+   "id": "female_26",
+   "label": "不参与传播女性私密照片",
+   "type": "道德准则",
+   "group": "female"
+  },
+  {
+   "id": "female_27",
+   "label": "对性安全产品进行挑选和使用",
+   "type": "产品认知",
+   "group": "female"
+  },
+  {
+   "id": "female_28",
+   "label": "使用安全的交友软件功能",
+   "type": "安全选择",
+   "group": "female"
+  },
+  {
+   "id": "female_29",
+   "label": "学习性侵犯的逃脱技巧",
+   "type": "技能学习",
+   "group": "female"
+  },
+  {
+   "id": "female_30",
+   "label": "定期修改社交账号的密码",
+   "type": "隐私保护",
+   "group": "female"
+  },
+  {
+   "id": "female_31",
+   "label": "了解性教育对女性的重要性",
+   "type": "知识认知",
+   "group": "female"
+  },
+  {
+   "id": "female_32",
+   "label": "不与有暴力倾向的人发生亲密关系",
+   "type": "行为准则",
+   "group": "female"
+  },
+  {
+   "id": "female_33",
+   "label": "在学校参加性安全讲座",
+   "type": "学习行为",
+   "group": "female"
+  },
+  {
+   "id": "female_34",
+   "label": "对性侵犯的高发地点进行了解",
+   "type": "知识探索",
+   "group": "female"
+  },
+  {
+   "id": "female_35",
+   "label": "保持健康的性态度和价值观",
+   "type": "心理建设",
+   "group": "female"
+  },
+  {
+   "id": "female_36",
+   "label": "不随意在他人面前展示性用品",
+   "type": "隐私保护",
+   "group": "female"
+  },
+  {
+   "id": "female_37",
+   "label": "识别虚假的女性性健康服务",
+   "type": "识别能力",
+   "group": "female"
+  },
+  {
+   "id": "female_38",
+   "label": "学习性安全的紧急求助方式",
+   "type": "技能学习",
+   "group": "female"
+  },
+  {
+   "id": "female_39",
+   "label": "在旅游中保护好个人财物和隐私",
+   "type": "防范意识",
+   "group": "female"
+  },
+  {
+   "id": "female_40",
+   "label": "不与陌生异性在封闭空间相处",
+   "type": "防范策略",
+   "group": "female"
+  },
+  {
+   "id": "female_41",
+   "label": "与家人交流性安全的担忧",
+   "type": "沟通行为",
+   "group": "female"
+  },
+  {
+   "id": "female_42",
+   "label": "对性安全的新技术进行了解",
+   "type": "信息获取",
+   "group": "female"
+  },
+  {
+   "id": "female_43",
+   "label": "避免在醉酒后与异性独处",
+   "type": "行为准则",
+   "group": "female"
+  },
+  {
+   "id": "female_44",
+   "label": "识别性侵犯者的眼神和动作",
+   "type": "识别能力",
+   "group": "female"
+  },
+  {
+   "id": "female_45",
+   "label": "不参与非法的女性性交易活动",
+   "type": "道德准则",
+   "group": "female"
+  },
+  {
+   "id": "female_46",
+   "label": "学习性安全的法律维权途径",
+   "type": "法律学习",
+   "group": "female"
+  },
+  {
+   "id": "female_47",
+   "label": "在网络上设置严格的个人信息权限",
+   "type": "隐私保护",
+   "group": "female"
+  },
+  {
+   "id": "female_48",
+   "label": "了解性侵犯后的心理辅导资源",
+   "type": "心理调适",
+   "group": "female"
+  },
+  {
+   "id": "female_49",
+   "label": "不轻易与网友进行私密视频通话",
+   "type": "防范策略",
+   "group": "female"
+  },
+  {
+   "id": "female_50",
+   "label": "对性安全的新政策进行关注",
+   "type": "信息获取",
+   "group": "female"
+  },
+  {
+   "id": "male_1",
+   "label": "识别网络性诈骗的手段",
+   "type": "防范技能",
+   "group": "male"
+  },
+  {
+   "id": "male_2",
+   "label": "避免在娱乐场所陷入性陷阱",
+   "type": "防范策略",
+   "group": "male"
+  },
+  {
+   "id": "male_3",
+   "label": "学习性传播疾病的预防方法",
+   "type": "知识学习",
+   "group": "male"
+  },
+  {
+   "id": "male_4",
+   "label": "拒绝陌生人的性邀约",
+   "type": "行为准则",
+   "group": "male"
+  },
+  {
+   "id": "male_5",
+   "label": "保管好个人性隐私物品",
+   "type": "隐私保护",
+   "group": "male"
+  },
+  {
+   "id": "male_6",
+   "label": "了解性侵犯的法律后果",
+   "type": "法律认知",
+   "group": "male"
+  },
+  {
+   "id": "male_7",
+   "label": "在社交场合保持警惕性",
+   "type": "防范意识",
+   "group": "male"
+  },
+  {
+   "id": "male_8",
+   "label": "掌握应对性骚扰的话术",
+   "type": "技能技巧",
+   "group": "male"
+  },
+  {
+   "id": "male_9",
+   "label": "避免与有不良企图的人独处",
+   "type": "防范措施",
+   "group": "male"
+  },
+  {
+   "id": "male_10",
+   "label": "定期进行性健康检查",
+   "type": "健康维护",
+   "group": "male"
+  },
+  {
+   "id": "male_11",
+   "label": "识别色情陷阱的标志",
+   "type": "识别能力",
+   "group": "male"
+  },
+  {
+   "id": "male_12",
+   "label": "拒绝参与性交易活动",
+   "type": "行为准则",
+   "group": "male"
+  },
+  {
+   "id": "male_13",
+   "label": "对网络交友对象进行背景调查",
+   "type": "安全措施",
+   "group": "male"
+  },
+  {
+   "id": "male_14",
+   "label": "学习正确使用安全套的方法",
+   "type": "技能知识",
+   "group": "male"
+  },
+  {
+   "id": "male_15",
+   "label": "不随意在网上暴露性取向信息",
+   "type": "隐私保护",
+   "group": "male"
+  },
+  {
+   "id": "male_16",
+   "label": "了解同性之间性侵犯的特点",
+   "type": "知识认知",
+   "group": "male"
+  },
+  {
+   "id": "male_17",
+   "label": "在聚会中不接受不明饮品",
+   "type": "防范策略",
+   "group": "male"
+  },
+  {
+   "id": "male_18",
+   "label": "遇到性侵犯及时报警",
+   "type": "应急处理",
+   "group": "male"
+  },
+  {
+   "id": "male_19",
+   "label": "与家长沟通性安全问题",
+   "type": "沟通行为",
+   "group": "male"
+  },
+  {
+   "id": "male_20",
+   "label": "关注性健康资讯和动态",
+   "type": "信息获取",
+   "group": "male"
+  },
+  {
+   "id": "male_21",
+   "label": "不轻易相信网络上的性诱惑",
+   "type": "防范意识",
+   "group": "male"
+  },
+  {
+   "id": "male_22",
+   "label": "在公共场所注意个人身体边界",
+   "type": "防范措施",
+   "group": "male"
+  },
+  {
+   "id": "male_23",
+   "label": "学习性心理调适方法应对压力",
+   "type": "心理调节",
+   "group": "male"
+  },
+  {
+   "id": "male_24",
+   "label": "避免在情绪低落时进行高危性活动",
+   "type": "行为准则",
+   "group": "male"
+  },
+  {
+   "id": "male_25",
+   "label": "识别性侵犯的前期迹象",
+   "type": "识别能力",
+   "group": "male"
+  },
+  {
+   "id": "male_26",
+   "label": "不参与传播色情内容",
+   "type": "道德准则",
+   "group": "male"
+  },
+  {
+   "id": "male_27",
+   "label": "对性安全知识进行分享和交流",
+   "type": "社交行为",
+   "group": "male"
+  },
+  {
+   "id": "male_28",
+   "label": "使用安全的网络交友平台",
+   "type": "安全选择",
+   "group": "male"
+  },
+  {
+   "id": "male_29",
+   "label": "学习性侵犯的自救技巧",
+   "type": "技能学习",
+   "group": "male"
+  },
+  {
+   "id": "male_30",
+   "label": "定期更换个人性相关账号密码",
+   "type": "隐私保护",
+   "group": "male"
+  },
+  {
+   "id": "male_31",
+   "label": "了解性教育的重要性和意义",
+   "type": "知识认知",
+   "group": "male"
+  },
+  {
+   "id": "male_32",
+   "label": "不与有性传播疾病史的人发生关系",
+   "type": "行为准则",
+   "group": "male"
+  },
+  {
+   "id": "male_33",
+   "label": "在学校参与性安全培训课程",
+   "type": "学习行为",
+   "group": "male"
+  },
+  {
+   "id": "male_34",
+   "label": "对性侵犯的常见手段进行研究",
+   "type": "知识探索",
+   "group": "male"
+  },
+  {
+   "id": "male_35",
+   "label": "保持健康的性观念和心态",
+   "type": "心理建设",
+   "group": "male"
+  },
+  {
+   "id": "male_36",
+   "label": "不随意在他人面前谈论性隐私",
+   "type": "隐私保护",
+   "group": "male"
+  },
+  {
+   "id": "male_37",
+   "label": "识别虚假性健康广告",
+   "type": "识别能力",
+   "group": "male"
+  },
+  {
+   "id": "male_38",
+   "label": "学习性安全的急救知识",
+   "type": "技能学习",
+   "group": "male"
+  },
+  {
+   "id": "male_39",
+   "label": "在旅游中注意性安全问题",
+   "type": "防范意识",
+   "group": "male"
+  },
+  {
+   "id": "male_40",
+   "label": "不与陌生异性去偏僻场所",
+   "type": "防范策略",
+   "group": "male"
+  },
+  {
+   "id": "male_41",
+   "label": "与老师交流性安全的困惑",
+   "type": "沟通行为",
+   "group": "male"
+  },
+  {
+   "id": "male_42",
+   "label": "对性安全产品进行了解和选择",
+   "type": "产品认知",
+   "group": "male"
+  },
+  {
+   "id": "male_43",
+   "label": "避免在醉酒状态下进行性行为",
+   "type": "行为准则",
+   "group": "male"
+  },
+  {
+   "id": "male_44",
+   "label": "识别性侵犯者的伪装行为",
+   "type": "识别能力",
+   "group": "male"
+  },
+  {
+   "id": "male_45",
+   "label": "不参与非法的性活动组织",
+   "type": "道德准则",
+   "group": "male"
+  },
+  {
+   "id": "male_46",
+   "label": "学习性安全的法律法规",
+   "type": "法律学习",
+   "group": "male"
+  },
+  {
+   "id": "male_47",
+   "label": "在网络上设置严格的性信息过滤",
+   "type": "隐私保护",
+   "group": "male"
+  },
+  {
+   "id": "male_48",
+   "label": "了解性侵犯后的心理恢复方法",
+   "type": "心理调适",
+   "group": "male"
+  },
+  {
+   "id": "male_49",
+   "label": "不轻易与网友进行线下性接触",
+   "type": "防范策略",
+   "group": "male"
+  },
+  {
+   "id": "male_50",
+   "label": "对性安全的新趋势进行关注",
+   "type": "信息获取",
+   "group": "male"
+  }
+ ],
+ "edges": [
+  {
+   "from": "female_1",
+   "to": "female_2",
+   "label": "有助于避免"
+  },
+  {
+   "from": "female_1",
+   "to": "female_3",
+   "label": "促进学习"
+  },
+  {
+   "from": "female_2",
+   "to": "female_4",
+   "label": "支持执行"
+  },
+  {
+   "from": "female_3",
+   "to": "female_5",
+   "label": "关联保护"
+  },
+  {
+   "from": "female_4",
+   "to": "female_6",
+   "label": "增强认知"
+  },
+  {
+   "from": "female_5",
+   "to": "female_7",
+   "label": "提升意识"
+  },
+  {
+   "from": "female_6",
+   "to": "female_8",
+   "label": "辅助掌握"
+  },
+  {
+   "from": "female_7",
+   "to": "female_9",
+   "label": "促使采取"
+  },
+  {
+   "from": "female_8",
+   "to": "female_10",
+   "label": "保障健康"
+  },
+  {
+   "from": "female_9",
+   "to": "female_11",
+   "label": "利于识别"
+  },
+  {
+   "from": "female_10",
+   "to": "female_12",
+   "label": "引导拒绝"
+  },
+  {
+   "from": "female_11",
+   "to": "female_13",
+   "label": "推动审查"
+  },
+  {
+   "from": "female_12",
+   "to": "female_14",
+   "label": "需要掌握"
+  },
+  {
+   "from": "female_13",
+   "to": "female_15",
+   "label": "提醒防范"
+  },
+  {
+   "from": "female_14",
+   "to": "female_16",
+   "label": "促进了解"
+  },
+  {
+   "from": "female_15",
+   "to": "female_17",
+   "label": "提升意识"
+  },
+  {
+   "from": "female_16",
+   "to": "female_18",
+   "label": "指导处理"
+  },
+  {
+   "from": "female_17",
+   "to": "female_19",
+   "label": "鼓励分享"
+  },
+  {
+   "from": "female_18",
+   "to": "female_20",
+   "label": "推动关注"
+  },
+  {
+   "from": "female_19",
+   "to": "female_21",
+   "label": "强化意识"
+  },
+  {
+   "from": "female_20",
+   "to": "female_22",
+   "label": "保障安全"
+  },
+  {
+   "from": "female_21",
+   "to": "female_23",
+   "label": "需要调节"
+  },
+  {
+   "from": "female_22",
+   "to": "female_24",
+   "label": "避免行为"
+  },
+  {
+   "from": "female_23",
+   "to": "female_25",
+   "label": "提升能力"
+  },
+  {
+   "from": "female_24",
+   "to": "female_26",
+   "label": "遵循准则"
+  },
+  {
+   "from": "female_25",
+   "to": "female_27",
+   "label": "支持选择"
+  },
+  {
+   "from": "female_26",
+   "to": "female_28",
+   "label": "保障安全"
+  },
+  {
+   "from": "female_27",
+   "to": "female_29",
+   "label": "利于学习"
+  },
+  {
+   "from": "female_28",
+   "to": "female_30",
+   "label": "保障隐私"
+  },
+  {
+   "from": "female_29",
+   "to": "female_31",
+   "label": "深化认知"
+  },
+  {
+   "from": "female_30",
+   "to": "female_32",
+   "label": "指导行为"
+  },
+  {
+   "from": "female_31",
+   "to": "female_33",
+   "label": "参与学习"
+  },
+  {
+   "from": "female_32",
+   "to": "female_34",
+   "label": "进行探索"
+  },
+  {
+   "from": "female_33",
+   "to": "female_35",
+   "label": "促进建设"
+  },
+  {
+   "from": "female_34",
+   "to": "female_36",
+   "label": "保护隐私"
+  },
+  {
+   "from": "female_35",
+   "to": "female_37",
+   "label": "提升能力"
+  },
+  {
+   "from": "female_36",
+   "to": "female_38",
+   "label": "利于学习"
+  },
+  {
+   "from": "female_37",
+   "to": "female_39",
+   "label": "提醒意识"
+  },
+  {
+   "from": "female_38",
+   "to": "female_40",
+   "label": "避免策略"
+  },
+  {
+   "from": "female_39",
+   "to": "female_41",
+   "label": "鼓励沟通"
+  },
+  {
+   "from": "female_40",
+   "to": "female_42",
+   "label": "促进认知"
+  },
+  {
+   "from": "female_41",
+   "to": "female_43",
+   "label": "避免行为"
+  },
+  {
+   "from": "female_42",
+   "to": "female_44",
+   "label": "提升能力"
+  },
+  {
+   "from": "female_43",
+   "to": "female_45",
+   "label": "遵循准则"
+  },
+  {
+   "from": "female_44",
+   "to": "female_46",
+   "label": "促进学习"
+  },
+  {
+   "from": "female_45",
+   "to": "female_47",
+   "label": "保障隐私"
+  },
+  {
+   "from": "female_46",
+   "to": "female_48",
+   "label": "利于调适"
+  },
+  {
+   "from": "female_47",
+   "to": "female_49",
+   "label": "避免接触"
+  },
+  {
+   "from": "female_48",
+   "to": "female_50",
+   "label": "推动关注"
+  },
+  {
+   "from": "male_1",
+   "to": "male_2",
+   "label": "有助于避免"
+  },
+  {
+   "from": "male_1",
+   "to": "male_3",
+   "label": "促进学习"
+  },
+  {
+   "from": "male_2",
+   "to": "male_4",
+   "label": "支持执行"
+  },
+  {
+   "from": "male_3",
+   "to": "male_5",
+   "label": "关联保护"
+  },
+  {
+   "from": "male_4",
+   "to": "male_6",
+   "label": "增强认知"
+  },
+  {
+   "from": "male_5",
+   "to": "male_7",
+   "label": "提升意识"
+  },
+  {
+   "from": "male_6",
+   "to": "male_8",
+   "label": "辅助掌握"
+  },
+  {
+   "from": "male_7",
+   "to": "male_9",
+   "label": "促使采取"
+  },
+  {
+   "from": "male_8",
+   "to": "male_10",
+   "label": "保障健康"
+  },
+  {
+   "from": "male_9",
+   "to": "male_11",
+   "label": "利于识别"
+  },
+  {
+   "from": "male_10",
+   "to": "male_12",
+   "label": "引导拒绝"
+  },
+  {
+   "from": "male_11",
+   "to": "male_13",
+   "label": "推动调查"
+  },
+  {
+   "from": "male_12",
+   "to": "male_14",
+   "label": "需要掌握"
+  },
+  {
+   "from": "male_13",
+   "to": "male_15",
+   "label": "涉及保护"
+  },
+  {
+   "from": "male_14",
+   "to": "male_16",
+   "label": "促进了解"
+  },
+  {
+   "from": "male_15",
+   "to": "male_17",
+   "label": "提醒防范"
+  },
+  {
+   "from": "male_16",
+   "to": "male_18",
+   "label": "指导处理"
+  },
+  {
+   "from": "male_17",
+   "to": "male_19",
+   "label": "鼓励沟通"
+  },
+  {
+   "from": "male_18",
+   "to": "male_20",
+   "label": "推动关注"
+  },
+  {
+   "from": "male_19",
+   "to": "male_21",
+   "label": "强化意识"
+  },
+  {
+   "from": "male_20",
+   "to": "male_22",
+   "label": "保障边界"
+  },
+  {
+   "from": "male_21",
+   "to": "male_23",
+   "label": "需要调节"
+  },
+  {
+   "from": "male_22",
+   "to": "male_24",
+   "label": "避免行为"
+  },
+  {
+   "from": "male_23",
+   "to": "male_25",
+   "label": "提升能力"
+  },
+  {
+   "from": "male_24",
+   "to": "male_26",
+   "label": "遵循准则"
+  },
+  {
+   "from": "male_25",
+   "to": "male_27",
+   "label": "促进交流"
+  },
+  {
+   "from": "male_26",
+   "to": "male_28",
+   "label": "支持选择"
+  },
+  {
+   "from": "male_27",
+   "to": "male_29",
+   "label": "利于学习"
+  },
+  {
+   "from": "male_28",
+   "to": "male_30",
+   "label": "保障隐私"
+  },
+  {
+   "from": "male_29",
+   "to": "male_31",
+   "label": "深化认知"
+  },
+  {
+   "from": "male_30",
+   "to": "male_32",
+   "label": "指导行为"
+  },
+  {
+   "from": "male_31",
+   "to": "male_33",
+   "label": "参与学习"
+  },
+  {
+   "from": "male_32",
+   "to": "male_34",
+   "label": "进行探索"
+  },
+  {
+   "from": "male_33",
+   "to": "male_35",
+   "label": "促进建设"
+  },
+  {
+   "from": "male_34",
+   "to": "male_36",
+   "label": "保护隐私"
+  },
+  {
+   "from": "male_35",
+   "to": "male_37",
+   "label": "提升能力"
+  },
+  {
+   "from": "male_36",
+   "to": "male_38",
+   "label": "利于学习"
+  },
+  {
+   "from": "male_37",
+   "to": "male_39",
+   "label": "提醒意识"
+  },
+  {
+   "from": "male_38",
+   "to": "male_40",
+   "label": "避免策略"
+  },
+  {
+   "from": "male_39",
+   "to": "male_41",
+   "label": "鼓励沟通"
+  },
+  {
+   "from": "male_40",
+   "to": "male_42",
+   "label": "促进认知"
+  },
+  {
+   "from": "male_41",
+   "to": "male_43",
+   "label": "避免行为"
+  },
+  {
+   "from": "male_42",
+   "to": "male_44",
+   "label": "提升能力"
+  },
+  {
+   "from": "male_43",
+   "to": "male_45",
+   "label": "遵循准则"
+  },
+  {
+   "from": "male_44",
+   "to": "male_46",
+   "label": "促进学习"
+  },
+  {
+   "from": "male_45",
+   "to": "male_47",
+   "label": "保障隐私"
+  },
+  {
+   "from": "male_46",
+   "to": "male_48",
+   "label": "利于调适"
+  },
+  {
+   "from": "male_47",
+   "to": "male_49",
+   "label": "避免接触"
+  },
+  {
+   "from": "male_48",
+   "to": "male_50",
+   "label": "推动关注"
+  }
+ ]
+}

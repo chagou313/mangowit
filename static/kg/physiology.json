@@ -1,0 +1,1525 @@
+{
+ "nodes": [
+  {
+   "id": "female_1",
+   "label": "雌性激素变化",
+   "type": "生理机制",
+   "group": "female"
+  },
+  {
+   "id": "female_2",
+   "label": "骨盆发育",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_3",
+   "label": "月经疼痛",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_4",
+   "label": "卫生棉条使用",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_5",
+   "label": "体毛管理",
+   "type": "个人护理",
+   "group": "female"
+  },
+  {
+   "id": "female_6",
+   "label": "青春期乳房发育",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_7",
+   "label": "卵巢功能成熟",
+   "type": "生理机制",
+   "group": "female"
+  },
+  {
+   "id": "female_8",
+   "label": "初潮",
+   "type": "生理现象",
+   "group": "female"
+  },
+  {
+   "id": "female_9",
+   "label": "子宫内膜增厚",
+   "type": "生理过程",
+   "group": "female"
+  },
+  {
+   "id": "female_10",
+   "label": "乳腺增生",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_11",
+   "label": "皮下脂肪堆积",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_12",
+   "label": "臀部变宽",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_13",
+   "label": "阴阜隆起",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_14",
+   "label": "大阴唇变厚",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_15",
+   "label": "小阴唇增大",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_16",
+   "label": "阴道长度增加",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_17",
+   "label": "阴道黏膜变厚",
+   "type": "身体变化",
+   "group": "female"
+  },
+  {
+   "id": "female_18",
+   "label": "宫颈黏液变化",
+   "type": "生理现象",
+   "group": "female"
+  },
+  {
+   "id": "female_19",
+   "label": "卵泡发育",
+   "type": "生理过程",
+   "group": "female"
+  },
+  {
+   "id": "female_20",
+   "label": "排卵",
+   "type": "生理过程",
+   "group": "female"
+  },
+  {
+   "id": "female_21",
+   "label": "黄体形成",
+   "type": "生理过程",
+   "group": "female"
+  },
+  {
+   "id": "female_22",
+   "label": "雌激素波动",
+   "type": "生理机制",
+   "group": "female"
+  },
+  {
+   "id": "female_23",
+   "label": "孕激素波动",
+   "type": "生理机制",
+   "group": "female"
+  },
+  {
+   "id": "female_24",
+   "label": "情绪波动",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_25",
+   "label": "痤疮出现",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_26",
+   "label": "乳房胀痛",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_27",
+   "label": "腹部坠胀",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_28",
+   "label": "腰背酸痛",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_29",
+   "label": "疲劳感",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_30",
+   "label": "睡眠障碍",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_31",
+   "label": "食欲变化",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_32",
+   "label": "经前期综合征",
+   "type": "常见症状",
+   "group": "female"
+  },
+  {
+   "id": "female_33",
+   "label": "痛经缓解方法 - 热敷",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_34",
+   "label": "痛经缓解方法 - 按摩",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_35",
+   "label": "痛经缓解方法 - 药物",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_36",
+   "label": "经期卫生用品选择 - 卫生巾",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_37",
+   "label": "经期卫生用品选择 - 卫生棉条",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_38",
+   "label": "经期卫生用品选择 - 月经杯",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_39",
+   "label": "经期清洁护理 - 外阴清洗",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_40",
+   "label": "经期清洁护理 - 更换频率",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_41",
+   "label": "经期运动 - 适度散步",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_42",
+   "label": "经期运动 - 瑜伽",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_43",
+   "label": "经期运动 - 避免剧烈运动",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_44",
+   "label": "经期饮食 - 补充蛋白质",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_45",
+   "label": "经期饮食 - 多吃蔬果",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_46",
+   "label": "经期饮食 - 避免生冷食物",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_47",
+   "label": "经期心理调节 - 放松心情",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_48",
+   "label": "经期心理调节 - 倾诉交流",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_49",
+   "label": "经期心理调节 - 听音乐",
+   "type": "护理技能",
+   "group": "female"
+  },
+  {
+   "id": "female_50",
+   "label": "乳腺自我检查方法",
+   "type": "个人护理",
+   "group": "female"
+  },
+  {
+   "id": "female_51",
+   "label": "外阴日常清洁",
+   "type": "个人护理",
+   "group": "female"
+  },
+  {
+   "id": "female_52",
+   "label": "内裤选择与更换",
+   "type": "个人护理",
+   "group": "female"
+  },
+  {
+   "id": "female_53",
+   "label": "私密处保湿护理",
+   "type": "个人护理",
+   "group": "female"
+  },
+  {
+   "id": "female_54",
+   "label": "女性生殖系统结构 - 卵巢",
+   "type": "生理知识",
+   "group": "female"
+  },
+  {
+   "id": "female_55",
+   "label": "女性生殖系统结构 - 输卵管",
+   "type": "生理知识",
+   "group": "female"
+  },
+  {
+   "id": "female_56",
+   "label": "女性生殖系统结构 - 子宫",
+   "type": "生理知识",
+   "group": "female"
+  },
+  {
+   "id": "female_57",
+   "label": "女性生殖系统结构 - 阴道",
+   "type": "生理知识",
+   "group": "female"
+  },
+  {
+   "id": "female_58",
+   "label": "女性生殖系统功能 - 生殖",
+   "type": "生理知识",
+   "group": "female"
+  },
+  {
+   "id": "female_59",
+   "label": "女性生殖系统功能 - 内分泌调节",
+   "type": "生理知识",
+   "group": "female"
+  },
+  {
+   "id": "female_60",
+   "label": "青春期发育分期 - 初期",
+   "type": "生理阶段",
+   "group": "female"
+  },
+  {
+   "id": "female_61",
+   "label": "青春期发育分期 - 中期",
+   "type": "生理阶段",
+   "group": "female"
+  },
+  {
+   "id": "female_62",
+   "label": "青春期发育分期 - 后期",
+   "type": "生理阶段",
+   "group": "female"
+  },
+  {
+   "id": "female_63",
+   "label": "性意识觉醒",
+   "type": "心理变化",
+   "group": "female"
+  },
+  {
+   "id": "female_64",
+   "label": "对异性的好奇",
+   "type": "心理变化",
+   "group": "female"
+  },
+  {
+   "id": "female_65",
+   "label": "自我形象关注",
+   "type": "心理变化",
+   "group": "female"
+  },
+  {
+   "id": "female_66",
+   "label": "社交圈子变化",
+   "type": "心理变化",
+   "group": "female"
+  },
+  {
+   "id": "female_67",
+   "label": "学习压力与经期关系",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_68",
+   "label": "生活环境对经期的影响",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_69",
+   "label": "遗传因素对青春期发育的影响",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_70",
+   "label": "营养状况对青春期发育的影响",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_71",
+   "label": "运动习惯对青春期发育的影响",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_72",
+   "label": "睡眠质量对青春期发育的影响",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_73",
+   "label": "体重变化与青春期发育",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_74",
+   "label": "身高增长与青春期发育",
+   "type": "综合影响",
+   "group": "female"
+  },
+  {
+   "id": "female_75",
+   "label": "贫血与经期",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_76",
+   "label": "经期头痛",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_77",
+   "label": "经期腹泻",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_78",
+   "label": "经期皮肤过敏",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_79",
+   "label": "多囊卵巢综合征 - 症状",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_80",
+   "label": "多囊卵巢综合征 - 成因",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_81",
+   "label": "多囊卵巢综合征 - 护理",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_82",
+   "label": "子宫内膜异位症 - 症状",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_83",
+   "label": "子宫内膜异位症 - 成因",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_84",
+   "label": "子宫内膜异位症 - 护理",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_85",
+   "label": "盆腔炎 - 症状",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_86",
+   "label": "盆腔炎 - 成因",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_87",
+   "label": "盆腔炎 - 护理",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_88",
+   "label": "阴道炎 - 症状",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_89",
+   "label": "阴道炎 - 成因",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_90",
+   "label": "阴道炎 - 护理",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_91",
+   "label": "宫颈炎 - 症状",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_92",
+   "label": "宫颈炎 - 成因",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_93",
+   "label": "宫颈炎 - 护理",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_94",
+   "label": "HPV 感染 - 症状",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_95",
+   "label": "HPV 感染 - 成因",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_96",
+   "label": "HPV 感染 - 预防",
+   "type": "健康问题",
+   "group": "female"
+  },
+  {
+   "id": "female_97",
+   "label": "避孕方法 - 短效避孕药",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_98",
+   "label": "避孕方法 - 避孕套",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_99",
+   "label": "避孕方法 - 宫内节育器",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_100",
+   "label": "避孕方法 - 安全期避孕",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_101",
+   "label": "性传播疾病 - 淋病",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_102",
+   "label": "性传播疾病 - 梅毒",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_103",
+   "label": "性传播疾病 - 艾滋病",
+   "type": "生殖健康",
+   "group": "female"
+  },
+  {
+   "id": "female_104",
+   "label": "性教育的重要性",
+   "type": "教育知识",
+   "group": "female"
+  },
+  {
+   "id": "female_105",
+   "label": "性教育的内容",
+   "type": "教育知识",
+   "group": "female"
+  },
+  {
+   "id": "female_106",
+   "label": "性教育的途径",
+   "type": "教育知识",
+   "group": "female"
+  },
+  {
+   "id": "female_107",
+   "label": "家长在性教育中的角色",
+   "type": "教育知识",
+   "group": "female"
+  },
+  {
+   "id": "female_108",
+   "label": "学校在性教育中的责任",
+   "type": "教育知识",
+   "group": "female"
+  },
+  {
+   "id": "female_109",
+   "label": "性健康检查 - 妇科检查",
+   "type": "健康管理",
+   "group": "female"
+  },
+  {
+   "id": "female_110",
+   "label": "性健康检查 - 乳腺检查",
+   "type": "健康管理",
+   "group": "female"
+  },
+  {
+   "id": "female_111",
+   "label": "性健康检查 - 宫颈癌筛查",
+   "type": "健康管理",
+   "group": "female"
+  },
+  {
+   "id": "female_112",
+   "label": "疫苗接种 - 宫颈癌疫苗",
+   "type": "健康管理",
+   "group": "female"
+  },
+  {
+   "id": "female_113",
+   "label": "疫苗接种 - 乙肝疫苗",
+   "type": "健康管理",
+   "group": "female"
+  },
+  {
+   "id": "female_114",
+   "label": "心理健康与生理健康的关联",
+   "type": "综合知识",
+   "group": "female"
+  },
+  {
+   "id": "female_115",
+   "label": "压力管理对女性生理的影响",
+   "type": "综合知识",
+   "group": "female"
+  },
+  {
+   "id": "female_116",
+   "label": "环境因素对女性生殖健康的影响",
+   "type": "综合知识",
+   "group": "female"
+  },
+  {
+   "id": "male_1",
+   "label": "青春期启动",
+   "type": "生理阶段",
+   "group": "male"
+  },
+  {
+   "id": "male_2",
+   "label": "睾丸发育",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_3",
+   "label": "雄性激素",
+   "type": "生物激素",
+   "group": "male"
+  },
+  {
+   "id": "male_4",
+   "label": "夜间遗精",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_5",
+   "label": "体毛生长",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_6",
+   "label": "阴茎增长增粗",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_7",
+   "label": "喉结突出",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_8",
+   "label": "声音变粗",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_9",
+   "label": "骨骼生长加速",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_10",
+   "label": "肌肉量增加",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_11",
+   "label": "皮下脂肪减少",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_12",
+   "label": "精囊腺发育",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_13",
+   "label": "前列腺发育",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_14",
+   "label": "阴毛发育",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_15",
+   "label": "腋毛生长",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_16",
+   "label": "肾上腺皮质功能增强",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_17",
+   "label": "促性腺激素释放激素分泌增加",
+   "type": "生物激素变化",
+   "group": "male"
+  },
+  {
+   "id": "male_18",
+   "label": "促黄体生成素分泌",
+   "type": "生物激素",
+   "group": "male"
+  },
+  {
+   "id": "male_19",
+   "label": "促卵泡刺激素分泌",
+   "type": "生物激素",
+   "group": "male"
+  },
+  {
+   "id": "male_20",
+   "label": "附睾成熟",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_21",
+   "label": "精子生成能力开始具备",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_22",
+   "label": "性冲动出现",
+   "type": "生理心理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_23",
+   "label": "大脑神经递质变化",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_24",
+   "label": "心血管功能增强",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_25",
+   "label": "肺活量增加",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_26",
+   "label": "身体协调性增强",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_27",
+   "label": "汗腺分泌增多",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_28",
+   "label": "皮脂腺分泌旺盛",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_29",
+   "label": "免疫系统增强",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_30",
+   "label": "第二性征发育成熟",
+   "type": "生理阶段",
+   "group": "male"
+  },
+  {
+   "id": "male_31",
+   "label": "阴茎勃起功能逐渐完善",
+   "type": "生理现象",
+   "group": "male"
+  },
+  {
+   "id": "male_32",
+   "label": "脂肪分布变化",
+   "type": "生理变化",
+   "group": "male"
+  },
+  {
+   "id": "male_33",
+   "label": "新陈代谢加快",
+   "type": "生理现象",
+   "group": "male"
+  }
+ ],
+ "edges": [
+  {
+   "from": "female_1",
+   "to": "female_2",
+   "label": "促进发育"
+  },
+  {
+   "from": "female_3",
+   "to": "female_33",
+   "label": "缓解方式"
+  },
+  {
+   "from": "female_3",
+   "to": "female_34",
+   "label": "缓解方式"
+  },
+  {
+   "from": "female_3",
+   "to": "female_35",
+   "label": "缓解方式"
+  },
+  {
+   "from": "female_2",
+   "to": "female_12",
+   "label": "伴随变化"
+  },
+  {
+   "from": "female_6",
+   "to": "female_10",
+   "label": "伴随变化"
+  },
+  {
+   "from": "female_7",
+   "to": "female_19",
+   "label": "驱动过程"
+  },
+  {
+   "from": "female_19",
+   "to": "female_20",
+   "label": "引发"
+  },
+  {
+   "from": "female_20",
+   "to": "female_21",
+   "label": "后续阶段"
+  },
+  {
+   "from": "female_22",
+   "to": "female_24",
+   "label": "导致"
+  },
+  {
+   "from": "female_23",
+   "to": "female_9",
+   "label": "调节"
+  },
+  {
+   "from": "female_8",
+   "to": "female_60",
+   "label": "属于阶段"
+  },
+  {
+   "from": "female_32",
+   "to": "female_24",
+   "label": "包含症状"
+  },
+  {
+   "from": "female_32",
+   "to": "female_25",
+   "label": "包含症状"
+  },
+  {
+   "from": "female_32",
+   "to": "female_26",
+   "label": "包含症状"
+  },
+  {
+   "from": "female_36",
+   "to": "female_37",
+   "label": "替代选择"
+  },
+  {
+   "from": "female_37",
+   "to": "female_4",
+   "label": "具体方法"
+  },
+  {
+   "from": "female_50",
+   "to": "female_10",
+   "label": "预防检查"
+  },
+  {
+   "from": "female_54",
+   "to": "female_7",
+   "label": "构成部分"
+  },
+  {
+   "from": "female_55",
+   "to": "female_20",
+   "label": "运输通道"
+  },
+  {
+   "from": "female_63",
+   "to": "female_64",
+   "label": "引发心理变化"
+  },
+  {
+   "from": "female_70",
+   "to": "female_2",
+   "label": "正向影响"
+  },
+  {
+   "from": "female_71",
+   "to": "female_73",
+   "label": "调节关系"
+  },
+  {
+   "from": "female_75",
+   "to": "female_46",
+   "label": "需注意饮食"
+  },
+  {
+   "from": "female_96",
+   "to": "female_94",
+   "label": "预防措施"
+  },
+  {
+   "from": "female_104",
+   "to": "female_105",
+   "label": "包含内容"
+  },
+  {
+   "from": "female_112",
+   "to": "female_94",
+   "label": "降低风险"
+  },
+  {
+   "from": "female_114",
+   "to": "female_24",
+   "label": "双向影响"
+  },
+  {
+   "from": "female_69",
+   "to": "female_7",
+   "label": "遗传关联"
+  },
+  {
+   "from": "female_79",
+   "to": "female_81",
+   "label": "护理方案"
+  },
+  {
+   "from": "female_76",
+   "to": "female_33",
+   "label": "缓解方式"
+  },
+  {
+   "from": "female_76",
+   "to": "female_35",
+   "label": "缓解方式"
+  },
+  {
+   "from": "female_20",
+   "to": "female_9",
+   "label": "驱动过程"
+  },
+  {
+   "from": "female_65",
+   "to": "female_66",
+   "label": "伴随变化"
+  },
+  {
+   "from": "female_36",
+   "to": "female_39",
+   "label": "相关护理"
+  },
+  {
+   "from": "female_41",
+   "to": "female_12",
+   "label": "有益影响"
+  },
+  {
+   "from": "female_42",
+   "to": "female_10",
+   "label": "有益影响"
+  },
+  {
+   "from": "female_44",
+   "to": "female_29",
+   "label": "营养补充"
+  },
+  {
+   "from": "female_45",
+   "to": "female_25",
+   "label": "饮食建议"
+  },
+  {
+   "from": "female_47",
+   "to": "female_24",
+   "label": "调节方法"
+  },
+  {
+   "from": "female_48",
+   "to": "female_24",
+   "label": "缓解方式"
+  },
+  {
+   "from": "female_51",
+   "to": "female_88",
+   "label": "预防措施"
+  },
+  {
+   "from": "female_52",
+   "to": "female_88",
+   "label": "卫生习惯"
+  },
+  {
+   "from": "female_54",
+   "to": "female_22",
+   "label": "生理基础"
+  },
+  {
+   "from": "female_56",
+   "to": "female_23",
+   "label": "生理基础"
+  },
+  {
+   "from": "female_63",
+   "to": "female_24",
+   "label": "心理影响"
+  },
+  {
+   "from": "female_64",
+   "to": "female_24",
+   "label": "心理影响"
+  },
+  {
+   "from": "female_70",
+   "to": "female_22",
+   "label": "影响因素"
+  },
+  {
+   "from": "female_72",
+   "to": "female_23",
+   "label": "影响因素"
+  },
+  {
+   "from": "female_77",
+   "to": "female_40",
+   "label": "护理措施"
+  },
+  {
+   "from": "female_78",
+   "to": "female_39",
+   "label": "护理措施"
+  },
+  {
+   "from": "female_97",
+   "to": "female_104",
+   "label": "教育内容"
+  },
+  {
+   "from": "female_98",
+   "to": "female_104",
+   "label": "教育内容"
+  },
+  {
+   "from": "female_109",
+   "to": "female_82",
+   "label": "检查项目"
+  },
+  {
+   "from": "female_110",
+   "to": "female_10",
+   "label": "检查项目"
+  },
+  {
+   "from": "female_114",
+   "to": "female_10",
+   "label": "关联影响"
+  },
+  {
+   "from": "female_115",
+   "to": "female_24",
+   "label": "影响因素"
+  },
+  {
+   "from": "female_6",
+   "to": "female_26",
+   "label": "发育过程中可能出现的经期症状"
+  },
+  {
+   "from": "female_26",
+   "to": "female_6",
+   "label": "经期症状与乳房发育的关联"
+  },
+  {
+   "from": "female_9",
+   "to": "female_32",
+   "label": "生理变化可能引发的综合征症状"
+  },
+  {
+   "from": "female_32",
+   "to": "female_9",
+   "label": "综合征症状与子宫内膜变化的关系"
+  },
+  {
+   "from": "female_4",
+   "to": "female_88",
+   "label": "不当使用可能引发的健康问题"
+  },
+  {
+   "from": "female_37",
+   "to": "female_88",
+   "label": "卫生用品选择不当与健康问题的关联"
+  },
+  {
+   "from": "female_41",
+   "to": "female_3",
+   "label": "适度运动对痛经的缓解作用"
+  },
+  {
+   "from": "female_42",
+   "to": "female_3",
+   "label": "特定运动对减轻痛经的帮助"
+  },
+  {
+   "from": "female_3",
+   "to": "female_41",
+   "label": "痛经时可选择的运动方式"
+  },
+  {
+   "from": "female_3",
+   "to": "female_42",
+   "label": "通过运动缓解痛经的方法"
+  },
+  {
+   "from": "female_24",
+   "to": "female_76",
+   "label": "情绪波动可能诱发的经期症状"
+  },
+  {
+   "from": "female_76",
+   "to": "female_24",
+   "label": "经期头痛与情绪状态的关联"
+  },
+  {
+   "from": "female_51",
+   "to": "female_79",
+   "label": "良好个人护理对疾病的预防辅助作用"
+  },
+  {
+   "from": "female_79",
+   "to": "female_51",
+   "label": "疾病管理中个人护理的重要性"
+  },
+  {
+   "from": "female_54",
+   "to": "female_20",
+   "label": "卵巢结构与排卵的关系"
+  },
+  {
+   "from": "female_55",
+   "to": "female_20",
+   "label": "输卵管在排卵过程中的作用"
+  },
+  {
+   "from": "female_20",
+   "to": "female_54",
+   "label": "排卵依赖的卵巢结构基础"
+  },
+  {
+   "from": "female_20",
+   "to": "female_55",
+   "label": "排卵后卵子的运输通道"
+  },
+  {
+   "from": "female_70",
+   "to": "female_16",
+   "label": "充足营养促进身体结构变化"
+  },
+  {
+   "from": "female_70",
+   "to": "female_11",
+   "label": "营养对皮下脂肪堆积的影响"
+  },
+  {
+   "from": "female_16",
+   "to": "female_70",
+   "label": "身体变化受营养状况制约"
+  },
+  {
+   "from": "female_11",
+   "to": "female_70",
+   "label": "皮下脂肪堆积与营养的关系"
+  },
+  {
+   "from": "female_97",
+   "to": "female_101",
+   "label": "部分避孕方法对性传播疾病的防护作用"
+  },
+  {
+   "from": "female_98",
+   "to": "female_101",
+   "label": "避孕套在预防性传播疾病中的作用"
+  },
+  {
+   "from": "female_97",
+   "to": "female_102",
+   "label": "避孕措施与性传播疾病预防的关联"
+  },
+  {
+   "from": "female_98",
+   "to": "female_102",
+   "label": "避孕套对梅毒等疾病的预防效果"
+  },
+  {
+   "from": "female_98",
+   "to": "female_103",
+   "label": "避孕套在预防艾滋病传播中的意义"
+  },
+  {
+   "from": "female_104",
+   "to": "female_114",
+   "label": "性教育对青少年女性心理健康的影响"
+  },
+  {
+   "from": "female_114",
+   "to": "female_104",
+   "label": "心理健康在性教育中的重要性"
+  },
+  {
+   "from": "female_77",
+   "to": "female_46",
+   "label": "不当经期饮食可能导致的症状"
+  },
+  {
+   "from": "female_46",
+   "to": "female_77",
+   "label": "通过调整饮食改善经期腹泻"
+  },
+  {
+   "from": "female_94",
+   "to": "female_57",
+   "label": "HPV感染对阴道等生殖结构的影响"
+  },
+  {
+   "from": "female_57",
+   "to": "female_94",
+   "label": "生殖系统结构与HPV感染的易感性"
+  },
+  {
+   "from": "female_88",
+   "to": "female_36",
+   "label": "不合适的卫生用品可能引发阴道炎"
+  },
+  {
+   "from": "female_36",
+   "to": "female_88",
+   "label": "经期卫生用品选择对阴道健康的影响"
+  },
+  {
+   "from": "male_1",
+   "to": "male_2",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_3",
+   "label": "促进分泌"
+  },
+  {
+   "from": "male_3",
+   "to": "male_4",
+   "label": "导致"
+  },
+  {
+   "from": "male_3",
+   "to": "male_5",
+   "label": "促进"
+  },
+  {
+   "from": "male_1",
+   "to": "male_6",
+   "label": "引发"
+  },
+  {
+   "from": "male_3",
+   "to": "male_7",
+   "label": "促进"
+  },
+  {
+   "from": "male_3",
+   "to": "male_8",
+   "label": "促进"
+  },
+  {
+   "from": "male_1",
+   "to": "male_9",
+   "label": "引发"
+  },
+  {
+   "from": "male_3",
+   "to": "male_10",
+   "label": "促进"
+  },
+  {
+   "from": "male_3",
+   "to": "male_11",
+   "label": "促进"
+  },
+  {
+   "from": "male_1",
+   "to": "male_12",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_13",
+   "label": "引发"
+  },
+  {
+   "from": "male_3",
+   "to": "male_14",
+   "label": "促进"
+  },
+  {
+   "from": "male_3",
+   "to": "male_15",
+   "label": "促进"
+  },
+  {
+   "from": "male_16",
+   "to": "male_3",
+   "label": "促进分泌"
+  },
+  {
+   "from": "male_17",
+   "to": "male_18",
+   "label": "促进分泌"
+  },
+  {
+   "from": "male_17",
+   "to": "male_19",
+   "label": "促进分泌"
+  },
+  {
+   "from": "male_18",
+   "to": "male_2",
+   "label": "促进"
+  },
+  {
+   "from": "male_19",
+   "to": "male_2",
+   "label": "促进"
+  },
+  {
+   "from": "male_2",
+   "to": "male_20",
+   "label": "促进"
+  },
+  {
+   "from": "male_20",
+   "to": "male_21",
+   "label": "促进"
+  },
+  {
+   "from": "male_3",
+   "to": "male_22",
+   "label": "促进"
+  },
+  {
+   "from": "male_23",
+   "to": "male_22",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_24",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_25",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_26",
+   "label": "引发"
+  },
+  {
+   "from": "male_3",
+   "to": "male_27",
+   "label": "促进"
+  },
+  {
+   "from": "male_3",
+   "to": "male_28",
+   "label": "促进"
+  },
+  {
+   "from": "male_1",
+   "to": "male_29",
+   "label": "引发"
+  },
+  {
+   "from": "male_1",
+   "to": "male_30",
+   "label": "引发"
+  },
+  {
+   "from": "male_3",
+   "to": "male_31",
+   "label": "促进"
+  },
+  {
+   "from": "male_3",
+   "to": "male_32",
+   "label": "促进"
+  },
+  {
+   "from": "male_1",
+   "to": "male_33",
+   "label": "引发"
+  }
+ ]
+}

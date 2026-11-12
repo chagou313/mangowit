@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .kg {
+        --kg-ink: #2b2540;
+        --kg-muted: #6b6380;
+        --kg-line: #e4e0ee;
+        --kg-panel: #ffffff;
+        --kg-soft: #f6f4fb;
+        --kg-accent: #7e57c2;
+        --kg-teal: #4f8f78;
+        --kg-female: #d9548f;
+        --kg-male: #3f6fd1;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem max(16px, env(safe-area-inset-left, 0px)) 2.5rem max(16px, env(safe-area-inset-right, 0px));
+        color: var(--kg-ink);
+    }
+    .kg-card {
+        background: var(--kg-panel);
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(43, 37, 64, 0.18);
+        overflow: hidden;
+    }
+    .kg-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: 1.5rem 1.5rem 1rem;
+        border-bottom: 1px solid var(--kg-line);
+    }
+    .kg-head h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--kg-accent);
+        line-height: 1.3;
+    }
+    .kg-head p {
+        color: var(--kg-muted);
+        max-width: 40em;
+        margin-top: 0.25rem;
+    }
+    .kg-stats {
+        display: flex;
+        gap: 1.25rem;
+        font-variant-numeric: tabular-nums;
+    }
+    .kg-stat b {
+        display: block;
+        font-size: 1.5rem;
+        line-height: 1.1;
+        color: var(--kg-ink);
+    }
+    .kg-stat span {
+        font-size: 0.8rem;
+        color: var(--kg-muted);
+    }
+    .kg-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        padding: 0.875rem 1.5rem;
+        background: var(--kg-soft);
+        border-bottom: 1px solid var(--kg-line);
+    }
+    .kg-search {
+        flex: 1 1 220px;
+        display: flex;
+        min-width: 0;
+    }
+    .kg-search input {
+        flex: 1;
+        min-width: 0;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--kg-line);
+        border-right: 0;
+        border-radius: 8px 0 0 8px;
+        font-size: 0.95rem;
+        background: #fff;
+    }
+    .kg-search button,
+    .kg-btn {
+        padding: 0.5rem 0.9rem;
+        border: 1px solid var(--kg-accent);
+        background: var(--kg-accent);
+        color: #fff;
+        font-size: 0.9rem;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .kg-search button { border-radius: 0 8px 8px 0; }
+    .kg-btn {
+        border-radius: 8px;
+        background: #fff;
+        color: var(--kg-accent);
+    }
+    .kg-btn:hover { background: var(--kg-soft); }
+    .kg-chips {
+        display: flex;
+        border: 1px solid var(--kg-line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+    }
+    .kg-chips button {
+        padding: 0.45rem 0.8rem;
+        border: 0;
+        background: transparent;
+        color: var(--kg-muted);
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+    .kg-chips button + button { border-left: 1px solid var(--kg-line); }
+    .kg-chips button[aria-pressed="true"] {
+        background: var(--kg-accent);
+        color: #fff;
+    }
+    .kg-toolbar select {
+        padding: 0.45rem 0.6rem;
+        border: 1px solid var(--kg-line);
+        border-radius: 8px;
+        background: #fff;
+        font-size: 0.9rem;
+        color: var(--kg-ink);
+        max-width: 100%;
+    }
+    .kg :focus-visible {
+        outline: 2px solid var(--kg-teal);
+        outline-offset: 2px;
+    }
+    .kg-body {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+    }
+    .kg-canvas {
+        position: relative;
+        height: min(72vh, 680px);
+        min-height: 420px;
+        background:
+            radial-gradient(circle at 20% 15%, rgba(126, 87, 194, 0.06), transparent 45%),
+            radial-gradient(circle at 85% 80%, rgba(119, 172, 152, 0.08), transparent 45%),
+            #fcfbfe;
+    }
+    #kg-network { position: absolute; inset: 0; }
+    .kg-status {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--kg-muted);
+        background: rgba(252, 251, 254, 0.85);
+        font-size: 0.95rem;
+        text-align: center;
+        padding: 1rem;
+        z-index: 2;
+    }
+    .kg-status[hidden] { display: none; }
+    .kg-legend {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        display: flex;
+        gap: 0.9rem;
+        padding: 0.4rem 0.7rem;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--kg-line);
+        border-radius: 8px;
+        font-size: 0.8rem;
+        color: var(--kg-muted);
+        z-index: 1;
+    }
+    .kg-legend i {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 0.35rem;
+        vertical-align: -1px;
+    }
+    .kg-side {
+        border-left: 1px solid var(--kg-line);
+        padding: 1.25rem;
+        overflow-y: auto;
+        max-height: max(420px, min(72vh, 680px));
+        min-width: 0;
+    }
+    .kg-side h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.35;
+        text-wrap: balance;
+    }
+    .kg-side h3 {
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--kg-muted);
+        margin: 1.1rem 0 0.4rem;
+    }
+    .kg-side .kg-hint { color: var(--kg-muted); font-size: 0.92rem; }
+    .kg-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+    }
+    .kg-tag {
+        font-size: 0.78rem;
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        background: var(--kg-soft);
+        color: var(--kg-muted);
+    }
+    .kg-tag.female { background: #fbe9f1; color: #a8336a; }
+    .kg-tag.male { background: #e8eefb; color: #2d55a8; }
+    .kg-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    .kg-links button {
+        width: 100%;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        text-align: left;
+        padding: 0.45rem 0.6rem;
+        border: 1px solid var(--kg-line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--kg-ink);
+        font-size: 0.92rem;
+        cursor: pointer;
+    }
+    .kg-links button:hover { border-color: var(--kg-accent); background: var(--kg-soft); }
+    .kg-rel {
+        flex: none;
+        font-size: 0.75rem;
+        color: var(--kg-teal);
+        min-width: 4.5em;
+        max-width: 9em;
+    }
+    .kg-empty { color: var(--kg-muted); font-size: 0.88rem; }
+    .kg .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+    .kg-noscript { padding: 1.5rem; color: var(--kg-muted); }
+
+    @media (max-width: 860px) {
+        .kg-body { grid-template-columns: minmax(0, 1fr); }
+        .kg-side { border-left: 0; border-top: 1px solid var(--kg-line); max-height: none; }
+        .kg-canvas { height: 62vh; min-height: 360px; }
+        .kg-head { padding: 1.25rem 1rem 0.875rem; }
+        .kg-toolbar { padding: 0.75rem 1rem; }
+        .kg-head h1 { font-size: 1.45rem; }
+    }
+</style>
+
+<section class="kg" data-src="{% block kg_src %}{% endblock %}" data-ai="{% url 'ai_home' %}">
+    <div class="kg-card">
+        <header class="kg-head">
+            <div>
+                <h1>{% block kg_heading %}{% endblock %}</h1>
+                <p>{% block kg_intro %}{% endblock %}</p>
+            </div>
+            <div class="kg-stats" aria-live="polite">
+                <div class="kg-stat"><b id="kg-node-count">–</b><span>个知识点</span></div>
+                <div class="kg-stat"><b id="kg-edge-count">–</b><span>条关系</span></div>
+            </div>
+        </header>
+
+        <div class="kg-toolbar">
+            <form class="kg-search" id="kg-search" role="search">
+                <label for="kg-search-input" class="sr-only">搜索知识点</label>
+                <input id="kg-search-input" list="kg-labels" placeholder="搜索知识点，例如：{% block kg_example %}{% endblock %}" autocomplete="off">
+                <datalist id="kg-labels"></datalist>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> 查找</button>
+            </form>
+            <div class="kg-chips" role="group" aria-label="按性别筛选">
+                <button type="button" data-group="all" aria-pressed="true">全部</button>
+                <button type="button" data-group="female" aria-pressed="false">女生</button>
+                <button type="button" data-group="male" aria-pressed="false">男生</button>
+            </div>
+            <label for="kg-type" class="sr-only">按类型筛选</label>
+            <select id="kg-type">
+                <option value="">全部类型</option>
+            </select>
+            <button type="button" class="kg-btn" id="kg-fit"><i class="fa-solid fa-expand"></i> 看全图</button>
+        </div>
+
+        <div class="kg-body">
+            <div class="kg-canvas">
+                <div id="kg-network" aria-label="知识图谱"></div>
+                <div class="kg-status" id="kg-status">正在加载图谱…</div>
+                <div class="kg-legend">
+                    <span><i style="background: var(--kg-female)"></i>女生</span>
+                    <span><i style="background: var(--kg-male)"></i>男生</span>
+                    <span>圆点越大，关联越多</span>
+                </div>
+            </div>
+            <aside class="kg-side" id="kg-side" aria-live="polite">
+                <h2>从一个知识点开始</h2>
+                <p class="kg-hint">点击图中任意圆点，这里会列出它和哪些知识点有关、是什么关系。</p>
+            </aside>
+        </div>
+        <noscript><p class="kg-noscript">知识图谱需要启用 JavaScript 才能显示。</p></noscript>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{% static 'kg/knowledge-graph.js' %}"></script>
+{% endblock %}
