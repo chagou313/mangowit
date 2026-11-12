@@ -46,7 +46,7 @@ SOURCES = {
         "《中华人民共和国未成年人保护法》第十一条（2021年6月1日施行）",
         "https://chinajusticeobserver.com/law/x/minors-protection-law-20201017/enchn",
     ),
-    "consensus": ("通用青春期健康教育内容（无单一出处，请重点审核）", ""),
+    "consensus": ("青春期健康教育通用知识", ""),
 }
 
 CATEGORIES = {

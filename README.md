@@ -1,82 +1,80 @@
-# 青芒悟语 Mangowit
+# Mangowit 青芒悟语
 
-面向青少年的青春期健康科普网站，基于 Django 5.2。
+[![tests](https://github.com/chagou313/mangowit/actions/workflows/tests.yml/badge.svg)](https://github.com/chagou313/mangowit/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)
 
-**在线访问：<https://mangowit.onrender.com>**（免费服务，闲置后首次打开需要等待约一分钟）
+**English** | [中文](README.zh-CN.md)
 
-## 功能
+A puberty and sexual-health education website for Chinese-speaking teenagers. It turns medically sourced information into interactive knowledge graphs, a quiz with progress tracking, and a moderated community.
 
-| 模块 | 地址 | 说明 |
-| --- | --- | --- |
-| 首页 | `/` | 每日一题、继续闯关、最新内容 |
-| 知识图谱 | `/physiology/`、`/psychology/`、`/safety/` | 生理、心理、安全三张可交互知识图谱 |
-| 科普视频 | `/knowledge/` | 青春期（上）（下） |
-| 新闻资讯 | `/news/`、`/education/<文章>/` | 新闻与法规文章，支持点赞、收藏、评论 |
-| 答题闯关 | `/category_select/` | 三类各三关，共 45 道带出处的题目，记录成绩 |
-| 社区 | `/community/` | 发布话题、点赞、收藏、评论 |
-| AI 问答 | `/ai/` | 内置问答库 |
-| 个人主页 | `/profile/` | 资料、头像、收藏 / 点赞、答题记录 |
+**Live demo:** <https://mangowit.onrender.com>. It runs on a free plan, so the first visit after a quiet period takes about a minute to wake up.
 
-评论经过敏感词与联系方式过滤后直接显示（每人每分钟最多 5 条），管理员可在 `/admin/` 隐藏评论。
+![Home page](docs/screenshots/home.jpg)
 
-## 目录结构
+## Features
+
+- **Interactive knowledge graphs.** Three graphs cover physiology, mental health and self-protection, with 349 concepts and 321 relations in total. Readers can search them, filter by topic and gender, and click any concept to see how it connects to others. The data lives in plain JSON files, so the content can be edited without touching code.
+- **Quiz with progress tracking.** 45 questions across 3 topics × 3 levels. Every question has an explanation, and many cite the sources they were checked against, such as the NHS, the WHO and Chinese law. Answer options are shuffled on every attempt, and answers are graded on the server so they never reach the browser early. Scores, passed levels and the full history are saved to the reader's profile.
+- **Likes, favorites and comments.** These work on both news articles and community topics. Comments are filtered for abuse, spam and personal contact details (phone numbers, WeChat IDs and links), limited to 5 per minute per user, safely escaped, and can be hidden by an admin.
+- **Personal dashboard.** Points, quiz progress per topic, recent attempts, favorites, likes and comments, plus profile and avatar editing.
+- **Q&A assistant.** Answers common questions from a curated answer bank. Questions are normalised and fuzzy-matched, so rephrased questions still find the right answer.
+- **News and law articles.** Real reports and excerpts from Chinese child-protection law.
+
+| Knowledge graph | Quiz |
+| --- | --- |
+| ![Knowledge graph](docs/screenshots/graph.jpg) | ![Quiz](docs/screenshots/quiz.jpg) |
+| **Article with likes, favorites and comments** | **Personal dashboard** |
+| ![Article](docs/screenshots/article.jpg) | ![Profile](docs/screenshots/profile.jpg) |
+
+## Tech stack
+
+| Layer | Technology |
+| --- | --- |
+| Backend | Python 3.13, Django 5.2 |
+| Frontend | Django templates, vanilla JavaScript, [vis-network](https://visjs.github.io/vis-network/) for the graphs |
+| Database | SQLite locally, PostgreSQL ([Neon](https://neon.tech)) in production |
+| Media storage | [Cloudinary](https://cloudinary.com) for user avatars |
+| Hosting | [Render](https://render.com) with Gunicorn and WhiteNoise, defined in `render.yaml` |
+| Testing / CI | Django test runner (72 tests) and GitHub Actions |
+
+## Engineering highlights
+
+- **The server is the source of truth.** Quiz grading, like and favorite toggles, and comment validation all happen in Django views. The browser only renders the result.
+- **One interaction layer for every kind of content.** Likes, favorites and comments use a shared `target` key (e.g. `news2`, `topic-12`), so articles and community topics reuse the same models, endpoints and templates.
+- **Security basics.** CSRF protection on every write, login-required JSON endpoints that return 401 instead of redirecting, open-redirect protection on login, escaped user content, and secrets kept in environment variables.
+- **Configuration through the environment.** The same code runs on SQLite locally and on PostgreSQL with Cloudinary in production. Every push to `main` triggers a redeploy, and migrations run automatically on startup.
+
+## Project structure
 
 ```text
-mangowit/                 项目配置（settings、urls）
-sex_education_app/        用户、首页、个人主页、登录注册
-KnowledgePopularization/  知识图谱与科普视频
-EducationInformation/     新闻法规文章、点赞收藏
-challenge/                答题闯关（题库在 question_bank.py）
-CommunityForums/          社区话题
-AI_communication/         AI 问答
-interactions/             评论（敏感词过滤在 moderation.py）
-static/                   样式、图片、视频、知识图谱数据（static/kg/）
-tests/                    自动化测试
+mangowit/                 Project settings and URL routing
+sex_education_app/        Users, home page, profile, login and registration
+KnowledgePopularization/  Knowledge graphs and education videos
+EducationInformation/     News and law articles, likes and favorites
+challenge/                Quiz (question bank in question_bank.py)
+CommunityForums/          Community topics
+AI_communication/         Q&A assistant
+interactions/             Comments and moderation
+static/kg/                Knowledge-graph data (JSON) and renderer
+tests/                    Automated tests
 ```
 
-## 本地启动（SQLite）
+## Run locally
 
 ```bash
+git clone https://github.com/chagou313/mangowit.git
+cd mangowit
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python manage.py migrate
 .venv/bin/python manage.py seed_ai_data
-.venv/bin/python manage.py runserver 127.0.0.1:8001
+.venv/bin/python manage.py runserver
 ```
 
-浏览器访问 <http://127.0.0.1:8001/>。拉取新代码后如果有模型改动，记得再执行一次 `migrate`。
+Then open <http://127.0.0.1:8000/>. Run the tests with `.venv/bin/python manage.py test`.
 
-## 测试
+## Deployment
 
-```bash
-.venv/bin/python manage.py check
-.venv/bin/python manage.py test
-```
-
-## 线上部署
-
-网站部署在 Render 免费套餐上，配置写在 `render.yaml`：
-
-| 服务 | 用途 |
-| --- | --- |
-| Render | 运行 Django 与 Gunicorn，WhiteNoise 提供静态资源 |
-| Neon PostgreSQL | 保存账号、点赞收藏、评论、答题记录、社区和问答数据 |
-| Cloudinary | 保存用户上传的头像 |
-
-**更新网站**：把代码合并到 `main` 分支即可。Render 会自动重新构建，启动时自动执行数据库迁移并导入 AI 问答数据。
-
-**环境变量**（在 Render 服务的 Environment 页面管理）：
-
-| 变量 | 说明 |
-| --- | --- |
-| `DATABASE_URL` | Neon 提供的连接字符串，以 `postgresql://` 开头 |
-| `CLOUDINARY_URL` | Cloudinary 控制台提供的连接字符串，以 `cloudinary://` 开头 |
-| `MANGOWIT_SECRET_KEY` | 由 Blueprint 自动生成 |
-
-连接字符串和密钥只填在 Render 里，不要提交到 GitHub。
-
-**注意事项**：
-
-- 免费服务 15 分钟无人访问会休眠，下次打开需要等待约一分钟；数据保存在 Neon 和 Cloudinary，不会因休眠丢失。
-- Neon 数据库长期不用会自动归档，网站再次访问时会自动恢复。
-- 部署失败时，在 Render 的 Deploys 页面打开对应部署查看日志。
+The site is deployed on Render (see `render.yaml`), with Neon PostgreSQL for data and Cloudinary for avatars. Merging into `main` redeploys automatically. `DATABASE_URL` and `CLOUDINARY_URL` are set only in Render's Environment settings and are never committed.
