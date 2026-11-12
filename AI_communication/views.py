@@ -1,5 +1,7 @@
 # AI_communication/views.py
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
+from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import AIQuestion, AIAnswer
 import random
@@ -37,6 +39,12 @@ def get_answer(request):
     logger.warning("用户使用了无效的请求方法")
     return JsonResponse({'error': '无效的请求方法'}, status=400)
 
+def _staff_only(user):
+    return user.is_active and user.is_staff
+
+
+@user_passes_test(_staff_only, login_url='login_register')
+@require_POST
 def add_question(request):
     if request.method == 'POST':
         question_text = request.POST.get('question_text')
@@ -57,5 +65,3 @@ def add_question(request):
             return JsonResponse({'status': 'error', 'message': '服务器错误'}, status=500)
 
         return JsonResponse({'status': 'success', 'message': '问题和答案已成功添加。'})
-
-    return JsonResponse({'status': 'error', 'message': '请求方法错误'}, status=400)
