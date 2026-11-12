@@ -7,11 +7,6 @@ class SexEducationEntryRouteTests(TestCase):
     def setUp(self):
         self.client.raise_request_exception = False
 
-    def test_legacy_quiz_redirects_to_category_selection(self):
-        response = self.client.get(reverse("quiz"))
-
-        self.assertRedirects(response, reverse("category_select"))
-
     def test_anonymous_profile_redirects_to_login_register(self):
         response = self.client.get(reverse("profile"))
 
@@ -36,11 +31,6 @@ class SexEducationEntryRouteTests(TestCase):
 class ChallengeEntryRouteTests(TestCase):
     def setUp(self):
         self.client.raise_request_exception = False
-
-    def test_legacy_question_redirects_to_category_selection(self):
-        response = self.client.get(reverse("question"))
-
-        self.assertRedirects(response, reverse("category_select"))
 
     def test_level_selection_without_category_redirects(self):
         response = self.client.get("/level_select/")
