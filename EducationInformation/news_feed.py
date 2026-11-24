@@ -190,8 +190,16 @@ def fetch_news(fetch=download):
             seen.add(key)
             known_urls.add(entry["url"])
             added += 1
-    stale = NewsItem.objects.order_by("-published_at").values_list("pk", flat=True)[KEEP_ITEMS:]
-    NewsItem.objects.filter(pk__in=list(stale)).delete()
+    stale = set(NewsItem.objects.order_by("-published_at").values_list("pk", flat=True)[KEEP_ITEMS:])
+    if stale:  # never delete a headline that readers have liked, saved or discussed
+        from EducationInformation.models import ArticleReaction
+        from interactions.models import Comment
+
+        targets = [f"news-{pk}" for pk in stale]
+        engaged = set(ArticleReaction.objects.filter(article__in=targets).values_list("article", flat=True))
+        engaged |= set(Comment.objects.filter(target__in=targets).values_list("target", flat=True))
+        stale -= {int(t.split("-")[1]) for t in engaged}
+        NewsItem.objects.filter(pk__in=stale).delete()
     return {"added": added, "skipped": skipped, "errors": errors}
 
 

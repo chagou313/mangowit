@@ -1,7 +1,8 @@
 """Pages that readers can like and comment on.
 
 A target is a short string key: a news/law article key ("news1"), the fixed
-community post ("sexual_impulse"), or a user-published topic ("topic-12").
+community post ("sexual_impulse"), a user-published topic ("topic-12"), or an
+automatically collected news item ("news-34").
 """
 import re
 
@@ -13,6 +14,7 @@ FIXED_POSTS = {
     "sexual_impulse": {"category": "社区", "title": "青少年如何正确看待性冲动？", "url_name": "sexual_impulse"},
 }
 _TOPIC = re.compile(r"^topic-(\d+)$")
+_NEWS = re.compile(r"^news-(\d+)$")
 
 
 def resolve(target):
@@ -34,7 +36,18 @@ def resolve(target):
                 "title": topic.title,
                 "url": reverse("topic_detail", args=[topic.pk]),
             }
+    match = _NEWS.match(target or "")
+    if match:
+        from EducationInformation.models import NewsItem
+
+        item = NewsItem.objects.filter(pk=int(match.group(1)), is_hidden=False).first()
+        if item:
+            return {"category": "新闻", "title": item.title, "url": reverse("news_item", args=[item.pk])}
     return None
+
+
+def news_target(news_id):
+    return f"news-{news_id}"
 
 
 def topic_target(topic_id):
