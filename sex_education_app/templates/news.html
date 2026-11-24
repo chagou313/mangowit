@@ -48,7 +48,7 @@
 <div class="nw">
     <header class="nw-head">
         <h1>新闻资讯</h1>
-        <p>青春期健康教育的新闻报道和法律法规。每条都可以点赞、收藏和评论，新闻每 6 小时自动更新。</p>
+        <p>青春期健康教育的新闻报道和保护未成年人的法律法规。每条都可以点赞、收藏和评论，新闻和法规动态每 6 小时自动更新。</p>
         <div class="nw-search">
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <input type="search" id="nw-search" placeholder="搜索标题，例如：讲座、心理健康" aria-label="搜索新闻和法规">
@@ -66,7 +66,7 @@
             <li data-tab="{{ row.tab }}" data-search="{{ row.title }} {{ row.meta }}">
                 <a class="nw-row" href="{{ row.url }}">
                     <div class="nw-row-main">
-                        <div class="nw-row-title">{% if row.featured %}<span class="nw-pin">精选</span>{% elif row.tab == "law" %}<span class="nw-pin law">法规</span>{% endif %}{{ row.title }}</div>
+                        <div class="nw-row-title">{% if row.pin %}<span class="nw-pin{% if row.tab == "law" %} law{% endif %}">{{ row.pin }}</span>{% endif %}{{ row.title }}</div>
                         <div class="nw-meta">{{ row.meta }}</div>
                     </div>
                     <div class="nw-counts"><span>{{ row.likes }} 赞</span><span>{{ row.comments }} 评论</span></div>
@@ -76,7 +76,7 @@
         </ul>
         <p class="nw-empty" id="nw-empty" hidden>没有找到相关内容，换个关键词试试。</p>
         <button type="button" class="nw-more" id="nw-more" hidden>显示更多</button>
-        <p class="nw-foot">新闻由程序自动收集并过滤，本站只展示标题和摘要，完整内容请在详情页点击“阅读原文”，版权归原网站所有。发现不合适的内容可以在评论里反馈。</p>
+        <p class="nw-foot">法律法规的通俗解读由本站整理，以官方原文为准。新闻和法规动态由程序自动收集并过滤，本站只展示标题和摘要，完整内容请在详情页点击“阅读原文”，版权归原网站所有。发现不合适的内容可以在评论里反馈。</p>
     </div>
 </div>
 
@@ -88,7 +88,8 @@
         var input = document.getElementById("nw-search");
         var more = document.getElementById("nw-more");
         var empty = document.getElementById("nw-empty");
-        var tab = "news", limit = PAGE;
+        var tab = location.hash === "#laws" ? "law" : "news", limit = PAGE;
+        tabs.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.tab === tab)); });
 
         function render() {
             var q = input.value.trim().toLowerCase();
@@ -105,6 +106,7 @@
         tabs.forEach(function (btn) {
             btn.addEventListener("click", function () {
                 tab = btn.dataset.tab; limit = PAGE; input.value = "";
+                try { history.replaceState(null, "", tab === "law" ? "#laws" : location.pathname); } catch (e) {}
                 tabs.forEach(function (b) { b.setAttribute("aria-selected", String(b === btn)); });
                 render();
             });

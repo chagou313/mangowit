@@ -37,7 +37,21 @@ QUERIES = [
     "防性侵 教育 未成年人",
     "未成年人保护 普法 宣传",
     "青少年 心理健康 教育",
+    # Policy and law updates, shown under 法律法规 as 法规动态
+    "未成年人保护 新规 施行",
+    "未成年人 司法解释 发布",
+    "教育部 印发 中小学 健康教育",
+    "最高检 未成年人 保护 意见",
 ]
+
+# Headlines about a new or revised law, regulation, judicial document or policy.
+LAW_PATTERN = re.compile(
+    r"《[^》]*(法|条例|规定|办法|意见|解释|指南|纲要|方案)》|司法解释|新规|施行|印发|修订|修正|立法|条例|规章"
+)
+
+
+def classify(title):
+    return "law" if LAW_PATTERN.search(title) else "news"
 
 
 def feed_urls():
@@ -50,7 +64,7 @@ def feed_urls():
 TOPIC_WORDS = [
     "青春期", "性教育", "性健康", "防性侵", "生理", "心理健康", "心理育人", "育心", "未成年人", "青少年",
     "儿童", "女童", "女生", "男生", "护蕾", "春蕾", "身心", "自我保护", "生命教育", "健康教育",
-    "安全教育", "欺凌", "花蕾", "少年", "青春",
+    "安全教育", "欺凌", "花蕾", "少年", "青春", "学生",
 ]
 # ...describe education, protection or a school activity...
 KEEP_WORDS = [
@@ -185,7 +199,7 @@ def fetch_news(fetch=download):
                 continue
             NewsItem.objects.create(
                 title=entry["title"], url=entry["url"], source=entry["source"],
-                summary=entry["summary"], published_at=published,
+                summary=entry["summary"], published_at=published, kind=classify(entry["title"]),
             )
             seen.add(key)
             known_urls.add(entry["url"])

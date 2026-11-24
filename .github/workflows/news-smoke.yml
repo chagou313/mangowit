@@ -1,0 +1,35 @@
+name: news-smoke
+on:
+  push:
+    branches: [feat/laws]
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python manage.py migrate -v0
+      - run: python manage.py fetch_news
+      - run: |
+          python manage.py shell -c "
+          from EducationInformation.models import NewsItem
+          for n in NewsItem.objects.all()[:80]:
+              print(n.kind, n.published_at.date(), '|', n.source, '|', n.title, '|', n.url[:70])
+          "
+      - name: what the filter dropped
+        run: |
+          python - <<'PY'
+          import os, django
+          os.environ["DJANGO_SETTINGS_MODULE"] = "mangowit.settings"; django.setup()
+          from EducationInformation import news_feed as n
+          for u in n.feed_urls():
+              try: items = n.parse_feed(n.download(u))
+              except Exception as e: print("ERR", u[:60], e); continue
+              print("FEED", u[:60], len(items))
+              for i in items:
+                  if not n.is_suitable(i["title"], i["summary"]): print("  DROP", i["title"])
+          PY

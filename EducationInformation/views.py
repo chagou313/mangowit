@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 from interactions.targets import resolve
 from interactions.views import interaction_context, reaction_state
 
+from .laws import LAWS_BY_SLUG
 from .models import Article, ArticleReaction, NewsItem
 
 
@@ -26,6 +27,16 @@ def news_item(request, pk):
     context = interaction_context(request, f"news-{item.pk}")
     context["item"] = item
     return render(request, "news_item.html", context)
+
+
+def law_detail(request, slug):
+    """A curated law: plain-language summary, key points, link to the official text."""
+    law = LAWS_BY_SLUG.get(slug)
+    if law is None:
+        raise Http404
+    context = interaction_context(request, f"law-{slug}")
+    context["law"] = law
+    return render(request, "law_detail.html", context)
 
 
 def news1(request):

@@ -15,6 +15,7 @@ from challenge.progress import best_scores, category_progress, user_stats
 from challenge.question_bank import CATEGORIES, LEVEL_NAMES, QUESTIONS
 from CommunityForums.models import Topic
 from EducationInformation.articles import ARTICLES
+from EducationInformation.laws import LAWS
 from EducationInformation.models import ArticleReaction, NewsFetchRun, NewsItem
 from EducationInformation.news_feed import refresh_if_stale
 from interactions.models import Comment
@@ -94,18 +95,29 @@ def _counts(targets):
 
 def news(request):
     refresh_if_stale()
-    rows = []
-    for key in ["news1", "news2", "news3"]:
-        rows.append({"key": key, "tab": "news", "featured": True, "title": ARTICLES[key]["title"],
-                     "url": reverse(key), "meta": "精选报道"})
-    for item in NewsItem.objects.filter(is_hidden=False)[:80]:
+
+    def feed_row(item, tab, pin=""):
         day = timezone.localtime(item.published_at)
-        rows.append({"key": news_target(item.pk), "tab": "news", "featured": False, "title": item.title,
-                     "url": reverse("news_item", args=[item.pk]),
-                     "meta": f"{item.source or '网络'} · {day.year}年{day.month}月{day.day}日"})
-    for key in ["law1", "law2", "law3"]:
-        rows.append({"key": key, "tab": "law", "featured": False, "title": ARTICLES[key]["title"],
-                     "url": reverse(key), "meta": "法律法规"})
+        return {"key": news_target(item.pk), "tab": tab, "pin": pin, "title": item.title,
+                "url": reverse("news_item", args=[item.pk]),
+                "meta": f"{item.source or '网络'} · {day.year}年{day.month}月{day.day}日"}
+
+    feed = list(NewsItem.objects.filter(is_hidden=False)[:80])
+    rows = [
+        {"key": key, "tab": "news", "pin": "精选", "title": ARTICLES[key]["title"], "url": reverse(key), "meta": "精选报道"}
+        for key in ["news1", "news2", "news3"]
+    ]
+    rows += [feed_row(item, "news") for item in feed if item.kind == "news"]
+    rows += [
+        {"key": f"law-{law['slug']}", "tab": "law", "pin": law["kind"], "title": law["title"],
+         "url": reverse("law_detail", args=[law["slug"]]), "meta": f"{law['issuer']} · {law['effective']}"}
+        for law in LAWS
+    ]
+    rows += [
+        {"key": key, "tab": "law", "pin": "普法", "title": ARTICLES[key]["title"], "url": reverse(key), "meta": "普法文章"}
+        for key in ["law1", "law2", "law3"]
+    ]
+    rows += [feed_row(item, "law", "动态") for item in feed if item.kind == "law"]
     counts = _counts([row["key"] for row in rows])
     for row in rows:
         row["likes"], row["comments"] = counts[row["key"]]

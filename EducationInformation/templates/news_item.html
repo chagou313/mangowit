@@ -28,7 +28,7 @@
                 {% if item.summary %}<p class="ni-summary">{{ item.summary }}</p>{% endif %}
                 <p class="ni-note">这条新闻由本站自动收集，这里只展示标题和摘要。完整报道请阅读原文，版权归原网站所有。你可以在右侧点赞、收藏或者和大家讨论。</p>
                 <a class="ni-read" href="{{ item.url }}" target="_blank" rel="noopener noreferrer nofollow">阅读原文 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-                <a class="ni-back" href="{% url 'news' %}">返回新闻资讯</a>
+                <a class="ni-back" href="{% url 'news' %}{% if item.kind == 'law' %}#laws{% endif %}">{% if item.kind == 'law' %}返回法律法规{% else %}返回新闻资讯{% endif %}</a>
             </div>
         </div>
         <div class="sidebar">
