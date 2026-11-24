@@ -14,7 +14,8 @@ from challenge.progress import best_scores, category_progress, user_stats
 from challenge.question_bank import CATEGORIES, LEVEL_NAMES, QUESTIONS
 from CommunityForums.models import Topic
 from EducationInformation.articles import ARTICLES
-from EducationInformation.models import ArticleReaction
+from EducationInformation.models import ArticleReaction, NewsFetchRun, NewsItem
+from EducationInformation.news_feed import refresh_if_stale
 from interactions.models import Comment
 from interactions.targets import resolve
 
@@ -77,8 +78,27 @@ def knowledge(request):
     return render(request, "knowledge.html")
 
 
+def _article_cards(keys):
+    return [
+        {
+            **ARTICLES[key],
+            "url": reverse(key),
+            "likes": ArticleReaction.objects.filter(article=key, kind=ArticleReaction.LIKE).count(),
+            "comments": Comment.objects.filter(target=key, is_hidden=False).count(),
+        }
+        for key in keys
+    ]
+
+
 def news(request):
-    return render(request, "news.html")
+    refresh_if_stale()
+    last_run = NewsFetchRun.objects.filter(finished_at__isnull=False).first()
+    return render(request, "news.html", {
+        "featured": _article_cards(["news1", "news2", "news3"]),
+        "laws": _article_cards(["law1", "law2", "law3"]),
+        "feed": NewsItem.objects.filter(is_hidden=False)[:20],
+        "last_update": last_run.finished_at if last_run else None,
+    })
 
 
 def community(request):

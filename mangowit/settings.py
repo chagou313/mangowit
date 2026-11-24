@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 
 import dj_database_url
 
@@ -191,3 +192,6 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Fetch fresh news in the background when the news page is opened (see EducationInformation/news_feed.py).
+# Off while running tests so they never touch the network.
+NEWS_AUTO_REFRESH = os.getenv("MANGOWIT_NEWS_AUTO_REFRESH", "true").lower() == "true" and "test" not in sys.argv[1:2]
