@@ -44,14 +44,18 @@ QUERIES = [
     "最高检 未成年人 保护 意见",
 ]
 
-# Headlines about a new or revised law, regulation, judicial document or policy.
+# Headlines about a new or revised law, regulation, judicial document or policy...
 LAW_PATTERN = re.compile(
-    r"《[^》]*(法|条例|规定|办法|意见|解释|指南|纲要|方案)》|司法解释|新规|施行|印发|修订|修正|立法|条例|规章"
+    r"《[^》]*(法|条例|规定|办法|意见|解释|指南|纲要|方案)》|司法解释|新规|新法|施行|印发|修订|修正|立法|条例|规章"
 )
-
-
-def classify(title):
-    return "law" if LAW_PATTERN.search(title) else "news"
+# ...that concerns minors or schools...
+LAW_TOPIC_WORDS = [
+    "未成年人", "青少年", "儿童", "女童", "学生", "中小学", "幼儿园", "学校", "校园", "孩子", "少年",
+    "青春期", "性教育", "家庭教育", "防沉迷",
+]
+# ...and is not a local event that merely mentions a law, or about another country.
+EVENT_WORDS = ["开展", "活动", "宣讲", "讲座", "走进", "进校园", "班会", "培训", "大赛", "举办", "举行"]
+FOREIGN_WORDS = ["马来西亚", "马国", "印尼", "英国", "美国", "澳大利亚", "澳洲", "日本", "韩国", "新加坡", "欧盟", "法国", "德国"]
 
 
 def feed_urls():
@@ -99,14 +103,31 @@ def clean_title(title):
     return title
 
 
-def is_suitable(title, summary=""):
+def evaluate(title, summary=""):
+    """Return "law" for a policy/law update, "news" for an education story, or None to drop it."""
     text = f"{title} {summary}"
     if not CHINESE.search(title):
-        return False
+        return None
     if any(word in text for word in BLOCK_WORDS) or "性侵" in SAFE_ABUSE_PHRASES.sub("", text):
-        return False
+        return None
+    if (
+        LAW_PATTERN.search(title)
+        and any(word in title for word in LAW_TOPIC_WORDS)
+        and not any(word in title for word in EVENT_WORDS + FOREIGN_WORDS)
+    ):
+        return "law"
     on_topic = any(word in title for word in TOPIC_WORDS) or SAFE_ABUSE_PHRASES.search(title)
-    return bool(on_topic) and any(word in title for word in KEEP_WORDS)
+    if on_topic and any(word in title for word in KEEP_WORDS):
+        return "news"
+    return None
+
+
+def is_suitable(title, summary=""):
+    return evaluate(title, summary) is not None
+
+
+def classify(title):
+    return evaluate(title) or "news"
 
 
 def _text(value):
@@ -193,13 +214,13 @@ def fetch_news(fetch=download):
             if (
                 key in seen or entry["url"] in known_urls
                 or published < now - MAX_AGE or published > now + timedelta(days=1)
-                or not is_suitable(entry["title"], entry["summary"])
+                or not (kind := evaluate(entry["title"], entry["summary"]))
             ):
                 skipped += 1
                 continue
             NewsItem.objects.create(
                 title=entry["title"], url=entry["url"], source=entry["source"],
-                summary=entry["summary"], published_at=published, kind=classify(entry["title"]),
+                summary=entry["summary"], published_at=published, kind=kind,
             )
             seen.add(key)
             known_urls.add(entry["url"])

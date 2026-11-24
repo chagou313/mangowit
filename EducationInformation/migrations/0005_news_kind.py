@@ -9,10 +9,13 @@ LAW_PATTERN = re.compile(
 )
 
 
+EVENT_WORDS = ["开展", "活动", "宣讲", "讲座", "走进", "进校园", "班会", "培训", "大赛", "举办", "举行"]
+
+
 def classify_existing(apps, schema_editor):
     NewsItem = apps.get_model("EducationInformation", "NewsItem")
     for item in NewsItem.objects.all():
-        if LAW_PATTERN.search(item.title):
+        if LAW_PATTERN.search(item.title) and not any(w in item.title for w in EVENT_WORDS):
             item.kind = "law"
             item.save(update_fields=["kind"])
 

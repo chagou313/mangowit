@@ -209,6 +209,17 @@ class ClassifyTests(TestCase):
                 self.assertEqual(news_feed.classify(title), "law")
         self.assertEqual(news_feed.classify("某中学开展青春期健康教育讲座"), "news")
 
+    def test_law_updates_have_their_own_rules(self):
+        self.assertEqual(news_feed.evaluate("严禁向未成年人提供虚拟伴侣等服务新规今年7月施行"), "law")
+        self.assertEqual(news_feed.evaluate("教育部印发指导意见全面推进健康学校建设"), "law")
+        # a local event that mentions a law is news, not a law update
+        self.assertEqual(news_feed.evaluate("大洋街道毓龙公园社区开展《未成年人保护法》普法宣讲活动"), "news")
+        for title in ["马来西亚新规实施：16岁以下青少年禁注册社交媒体账号",
+                      "人工智能拟人化互动服务新规7月15日起施行",
+                      "最高检发布指导性案例 依法严惩性侵害未成年人犯罪"]:
+            with self.subTest(title=title):
+                self.assertIsNone(news_feed.evaluate(title))
+
     def test_fetched_items_get_their_kind(self):
         def feed(url):
             return rss(plain_item("教育部印发中小学生健康教育指南", "https://www.example.cn/law.html", ""),
