@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.title }}{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<style>
+    .ni-meta, .ni-note, .ni-read, .ni-back { text-indent: 0; }
+    .ni-meta { color: #6b6380; font-size: 0.92rem; margin: 0.25rem 0 1.25rem; }
+    .ni-summary { font-size: 1.05rem; line-height: 1.9; }
+    .ni-note { margin-top: 1.25rem; padding: 0.9rem 1rem; border-radius: 12px; background: #f6f4fb; color: #6b6380; font-size: 0.9rem; line-height: 1.7; }
+    .ni-read { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.75rem 1.5rem; border-radius: 999px; background: #7e57c2; color: #fff !important; font-weight: 700; text-decoration: none; }
+    .ni-read:hover { background: #5e35b1; }
+    .ni-back { display: inline-block; margin-top: 1.25rem; margin-left: 1rem; color: #7e57c2; }
+</style>
+
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chatbot-info">
+                    <h2 class="chatbot-name">{{ item.title }}</h2>
+                </div>
+            </div>
+            <div class="post-content">
+                <p class="ni-meta">{{ item.source|default:"网络" }} · {{ item.published_at|date:"Y年n月j日" }}</p>
+                {% if item.summary %}<p class="ni-summary">{{ item.summary }}</p>{% endif %}
+                <p class="ni-note">这条新闻由本站自动收集，这里只展示标题和摘要。完整报道请阅读原文，版权归原网站所有。你可以在右侧点赞、收藏或者和大家讨论。</p>
+                <a class="ni-read" href="{{ item.url }}" target="_blank" rel="noopener noreferrer nofollow">阅读原文 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                <a class="ni-back" href="{% url 'news' %}">返回新闻资讯</a>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="comment-section">
+{% include '_reactions.html' %}
+{% include '_comments.html' %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

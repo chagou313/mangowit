@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import Count
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -17,7 +18,7 @@ from EducationInformation.articles import ARTICLES
 from EducationInformation.models import ArticleReaction, NewsFetchRun, NewsItem
 from EducationInformation.news_feed import refresh_if_stale
 from interactions.models import Comment
-from interactions.targets import resolve
+from interactions.targets import news_target, resolve
 
 from .forms import RegistrationForm, UserProfileForm
 
@@ -78,25 +79,41 @@ def knowledge(request):
     return render(request, "knowledge.html")
 
 
-def _article_cards(keys):
-    return [
-        {
-            **ARTICLES[key],
-            "url": reverse(key),
-            "likes": ArticleReaction.objects.filter(article=key, kind=ArticleReaction.LIKE).count(),
-            "comments": Comment.objects.filter(target=key, is_hidden=False).count(),
-        }
-        for key in keys
-    ]
+def _counts(targets):
+    """{target: (likes, comments)} for a batch of interaction targets."""
+    likes = dict(
+        ArticleReaction.objects.filter(article__in=targets, kind=ArticleReaction.LIKE)
+        .values_list("article").annotate(n=Count("id"))
+    )
+    comments = dict(
+        Comment.objects.filter(target__in=targets, is_hidden=False)
+        .values_list("target").annotate(n=Count("id"))
+    )
+    return {t: (likes.get(t, 0), comments.get(t, 0)) for t in targets}
 
 
 def news(request):
     refresh_if_stale()
+    rows = []
+    for key in ["news1", "news2", "news3"]:
+        rows.append({"key": key, "tab": "news", "featured": True, "title": ARTICLES[key]["title"],
+                     "url": reverse(key), "meta": "精选报道"})
+    for item in NewsItem.objects.filter(is_hidden=False)[:80]:
+        day = timezone.localtime(item.published_at)
+        rows.append({"key": news_target(item.pk), "tab": "news", "featured": False, "title": item.title,
+                     "url": reverse("news_item", args=[item.pk]),
+                     "meta": f"{item.source or '网络'} · {day.year}年{day.month}月{day.day}日"})
+    for key in ["law1", "law2", "law3"]:
+        rows.append({"key": key, "tab": "law", "featured": False, "title": ARTICLES[key]["title"],
+                     "url": reverse(key), "meta": "法律法规"})
+    counts = _counts([row["key"] for row in rows])
+    for row in rows:
+        row["likes"], row["comments"] = counts[row["key"]]
     last_run = NewsFetchRun.objects.filter(finished_at__isnull=False).first()
     return render(request, "news.html", {
-        "featured": _article_cards(["news1", "news2", "news3"]),
-        "laws": _article_cards(["law1", "law2", "law3"]),
-        "feed": NewsItem.objects.filter(is_hidden=False)[:20],
+        "rows": rows,
+        "news_count": sum(1 for row in rows if row["tab"] == "news"),
+        "law_count": sum(1 for row in rows if row["tab"] == "law"),
         "last_update": last_run.finished_at if last_run else None,
     })
 

@@ -1,12 +1,12 @@
 from django.db import IntegrityError, transaction
 from django.http import Http404, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
 from interactions.targets import resolve
 from interactions.views import interaction_context, reaction_state
 
-from .models import Article, ArticleReaction
+from .models import Article, ArticleReaction, NewsItem
 
 
 def education_index(request):
@@ -18,6 +18,14 @@ def render_article(request, article, extra=None):
     context = interaction_context(request, article)
     context.update(extra or {})
     return render(request, f"{article}.html", context)
+
+
+def news_item(request, pk):
+    """An automatically collected headline: summary, link to the original, likes and comments."""
+    item = get_object_or_404(NewsItem, pk=pk, is_hidden=False)
+    context = interaction_context(request, f"news-{item.pk}")
+    context["item"] = item
+    return render(request, "news_item.html", context)
 
 
 def news1(request):

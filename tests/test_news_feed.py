@@ -8,6 +8,8 @@ from django.utils import timezone
 
 from EducationInformation import news_feed
 from EducationInformation.models import NewsFetchRun, NewsItem
+from interactions.models import Comment
+from sex_education_app.models import CustomUser
 
 
 PLAIN_STATIC = override_settings(STORAGES={
@@ -109,6 +111,17 @@ class FetchNewsTests(TestCase):
         self.assertEqual(result["added"], 1)
         self.assertTrue(result["errors"])
 
+    def test_pruning_keeps_items_readers_engaged_with(self):
+        now = timezone.now()
+        old = NewsItem.objects.create(title="很早以前的健康教育新闻", url="https://example.cn/old",
+                                      published_at=now - timedelta(days=200))
+        for i in range(news_feed.KEEP_ITEMS):
+            NewsItem.objects.create(title=f"健康教育新闻{i}", url=f"https://example.cn/{i}", published_at=now - timedelta(hours=i))
+        Comment.objects.create(user=CustomUser.objects.create_user("r", password="pw-123456"),
+                               target=f"news-{old.pk}", body="收藏了")
+        news_feed.fetch_news(fetch=lambda url: rss())
+        self.assertTrue(NewsItem.objects.filter(pk=old.pk).exists())
+
     def test_keeps_only_the_newest_items(self):
         now = timezone.now()
         for i in range(news_feed.KEEP_ITEMS + 5):
@@ -138,18 +151,50 @@ class RefreshTests(TestCase):
 
 @PLAIN_STATIC
 class NewsPageTests(TestCase):
-    def test_shows_featured_laws_and_fetched_news(self):
-        NewsItem.objects.create(title="某中学开展青春期健康教育讲座", url="https://example.cn/news/1",
-                                source="人民网", summary="讲座介绍了青春期身体变化。", published_at=timezone.now())
+    def setUp(self):
+        self.item = NewsItem.objects.create(
+            title="某中学开展青春期健康教育讲座", url="https://example.cn/news/1", source="人民网",
+            summary="讲座介绍了青春期身体变化。", published_at=timezone.now())
+
+    def test_one_list_with_every_item_opening_on_this_site(self):
         NewsItem.objects.create(title="被隐藏的新闻", url="https://example.cn/news/2", published_at=timezone.now(), is_hidden=True)
+        Comment.objects.create(user=CustomUser.objects.create_user("r", password="pw-123456"),
+                               target=f"news-{self.item.pk}", body="很有用")
         response = self.client.get(reverse("news"))
-        self.assertContains(response, reverse("news2"))
-        self.assertContains(response, reverse("law3"))
-        self.assertContains(response, "某中学开展青春期健康教育讲座")
-        self.assertContains(response, 'href="https://example.cn/news/1" target="_blank" rel="noopener noreferrer nofollow"')
+        detail = reverse("news_item", args=[self.item.pk])
+        for url in [reverse("news2"), reverse("law3"), detail]:
+            self.assertContains(response, f'class="nw-row" href="{url}"')
+        self.assertNotContains(response, 'href="https://example.cn/news/1"')  # the original is linked from the detail page
         self.assertNotContains(response, "被隐藏的新闻")
+        row = next(r for r in response.context["rows"] if r["key"] == f"news-{self.item.pk}")
+        self.assertEqual((row["likes"], row["comments"]), (0, 1))
+        self.assertEqual(response.context["law_count"], 3)
+
+    def test_detail_page_links_to_the_original_and_takes_comments(self):
+        response = self.client.get(reverse("news_item", args=[self.item.pk]))
+        self.assertContains(response, "讲座介绍了青春期身体变化。")
+        self.assertContains(response, 'href="https://example.cn/news/1" target="_blank" rel="noopener noreferrer nofollow"')
+        self.assertContains(response, reverse("toggle_reaction", args=[f"news-{self.item.pk}", "like"]))
+        self.assertContains(response, 'id="comment-count">0<')
+
+    def test_hidden_items_have_no_page_and_cannot_be_liked(self):
+        self.item.is_hidden = True
+        self.item.save()
+        self.assertEqual(self.client.get(reverse("news_item", args=[self.item.pk])).status_code, 404)
+        self.client.force_login(CustomUser.objects.create_user("r", password="pw-123456"))
+        url = reverse("toggle_reaction", args=[f"news-{self.item.pk}", "like"])
+        self.assertEqual(self.client.post(url).status_code, 404)
+
+    def test_saved_news_shows_in_favorites(self):
+        user = CustomUser.objects.create_user("r", password="pw-123456")
+        self.client.force_login(user)
+        self.client.post(reverse("toggle_reaction", args=[f"news-{self.item.pk}", "favorite"]))
+        response = self.client.get(reverse("favorite_news"))
+        self.assertContains(response, "某中学开展青春期健康教育讲座")
+        self.assertContains(response, reverse("news_item", args=[self.item.pk]))
 
     def test_empty_feed_says_it_is_loading(self):
+        NewsItem.objects.all().delete()
         response = self.client.get(reverse("news"))
-        self.assertContains(response, "正在获取最新资讯")
+        self.assertContains(response, "正在获取最新新闻")
         self.assertNotContains(response, "alert(")
