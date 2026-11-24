@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ law.title }}{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<style>
+    .lw-tag, .lw-meta, .lw-summary, .lw-points, .lw-points li, .lw-note, .lw-read, .lw-back, .lw-h { text-indent: 0; }
+    .lw-tag { display: inline-block; font-size: 0.8rem; padding: 0.1rem 0.6rem; border-radius: 999px; background: #e6f2ee; color: #2f7d5f; font-weight: 700; }
+    .lw-meta { color: #6b6380; font-size: 0.92rem; margin: 0.5rem 0 1.25rem; line-height: 1.7; }
+    .lw-summary { font-size: 1.05rem; line-height: 1.9; }
+    .lw-h { font-size: 1.05rem; font-weight: 700; margin: 1.25rem 0 0.5rem; color: #2b2540; }
+    .lw-points { margin: 0; padding-left: 1.3rem; line-height: 1.85; }
+    .lw-points li + li { margin-top: 0.35rem; }
+    .lw-note { margin-top: 1.25rem; padding: 0.9rem 1rem; border-radius: 12px; background: #f6f4fb; color: #6b6380; font-size: 0.9rem; line-height: 1.7; }
+    .lw-read { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.75rem 1.5rem; border-radius: 999px; background: #7e57c2; color: #fff !important; font-weight: 700; text-decoration: none; }
+    .lw-read:hover { background: #5e35b1; }
+    .lw-back { display: inline-block; margin-top: 1.25rem; margin-left: 1rem; color: #7e57c2; }
+</style>
+
+<main class="main-content">
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chatbot-info">
+                    <h2 class="chatbot-name">{{ law.title }}</h2>
+                </div>
+            </div>
+            <div class="post-content">
+                <span class="lw-tag">{{ law.kind }}</span>
+                <p class="lw-meta">{{ law.issuer }}<br>{{ law.effective }}</p>
+                <p class="lw-summary">{{ law.summary }}</p>
+                <h3 class="lw-h">和你有关的要点</h3>
+                <ul class="lw-points">
+                    {% for point in law.points %}<li>{{ point }}</li>{% endfor %}
+                </ul>
+                <p class="lw-note">以上是本站整理的通俗解读，仅供学习参考，具体内容以官方原文为准。如果你或身边的人遇到危险，可以告诉信任的大人、老师，或者拨打 110 报警。</p>
+                <a class="lw-read" href="{{ law.url }}" target="_blank" rel="noopener noreferrer">查看原文 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                <a class="lw-back" href="{% url 'news' %}#laws">返回法律法规</a>
+                <p class="lw-meta" style="margin-top:0.75rem">原文来源：{{ law.source }}</p>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="comment-section">
+{% include '_reactions.html' %}
+{% include '_comments.html' %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

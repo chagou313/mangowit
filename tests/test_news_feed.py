@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from EducationInformation import news_feed
+from EducationInformation.laws import LAWS
 from EducationInformation.models import NewsFetchRun, NewsItem
 from interactions.models import Comment
 from sex_education_app.models import CustomUser
@@ -168,7 +169,7 @@ class NewsPageTests(TestCase):
         self.assertNotContains(response, "被隐藏的新闻")
         row = next(r for r in response.context["rows"] if r["key"] == f"news-{self.item.pk}")
         self.assertEqual((row["likes"], row["comments"]), (0, 1))
-        self.assertEqual(response.context["law_count"], 3)
+        self.assertEqual(response.context["law_count"], len(LAWS) + 3)
 
     def test_detail_page_links_to_the_original_and_takes_comments(self):
         response = self.client.get(reverse("news_item", args=[self.item.pk]))
@@ -198,3 +199,79 @@ class NewsPageTests(TestCase):
         response = self.client.get(reverse("news"))
         self.assertContains(response, "正在获取最新新闻")
         self.assertNotContains(response, "alert(")
+
+
+class ClassifyTests(TestCase):
+    def test_policy_headlines_are_law_updates(self):
+        for title in ["《未成年人网络保护条例》明年1月1日起施行", "教育部印发中小学健康教育指南",
+                      "两高发布司法解释 加强未成年人保护"]:
+            with self.subTest(title=title):
+                self.assertEqual(news_feed.classify(title), "law")
+        self.assertEqual(news_feed.classify("某中学开展青春期健康教育讲座"), "news")
+
+    def test_law_updates_have_their_own_rules(self):
+        self.assertEqual(news_feed.evaluate("严禁向未成年人提供虚拟伴侣等服务新规今年7月施行"), "law")
+        self.assertEqual(news_feed.evaluate("教育部印发指导意见全面推进健康学校建设"), "law")
+        # a local event that mentions a law is news, not a law update
+        self.assertEqual(news_feed.evaluate("大洋街道毓龙公园社区开展《未成年人保护法》普法宣讲活动"), "news")
+        for title in ["马来西亚新规实施：16岁以下青少年禁注册社交媒体账号",
+                      "人工智能拟人化互动服务新规7月15日起施行",
+                      "最高检发布指导性案例 依法严惩性侵害未成年人犯罪"]:
+            with self.subTest(title=title):
+                self.assertIsNone(news_feed.evaluate(title))
+
+    def test_fetched_items_get_their_kind(self):
+        def feed(url):
+            return rss(plain_item("教育部印发中小学生健康教育指南", "https://www.example.cn/law.html", ""),
+                       plain_item("某中学开展青春期健康教育讲座", "https://www.example.cn/news.html", ""))
+        news_feed.fetch_news(fetch=feed)
+        self.assertEqual(NewsItem.objects.get(url__endswith="law.html").kind, "law")
+        self.assertEqual(NewsItem.objects.get(url__endswith="news.html").kind, "news")
+
+
+class CuratedLawDataTests(TestCase):
+    def test_every_law_is_complete_and_links_to_https(self):
+        slugs = [law["slug"] for law in LAWS]
+        self.assertEqual(len(slugs), len(set(slugs)))
+        for law in LAWS:
+            with self.subTest(law=law["slug"]):
+                for field in ["title", "kind", "issuer", "effective", "summary", "source"]:
+                    self.assertTrue(law[field].strip())
+                self.assertGreaterEqual(len(law["points"]), 2)
+                self.assertRegex(law["url"], r"^https?://")
+                self.assertLessEqual(len(f"law-{law['slug']}"), 40)  # fits ArticleReaction.article
+
+
+@PLAIN_STATIC
+class LawPageTests(TestCase):
+    def test_law_tab_lists_core_laws_articles_and_updates(self):
+        update = NewsItem.objects.create(title="教育部印发中小学生健康教育指南", url="https://example.cn/l",
+                                         published_at=timezone.now(), kind="law")
+        response = self.client.get(reverse("news"))
+        law_rows = [r for r in response.context["rows"] if r["tab"] == "law"]
+        urls = [r["url"] for r in law_rows]
+        self.assertIn(reverse("law_detail", args=["school_protection"]), urls)
+        self.assertIn(reverse("law1"), urls)
+        self.assertIn(reverse("news_item", args=[update.pk]), urls)
+        news_urls = [r["url"] for r in response.context["rows"] if r["tab"] == "news"]
+        self.assertNotIn(reverse("news_item", args=[update.pk]), news_urls)
+
+    def test_detail_page_shows_points_official_link_and_comments(self):
+        law = LAWS[0]
+        response = self.client.get(reverse("law_detail", args=[law["slug"]]))
+        self.assertContains(response, law["title"])
+        self.assertContains(response, law["points"][0])
+        self.assertContains(response, f'href="{law["url"]}"')
+        self.assertContains(response, "以官方原文为准")
+        self.assertContains(response, reverse("toggle_reaction", args=[f"law-{law['slug']}", "favorite"]))
+
+    def test_unknown_law_is_404(self):
+        self.assertEqual(self.client.get(reverse("law_detail", args=["no_such_law"])).status_code, 404)
+
+    def test_laws_can_be_saved_and_discussed(self):
+        user = CustomUser.objects.create_user("r", password="pw-123456")
+        self.client.force_login(user)
+        target = "law-online_protection"
+        self.assertEqual(self.client.post(reverse("toggle_reaction", args=[target, "favorite"])).status_code, 200)
+        self.assertEqual(self.client.post(reverse("post_comment", args=[target]), {"body": "很实用"}).status_code, 201)
+        self.assertContains(self.client.get(reverse("favorite_news")), "未成年人网络保护条例")

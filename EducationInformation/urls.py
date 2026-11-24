@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.education_index, name='education_index'),
     path('item/<int:pk>/', views.news_item, name='news_item'),
+    path('law/<slug:slug>/', views.law_detail, name='law_detail'),
     path('news1/', views.news1, name='news1'),
     path('news2/', views.news2, name='news2'),
     path('news3/', views.news3, name='news3'),

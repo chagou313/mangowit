@@ -53,6 +53,7 @@ class NewsItem(models.Model):
     url = models.URLField("原文链接", max_length=500, unique=True)
     source = models.CharField("来源", max_length=80, blank=True)
     summary = models.CharField("摘要", max_length=300, blank=True)
+    kind = models.CharField("类型", max_length=10, choices=[("news", "新闻"), ("law", "法规动态")], default="news")
     published_at = models.DateTimeField("发布时间", db_index=True)
     fetched_at = models.DateTimeField("抓取时间", auto_now_add=True)
     is_hidden = models.BooleanField("隐藏", default=False)

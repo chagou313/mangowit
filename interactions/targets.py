@@ -2,7 +2,8 @@
 
 A target is a short string key: a news/law article key ("news1"), the fixed
 community post ("sexual_impulse"), a user-published topic ("topic-12"), or an
-automatically collected news item ("news-34").
+automatically collected news item ("news-34"), or a curated law
+("law-school_protection").
 """
 import re
 
@@ -15,6 +16,7 @@ FIXED_POSTS = {
 }
 _TOPIC = re.compile(r"^topic-(\d+)$")
 _NEWS = re.compile(r"^news-(\d+)$")
+_LAW = re.compile(r"^law-([a-z0-9_]+)$")
 
 
 def resolve(target):
@@ -36,6 +38,13 @@ def resolve(target):
                 "title": topic.title,
                 "url": reverse("topic_detail", args=[topic.pk]),
             }
+    match = _LAW.match(target or "")
+    if match:
+        from EducationInformation.laws import LAWS_BY_SLUG
+
+        law = LAWS_BY_SLUG.get(match.group(1))
+        if law:
+            return {"category": "法规", "title": law["title"], "url": reverse("law_detail", args=[law["slug"]])}
     match = _NEWS.match(target or "")
     if match:
         from EducationInformation.models import NewsItem

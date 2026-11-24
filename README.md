@@ -20,7 +20,8 @@ A puberty and sexual-health education website for Chinese-speaking teenagers. It
 - **Likes, favorites and comments.** These work on both news articles and community topics. Comments are filtered for abuse, spam and personal contact details (phone numbers, WeChat IDs and links), limited to 5 per minute per user, safely escaped, and can be hidden by an admin.
 - **Personal dashboard.** Points, quiz progress per topic, recent attempts, favorites, likes and comments, plus profile and avatar editing.
 - **Q&A assistant.** Answers common questions from a curated answer bank. Questions are normalised and fuzzy-matched, so rephrased questions still find the right answer.
-- **Self-updating news feed.** Alongside hand-picked reports and child-protection laws, the news page collects recent headlines from Google News every 6 hours. A filter keeps stories about puberty, sex education, child protection and teen mental health, and drops crime reports, explicit content and adverts. Only the headline, source and date are stored, and readers open the original article. The free host has no scheduler, so opening the page starts a background refresh when the data is stale.
+- **Laws explained for teenagers.** 11 core laws and policies on protecting minors and on health education (e.g. the Minors Protection Law, the 2023 judicial interpretation on sexual offences against minors, the mandatory reporting system), each with a plain-language summary, key points and a link to the official text.
+- **Self-updating news feed.** Alongside hand-picked reports, the news page collects recent headlines from Google News every 6 hours. A filter keeps stories about puberty, sex education, child protection and teen mental health, and drops crime reports, explicit content and adverts. Policy and law updates are recognised separately and listed under the laws tab. Only the headline, source and date are stored, and readers open the original article. The free host has no scheduler, so opening the page starts a background refresh when the data is stale.
 
 | Knowledge graph | Quiz |
 | --- | --- |
@@ -37,7 +38,7 @@ A puberty and sexual-health education website for Chinese-speaking teenagers. It
 | Database | SQLite locally, PostgreSQL ([Neon](https://neon.tech)) in production |
 | Media storage | [Cloudinary](https://cloudinary.com) for user avatars |
 | Hosting | [Render](https://render.com) with Gunicorn and WhiteNoise, defined in `render.yaml` |
-| Testing / CI | Django test runner (85 tests) and GitHub Actions |
+| Testing / CI | Django test runner (97 tests) and GitHub Actions |
 
 ## Engineering highlights
 
@@ -52,7 +53,7 @@ A puberty and sexual-health education website for Chinese-speaking teenagers. It
 mangowit/                 Project settings and URL routing
 sex_education_app/        Users, home page, profile, login and registration
 KnowledgePopularization/  Knowledge graphs and education videos
-EducationInformation/     Articles, news feed (news_feed.py), likes and favorites
+EducationInformation/     Articles, laws (laws.py), news feed (news_feed.py), likes and favorites
 challenge/                Quiz (question bank in question_bank.py)
 CommunityForums/          Community topics
 AI_communication/         Q&A assistant
