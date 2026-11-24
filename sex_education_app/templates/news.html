@@ -66,7 +66,7 @@
         <a class="nw-card" href="{{ a.url }}" data-search="{{ a.title }}">
             <span class="nw-tag">{{ a.category }}</span>
             <h3>{{ a.title }}</h3>
-            <div class="nw-counts"><span><i class="fa-regular fa-thumbs-up" aria-hidden="true"></i> {{ a.likes }}</span><span><i class="fa-regular fa-comment" aria-hidden="true"></i> {{ a.comments }}</span></div>
+            <div class="nw-counts"><span><i class="fa-regular fa-thumbs-up" aria-hidden="true"></i> {{ a.likes }} 赞</span><span><i class="fa-regular fa-comment" aria-hidden="true"></i> {{ a.comments }} 评论</span></div>
         </a>
         {% endfor %}
     </div>
@@ -103,7 +103,7 @@
                         <a class="nw-item" href="{{ a.url }}">
                             <span class="nw-tag law">{{ a.category }}</span>
                             <div class="nw-item-title">{{ a.title }}</div>
-                            <div class="nw-meta"><i class="fa-regular fa-thumbs-up" aria-hidden="true"></i> {{ a.likes }} · <i class="fa-regular fa-comment" aria-hidden="true"></i> {{ a.comments }}</div>
+                            <div class="nw-meta">{{ a.likes }} 赞 · {{ a.comments }} 评论</div>
                         </a>
                     </li>
                     {% endfor %}

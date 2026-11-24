@@ -50,7 +50,7 @@ def feed_urls():
 TOPIC_WORDS = [
     "青春期", "性教育", "性健康", "防性侵", "生理", "心理健康", "心理育人", "育心", "未成年人", "青少年",
     "儿童", "女童", "女生", "男生", "护蕾", "春蕾", "身心", "自我保护", "生命教育", "健康教育",
-    "安全教育", "欺凌",
+    "安全教育", "欺凌", "花蕾", "少年", "青春",
 ]
 # ...describe education, protection or a school activity...
 KEEP_WORDS = [
@@ -61,13 +61,13 @@ KEEP_WORDS = [
 # ...and must not look like crime reporting, explicit content, adverts or clickbait.
 BLOCK_WORDS = [
     "强奸", "轮奸", "猥亵", "嫖", "卖淫", "色情", "淫秽", "裸", "偷拍", "约炮", "情色", "黄色",
-    "性感", "艳", "激情", "出轨", "小三", "不雅", "床", "成人用品", "致死", "杀", "尸", "自杀",
+    "性感", "艳照", "激情", "出轨", "小三", "不雅", "床", "成人用品", "致死", "惨案", "杀", "尸", "自杀",
     "跳楼", "坠楼", "农药", "判处", "判刑", "判了", "获刑", "被告", "嫌疑人", "涉嫌", "案发", "被害",
     "受害", "遭", "禽兽", "丧心病狂", "人流", "包皮", "早泄", "阳痿", "壮阳", "哪家好", "哪个好",
     "医院排名", "震惊", "曝光",
 ]
-# "性侵" is allowed only as part of prevention wording such as 防性侵 / 预防性侵害.
-SAFE_ABUSE_PHRASES = re.compile(r"(预防|防止|防范|防|反)性侵害?")
+# "性侵" is allowed only as part of prevention wording such as 防性侵 / 预防性侵害 / 性侵害预防.
+SAFE_ABUSE_PHRASES = re.compile(r"(预防|防止|防范|防|反)性侵害?|性侵害?(预防|防范|防治)")
 CHINESE = re.compile(r"[\u4e00-\u9fff]")
 TAGS = re.compile(r"<[^>]+>")
 SPACES = re.compile(r"\s+")
@@ -91,7 +91,8 @@ def is_suitable(title, summary=""):
         return False
     if any(word in text for word in BLOCK_WORDS) or "性侵" in SAFE_ABUSE_PHRASES.sub("", text):
         return False
-    return any(word in title for word in TOPIC_WORDS) and any(word in title for word in KEEP_WORDS)
+    on_topic = any(word in title for word in TOPIC_WORDS) or SAFE_ABUSE_PHRASES.search(title)
+    return bool(on_topic) and any(word in title for word in KEEP_WORDS)
 
 
 def _text(value):

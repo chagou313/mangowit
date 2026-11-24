@@ -67,7 +67,9 @@ class FilterTests(TestCase):
     def test_education_news_is_kept(self):
         for title in ["春蕾计划青春期健康教育讲座走进资溪二中", "检察官进校园开展防性侵普法宣传",
                       "全国人大代表建议性教育独立成课", "官渡法院开展校园防性侵专题法治宣讲活动",
-                      "人民日报：全员育心，守护青少年心理健康"]:
+                      "人民日报：全员育心，守护青少年心理健康", "刘宏艳代表：把青少年心理健康教育落在实处",
+                      "兴化市海南镇开展“未成年人性侵害预防”法律专题讲座", "盘点全球防范性侵教育 鼓励孩子勇敢说“不”",
+                      "法治宣讲进校园 护航少年平安成长"]:
             with self.subTest(title=title):
                 self.assertTrue(news_feed.is_suitable(title))
 
@@ -75,7 +77,7 @@ class FilterTests(TestCase):
         for title in ["男子猥亵女童被判处有期徒刑", "某地破获一起卖淫案", "无痛人流哪家好",
                       "震惊！某校学生做出这种事", "Sex education in schools", "今日股市收盘点评",
                       "留守女童遭宿管老师长期性侵", "农村已成性侵女童案高发地",
-                      "中国高等教育学会年会在扬州举行", "某区义务教育阶段学校招生工作实施意见"]:
+                      "中国高等教育学会年会在扬州举行", "象牙塔内惨案频发 大学生心理健康引关注", "某区义务教育阶段学校招生工作实施意见"]:
             with self.subTest(title=title):
                 self.assertFalse(news_feed.is_suitable(title))
 
