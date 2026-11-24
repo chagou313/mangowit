@@ -3,214 +3,39 @@
 {% block title %}{{ category_name }} - 选择关卡{% endblock %}
 
 {% block content %}
-<style>
-    /* 标题样式 */
-   .title {
-        font-size: clamp(3rem, 6vw, 5rem);
-        color: #fff;
-        font-weight: 900;
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.7);
-        animation: fadeInDown 1.2s ease;
-        margin-bottom: 2.5rem;
-        text-align: center;
-        letter-spacing: 0.3em;
-        font-family: 'Montserrat', sans-serif;
-        line-height: 1.1;
-    }
+{% include "_quiz_entry_styles.html" %}
 
-    /* 分类标题样式 */
-   .category-title {
-        font-size: clamp(2rem, 4vw, 2.5rem);
-        color: #7e57c2;
-        margin-bottom: 1.5rem;
-        text-shadow: 0 0 10px rgba(126, 87, 194, 0.6);
-        font-weight: 800;
-        line-height: 1.2;
-        text-transform: uppercase;
-    }
-
-    /* 分类容器样式 */
-   .category-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 5rem;
-        padding: 0 2rem;
-        max-width: 1400px;
-        margin-left: auto;
-        margin-right: auto;
-        min-height: calc(100vh - 250px);
-        align-items: center;
-    }
-
-    /* 分类样式 */
-   .category {
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
-        padding: 3rem;
-        border-radius: 30px;
-        text-align: center;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2);
-        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        transform-style: preserve-3d;
-        width: calc(33.33% - 2rem); /* 确保三个板块宽度合适 */
-    }
-
-   .category:hover {
-        transform: scale(1.1) translateZ(30px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    /* 进度条样式 */
-   .progress-bar {
-        background-color: #e9ecef;
-        border-radius: 20px;
-        height: 25px;
-        margin-bottom: 2rem;
-        overflow: hidden;
-        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-   .progress {
-        background: linear-gradient(to right, #77ac98, #669a88);
-        height: 100%;
-        border-radius: 20px;
-        width: 0;
-        animation: progressAnimation 1.5s ease forwards;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 开始按钮样式 */
-   .start-btn {
-        background: linear-gradient(to bottom, #77ac98, #669a88);
-        color: white;
-        padding: 1.2rem 2.5rem;
-        border-radius: 25px;
-        text-decoration: none;
-        display: inline-block;
-        transition: background 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        font-size: 1.3rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    }
-
-   .start-btn:hover {
-        background: linear-gradient(to bottom, #669a88, #558a78);
-        transform: scale(1.08);
-    }
-
-    /* 返回按钮样式 */
-   .back-btn {
-        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 20px;
-        text-decoration: none;
-        transition: background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        background-color: rgba(0, 0, 0, 0.15);
-        display: block;
-        text-align: center;
-        margin: 2rem auto;
-        max-width: 200px;
-    }
-
-   .back-btn:hover {
-        background-color: rgba(255, 255, 255, 0.25);
-        transform: scale(1.05);
-    }
-
-    /* 关卡图片样式 */
-   .level-image {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 20px;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-   .category:hover .level-image {
-        transform: scale(1.07);
-    }
-
-    /* 动画关键帧 */
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-50px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes progressAnimation {
-        from {
-            width: 0;
-        }
-        to {
-            width: var(--p, 0%);
-        }
-    }
-
-    .level-status {
-        margin: -0.5rem 0 0.75rem;
-        font-size: 0.95rem;
-        color: #6b6380;
-    }
-
-    /* 响应式设计 */
-    @media (max-width: 1200px) {
-       .category-container {
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-       .category {
-            width: calc(50% - 2rem);
-            margin: 1rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-       .category-container {
-            flex-direction: column;
-        }
-       .category {
-            width: 100%;
-            margin: 1rem 0;
-        }
-       .title {
-            font-size: 3.5rem;
-        }
-       .back-btn {
-            font-size: 1.2rem;
-            padding: 0.8rem 1.6rem;
-        }
-    }
-
-    /* 为 main 元素添加顶部和底部内边距，增加与顶部导航栏和底部导航栏的间距 */
-    main {
-        padding-top: 4rem; /* 新增顶部内边距 */
-        padding-bottom: 4rem;
-    }
-</style>
-
-<div class="container">
-    <h1 class="title">{{ category_name }} - 选择关卡</h1>
-    <div class="category-container">
-        {% for level in levels %}
-        <div class="category">
-            <img src="/static/{{ level.image }}" alt="{{ level.title }}" class="level-image">
-            <h2 class="category-title">{{ level.title }}</h2>
-            <p class="level-status">{% if level.passed %}已通过 · 最好成绩 {{ level.best }}/{{ level.total }}{% elif level.best is not None %}最好成绩 {{ level.best }}/{{ level.total }} · 答对 {{ pass_score }} 题过关{% elif user.is_authenticated %}还没挑战过{% else %}登录后记录成绩{% endif %}</p>
-            <div class="progress-bar" role="progressbar" aria-label="{{ level.title }}最好成绩" aria-valuemin="0" aria-valuemax="{{ level.total }}" aria-valuenow="{{ level.best|default:0 }}">
-                <div class="progress" style="--p: {{ level.percent }}%"></div>
-            </div>
-            <a href="{{ level.url }}" class="start-btn">{% if level.passed %}再次挑战{% else %}开始闯关{% endif %}</a>
+<section class="qe">
+    <header class="qe-head">
+        <div class="qe-crumb"><a href="{% url 'category_select' %}">答题闯关</a> / {{ category_name }}</div>
+        <h1>{{ category_name }} - 选择关卡</h1>
+        <p>从易到难共三关，可以按顺序挑战，也可以直接选一关开始。</p>
+        <div class="qe-rules">
+            <span><i class="fa-solid fa-list-check" aria-hidden="true"></i>每关 5 题</span>
+            <span><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i>答对 {{ pass_score }} 题过关</span>
+            <span><i class="fa-solid fa-star" aria-hidden="true"></i>答对一题 2 分，过关再加 10 分</span>
         </div>
+    </header>
+
+    <div class="qe-grid">
+        {% for level in levels %}
+        <a class="qe-card level" href="{{ level.url }}">
+            <div class="qe-art">
+                <img src="/static/{{ level.image }}" alt="" loading="lazy">
+                <span class="qe-chip">第 {{ level.number }} 关</span>
+                {% if level.passed %}<span class="qe-badge"><i class="fa-solid fa-check" aria-hidden="true"></i>已通过</span>{% endif %}
+            </div>
+            <div class="qe-body">
+                <h2>{{ level.title }}</h2>
+                <div class="qe-sub">{{ level.subtitle }}</div>
+                <p class="qe-status{% if level.passed %} pass{% endif %}">{% if level.passed %}已通过 · 最好成绩 {{ level.best }}/{{ level.total }}{% elif level.best is not None %}最好成绩 {{ level.best }}/{{ level.total }} · 答对 {{ pass_score }} 题过关{% elif user.is_authenticated %}还没挑战过{% else %}登录后记录成绩{% endif %}</p>
+                <div class="qe-score" role="progressbar" aria-label="{{ level.title }}最好成绩" aria-valuemin="0" aria-valuemax="{{ level.total }}" aria-valuenow="{{ level.best|default:0 }}"><div style="--p: {{ level.percent }}%"></div></div>
+                <span class="qe-cta{% if level.passed %} again{% endif %}">{% if level.passed %}再次挑战{% else %}开始闯关{% endif %} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </div>
+        </a>
         {% endfor %}
     </div>
-    <a href="{% url "category_select" %}" class="back-btn">返回</a>
-</div>
+
+    <a href="{% url 'category_select' %}" class="qe-back"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 返回选择主题</a>
+</section>
 {% endblock %}

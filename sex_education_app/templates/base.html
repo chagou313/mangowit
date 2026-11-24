@@ -116,11 +116,26 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 0.85rem max(16px, env(safe-area-inset-right, 0px)) 0.85rem max(16px, env(safe-area-inset-left, 0px));
+                overflow: visible;
+                gap: 1rem;
+            }
+           .logo {
+                font-size: 1.05rem;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+           .menu-icon {
+                font-size: 1.35rem;
+                padding: 0.25rem;
+            }
            .nav-links {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 4rem;
+                top: 100%;
                 left: 0;
                 right: 0;
                 background-color: #7e57c2;
