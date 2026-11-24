@@ -1,196 +1,42 @@
 {% extends 'base.html' %}
 
-{% block title %}知识挑战乐园{% endblock %}
+{% block title %}答题闯关{% endblock %}
 
 {% block content %}
-<style>
-    /* 全局样式 */
-    body {
-        background-color: #77ac98;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-    }
+{% include "_quiz_entry_styles.html" %}
 
-   .container {
-        max-width: 80%;
-        margin: 50px auto;
-        padding: 20px;
-        animation: fadeIn 1s ease;
-    }
-
-   .title {
-        font-size: 3.5rem;
-        color: #5e35b1;
-        font-weight: bold;
-        text-align: center;
-        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
-        margin-bottom: 50px;
-        letter-spacing: 2px;
-        animation: slideDown 1s ease;
-    }
-
-   .category-container {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        align-items: center;
-    }
-
-   .category {
-        background-color: rgba(255, 255, 255, 0.95);
-        padding: 30px;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        width: 100%;
-        cursor: pointer;
-        animation: scaleIn 0.5s ease;
-        border: 2px solid #5e35b1;
-    }
-
-   .category:hover {
-        transform: translateY(-10px) scale(1.05);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-        border-color: #8ec2b0;
-    }
-
-   .category-icon {
-        font-size: 3rem;
-        color: #5e35b1;
-        margin-bottom: 20px;
-    }
-
-   .category-title {
-        font-size: 2rem;
-        color: #5e35b1;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-
-    /* 进度条样式 */
-   .progress-bar {
-        background-color: #e9ecef;
-        border-radius: 20px;
-        height: 25px;
-        margin-bottom: 2rem;
-        overflow: hidden;
-        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-   .progress {
-        background: linear-gradient(to right, #77ac98, #669a88);
-        height: 100%;
-        border-radius: 20px;
-        width: 0;
-        animation: progressAnimation 1.5s ease forwards;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-   .start-btn {
-        background-color: #5e35b1;
-        color: white;
-        padding: 15px 30px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-size: 1.2rem;
-        display: inline-block;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-
-   .start-btn:hover {
-        background-color: #7e57c2;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-        transform: scale(1.05);
-    }
-
-    /* 动画关键帧 */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideDown {
-        from {
-            transform: translateY(-50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes scaleIn {
-        from {
-            transform: scale(0.8);
-            opacity: 0;
-        }
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    @keyframes progressAnimation {
-        from {
-            width: 0;
-        }
-        to {
-            width: var(--p, 0%);
-        }
-    }
-
-    .level-status {
-        margin: -0.5rem 0 0.75rem;
-        font-size: 0.95rem;
-        color: #6b6380;
-    }
-</style>
-
-<div class="container">
-    <h1 class="title">知识挑战乐园，开启智慧冒险！</h1>
-    <div class="category-container">
-        <div class="category">
-            <div class="category-icon">
-                <i class="fa-solid fa-dna"></i>
-            </div>
-            <h2 class="category-title">生理知识大冒险</h2>
-            <p class="level-status">{% if user.is_authenticated %}已通过 {{ progress.physiology.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</p>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ progress.physiology.passed|default:0 }}">
-                <div class="progress" style="--p: {{ progress.physiology.percent|default:0 }}%"></div>
-            </div>
-            <a href="{% url 'level_select' 'physiology' %}" class="start-btn">开启冒险，探索生理奥秘</a>
+<section class="qe">
+    <header class="qe-head">
+        <div class="qe-crumb">答题闯关</div>
+        <h1>知识挑战乐园</h1>
+        <p>选一个主题开始闯关。每道题答完都有解析和出处，答错了也能学到东西。</p>
+        <div class="qe-rules">
+            <span><i class="fa-solid fa-layer-group" aria-hidden="true"></i>3 个主题 × 3 关</span>
+            <span><i class="fa-solid fa-list-check" aria-hidden="true"></i>每关 5 题</span>
+            <span><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i>答对 3 题过关</span>
         </div>
-        <div class="category">
-            <div class="category-icon">
-                <i class="fa-solid fa-brain"></i>
+        {% if user.is_authenticated %}
+        <p class="qe-total">已通过 <b>{{ total_passed }}</b> / 9 关 · <a href="{% url 'quiz_history' %}" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.5)">查看闯关记录</a></p>
+        {% endif %}
+    </header>
+
+    <div class="qe-grid">
+        {% for topic in topics %}
+        <a class="qe-card" href="{% url 'level_select' topic.key %}">
+            <div class="qe-band {{ topic.key }}">
+                <span class="qe-icon"><i class="fa-solid {{ topic.icon }}" aria-hidden="true"></i></span>
+                <div><small>{{ topic.name }}</small><b>{{ topic.title }}</b></div>
             </div>
-            <h2 class="category-title">心理知识探秘之旅</h2>
-            <p class="level-status">{% if user.is_authenticated %}已通过 {{ progress.psychology.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</p>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ progress.psychology.passed|default:0 }}">
-                <div class="progress" style="--p: {{ progress.psychology.percent|default:0 }}%"></div>
+            <div class="qe-body">
+                <p class="qe-desc">{{ topic.desc }}</p>
+                <div class="qe-pips" role="progressbar" aria-label="{{ topic.name }}已通过关卡" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ topic.passed }}">
+                    {% for n in "123" %}<i{% if forloop.counter <= topic.passed %} class="on"{% endif %}></i>{% endfor %}
+                    <span class="qe-status{% if topic.passed == 3 %} pass{% endif %}">{% if user.is_authenticated %}已通过 {{ topic.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</span>
+                </div>
+                <span class="qe-cta">{% if topic.passed == 3 %}全部通过，再来一次{% elif topic.passed %}继续闯关{% else %}开始挑战{% endif %} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </div>
-            <a href="{% url 'level_select' 'psychology' %}" class="start-btn">踏上旅程，解锁心理密码</a>
-        </div>
-        <div class="category">
-            <div class="category-icon">
-                <i class="fa-solid fa-shield-heart"></i>
-            </div>
-            <h2 class="category-title">防范性知识守护战</h2>
-            <p class="level-status">{% if user.is_authenticated %}已通过 {{ progress.prevention.passed }} / 3 关{% else %}共 3 关 · 登录后记录进度{% endif %}</p>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="{{ progress.prevention.passed|default:0 }}">
-                <div class="progress" style="--p: {{ progress.prevention.percent|default:0 }}%"></div>
-            </div>
-            <a href="{% url 'level_select' 'prevention' %}" class="start-btn">投入战斗，守护自身安全</a>
-        </div>
+        </a>
+        {% endfor %}
     </div>
-</div>
+</section>
 {% endblock %}

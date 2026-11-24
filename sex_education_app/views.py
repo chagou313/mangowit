@@ -95,12 +95,23 @@ def quiz_history(request):
     })
 
 
+QUIZ_TOPICS = [
+    ("physiology", "生理知识大冒险", "身体发育、月经与遗精、生殖健康和日常护理，弄懂青春期身体的变化。"),
+    ("psychology", "心理知识探秘之旅", "情绪起伏、自我认同、喜欢一个人和人际关系，学会照顾自己的心情。"),
+    ("prevention", "防范性知识守护战", "身体边界、识别危险信号、求助渠道和相关法律，学会保护自己。"),
+]
+
+
 def category_select(request):
     passed = category_progress(request.user)
-    progress = {
-        key: {"passed": count, "percent": round(100 * count / 3)} for key, count in passed.items()
-    }
-    return render(request, "category_select.html", {"progress": progress})
+    topics = [
+        {"key": key, "title": title, "desc": desc, "passed": passed.get(key, 0), **CATEGORIES[key]}
+        for key, title, desc in QUIZ_TOPICS
+    ]
+    return render(request, "category_select.html", {
+        "topics": topics,
+        "total_passed": sum(t["passed"] for t in topics),
+    })
 
 
 def _reacted_articles(user, kind):

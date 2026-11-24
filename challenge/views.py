@@ -41,6 +41,7 @@ def level_select(request, category=None):
         levels.append({
             "number": level,
             "name": LEVEL_NAMES[level],
+            "subtitle": LEVEL_NAMES[level].split("·")[-1].strip(),
             "url": reverse("quiz_play", args=[category, level]),
             "best": info.get("best"),
             "passed": info.get("passed", False),
