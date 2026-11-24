@@ -1,6 +1,6 @@
 """Automatic news feed: fetch, filter and store recent news about sex and health education.
 
-Headlines come from news-search RSS feeds. Only the title, source, date, a short
+Headlines come from Google News search RSS feeds. Only the title, source, date, a short
 summary and the link are stored; readers open the original article on its own site.
 
 The site runs on a free host that sleeps when idle, so there is no scheduler.
@@ -43,34 +43,55 @@ QUERIES = [
 def feed_urls():
     for query in QUERIES:
         q = urllib.parse.quote(query)
-        yield f"https://www.bing.com/news/search?q={q}&format=rss&mkt=zh-CN"
         yield f"https://news.google.com/rss/search?q={q}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
 
 
-# A headline must mention education, health or protection...
+# A headline must be about our topic...
+TOPIC_WORDS = [
+    "青春期", "性教育", "性健康", "防性侵", "生理", "心理健康", "心理育人", "育心", "未成年人", "青少年",
+    "儿童", "女童", "女生", "男生", "护蕾", "春蕾", "身心", "自我保护", "生命教育", "健康教育",
+    "安全教育", "欺凌",
+]
+# ...describe education, protection or a school activity...
 KEEP_WORDS = [
-    "教育", "讲座", "课", "科普", "健康", "保护", "普法", "宣传", "指南", "成长", "青春期",
-    "心理", "防范", "关爱", "守护", "政策", "法规", "条例", "进校园", "家长", "学生",
+    "教育", "讲座", "课", "科普", "健康", "保护", "普法", "法治", "宣讲", "宣传", "指南", "成长",
+    "关爱", "守护", "呵护", "护航", "政策", "法规", "条例", "进校园", "家长", "开展", "活动", "班会",
+    "培训", "预防", "防范", "建议", "代表", "委员",
 ]
 # ...and must not look like crime reporting, explicit content, adverts or clickbait.
 BLOCK_WORDS = [
     "强奸", "轮奸", "猥亵", "嫖", "卖淫", "色情", "淫秽", "裸", "偷拍", "约炮", "情色", "黄色",
     "性感", "艳", "激情", "出轨", "小三", "不雅", "床", "成人用品", "致死", "杀", "尸", "自杀",
-    "跳楼", "坠楼", "判处", "判刑", "获刑", "被告", "嫌疑人", "涉嫌", "案发", "被害", "受害人",
-    "人流", "包皮", "早泄", "阳痿", "壮阳", "哪家好", "哪个好", "医院排名", "震惊", "曝光",
+    "跳楼", "坠楼", "农药", "判处", "判刑", "判了", "获刑", "被告", "嫌疑人", "涉嫌", "案发", "被害",
+    "受害", "遭", "禽兽", "丧心病狂", "人流", "包皮", "早泄", "阳痿", "壮阳", "哪家好", "哪个好",
+    "医院排名", "震惊", "曝光",
 ]
-CHINESE = re.compile(r"[一-鿿]")
+# "性侵" is allowed only as part of prevention wording such as 防性侵 / 预防性侵害.
+SAFE_ABUSE_PHRASES = re.compile(r"(预防|防止|防范|防|反)性侵害?")
+CHINESE = re.compile(r"[\u4e00-\u9fff]")
 TAGS = re.compile(r"<[^>]+>")
 SPACES = re.compile(r"\s+")
+TRAILING_JUNK = re.compile(r"(\s*\d{4}-\d{1,2}-\d{1,2}(\s+\d{1,2}:\d{2}(:\d{2})?)?|_[^_]{1,12}新闻|\s*-\s+[A-Za-z][A-Za-z'.\s-]*)$")
+
+
+def clean_title(title):
+    """Drop timestamps, site suffixes and keyword clutter that some sites add to headlines."""
+    parts = [p.strip() for p in title.split("|")]
+    if len(parts) > 2:  # "headline|keyword|keyword|..."
+        title = parts[0]
+    previous = None
+    while previous != title:
+        previous, title = title, TRAILING_JUNK.sub("", title).strip()
+    return title
 
 
 def is_suitable(title, summary=""):
     text = f"{title} {summary}"
     if not CHINESE.search(title):
         return False
-    if any(word in text for word in BLOCK_WORDS):
+    if any(word in text for word in BLOCK_WORDS) or "性侵" in SAFE_ABUSE_PHRASES.sub("", text):
         return False
-    return any(word in title for word in KEEP_WORDS)
+    return any(word in title for word in TOPIC_WORDS) and any(word in title for word in KEEP_WORDS)
 
 
 def _text(value):
@@ -84,16 +105,6 @@ def _child(item, name):
         if child.tag.rsplit("}", 1)[-1].lower() == name.lower():
             return child
     return None
-
-
-def _real_link(link):
-    """Bing wraps links in a click-tracking redirect; use the article's own address."""
-    parsed = urllib.parse.urlparse(link)
-    if parsed.netloc.endswith("bing.com") and "apiclick" in parsed.path:
-        target = urllib.parse.parse_qs(parsed.query).get("url")
-        if target:
-            return target[0]
-    return link
 
 
 def parse_feed(data):
@@ -112,8 +123,9 @@ def parse_feed(data):
         source = _text(source_el.text if source_el is not None else "")
         if source and title.endswith(f" - {source}"):
             title = title[: -len(source) - 3].strip()  # Google appends " - Source" to titles
+        title = clean_title(title)
         if not source:
-            source = urllib.parse.urlparse(_real_link(link)).netloc.removeprefix("www.")
+            source = urllib.parse.urlparse(link).netloc.removeprefix("www.")
         published = None
         date_el = _child(item, "pubDate")
         if date_el is not None and date_el.text:
@@ -128,7 +140,7 @@ def parse_feed(data):
             summary = ""  # Google's description just repeats the headline
         items.append({
             "title": title[:200],
-            "url": _real_link(link)[:500],
+            "url": link[:500],
             "source": source[:80],
             "published": published,
             "summary": summary[:300],

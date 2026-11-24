@@ -1,3 +1,4 @@
+import urllib.parse
 from datetime import timedelta
 from unittest import mock
 
@@ -28,11 +29,10 @@ def google_item(title, source, link, days_ago=1):
             f"<source url=\"https://example.cn\">{source}</source></item>")
 
 
-def bing_item(title, real_url, summary, source="中国青年报", days_ago=2):
+def plain_item(title, link, summary, days_ago=2):
     date = (timezone.now() - timedelta(days=days_ago)).strftime("%a, %d %b %Y %H:%M:%S GMT")
-    link = "http://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;url=" + real_url.replace(":", "%3a").replace("/", "%2f")
     return (f"<item><title>{title}</title><link>{link}</link><description>{summary}</description>"
-            f"<pubDate>{date}</pubDate><News:Source>{source}</News:Source></item>")
+            f"<pubDate>{date}</pubDate></item>")
 
 
 class ParseFeedTests(TestCase):
@@ -43,13 +43,21 @@ class ParseFeedTests(TestCase):
         self.assertEqual(item["summary"], "")  # Google's description only repeats the headline
         self.assertIsNotNone(item["published"])
 
-    def test_bing_links_point_to_the_original_article(self):
-        [item] = news_feed.parse_feed(rss(bing_item(
+    def test_feed_without_source_uses_the_site_name(self):
+        [item] = news_feed.parse_feed(rss(plain_item(
             "教育部发布中小学生健康教育指南", "https://www.example.cn/a/1.html",
             "指南提出学校要系统开展青春期教育，帮助学生正确认识身体变化。")))
-        self.assertEqual(item["url"], "https://www.example.cn/a/1.html")
-        self.assertEqual(item["source"], "中国青年报")
+        self.assertEqual(item["source"], "example.cn")
         self.assertIn("青春期教育", item["summary"])
+
+    def test_titles_are_cleaned(self):
+        for raw, clean in [
+            ("祁阳市人民中心小学开展女生防性侵专题安全教育讲座2026-11-12 10:24:42", "祁阳市人民中心小学开展女生防性侵专题安全教育讲座"),
+            ("给成年人上一堂青少年性教育课|沈奕斐|复旦大学|家庭教育_新浪新闻", "给成年人上一堂青少年性教育课"),
+            ("高校举办青少年心理健康论坛- Xi'an Jiaotong-Liverpool University", "高校举办青少年心理健康论坛"),
+        ]:
+            with self.subTest(raw=raw):
+                self.assertEqual(news_feed.clean_title(raw), clean)
 
     def test_broken_feed_gives_no_items(self):
         self.assertEqual(news_feed.parse_feed(b"<html>not rss"), [])
@@ -58,26 +66,29 @@ class ParseFeedTests(TestCase):
 class FilterTests(TestCase):
     def test_education_news_is_kept(self):
         for title in ["春蕾计划青春期健康教育讲座走进资溪二中", "检察官进校园开展防性侵普法宣传",
-                      "全国人大代表建议性教育独立成课"]:
+                      "全国人大代表建议性教育独立成课", "官渡法院开展校园防性侵专题法治宣讲活动",
+                      "人民日报：全员育心，守护青少年心理健康"]:
             with self.subTest(title=title):
                 self.assertTrue(news_feed.is_suitable(title))
 
     def test_crime_reports_ads_and_off_topic_news_are_dropped(self):
         for title in ["男子猥亵女童被判处有期徒刑", "某地破获一起卖淫案", "无痛人流哪家好",
-                      "震惊！某校学生做出这种事", "Sex education in schools", "今日股市收盘点评"]:
+                      "震惊！某校学生做出这种事", "Sex education in schools", "今日股市收盘点评",
+                      "留守女童遭宿管老师长期性侵", "农村已成性侵女童案高发地",
+                      "中国高等教育学会年会在扬州举行", "某区义务教育阶段学校招生工作实施意见"]:
             with self.subTest(title=title):
                 self.assertFalse(news_feed.is_suitable(title))
 
 
 class FetchNewsTests(TestCase):
     def feeds(self, url):
-        if "google" in url:
+        if "青春期" in urllib.parse.unquote(url):
             return rss(
                 google_item("某中学开展青春期健康教育讲座", "人民网", "https://news.google.com/rss/articles/a"),
                 google_item("男子涉嫌猥亵被刑拘", "某网", "https://news.google.com/rss/articles/b"),
                 google_item("十年前的青春期教育讲座", "旧闻网", "https://news.google.com/rss/articles/c", days_ago=900),
             )
-        return rss(bing_item("某中学开展青春期健康教育讲座！", "https://www.example.cn/dup.html", "同一条新闻的另一个标题写法，内容相同。"))
+        return rss(plain_item("某中学开展青春期健康教育讲座！", "https://www.example.cn/dup.html", "同一条新闻的另一个标题写法，内容相同。"))
 
     def test_stores_suitable_new_items_once(self):
         result = news_feed.fetch_news(fetch=self.feeds)
@@ -89,7 +100,7 @@ class FetchNewsTests(TestCase):
 
     def test_one_failing_feed_does_not_stop_the_rest(self):
         def flaky(url):
-            if "bing" in url:
+            if "青春期" not in urllib.parse.unquote(url):
                 raise TimeoutError("timed out")
             return self.feeds(url)
         result = news_feed.fetch_news(fetch=flaky)
